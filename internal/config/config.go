@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"github.com/joho/godotenv"
 	"os"
 )
@@ -20,10 +19,7 @@ type Server struct {
 }
 
 func CfgInit() (*Postgres, error) {
-	err := godotenv.Load(".env")
-	if err != nil {
-		return nil, fmt.Errorf("Error loading .env file %w", err)
-	}
+	_ = godotenv.Load(".env")
 	return &Postgres{
 		PORT:     os.Getenv("DB_PORT"),
 		HOST:     os.Getenv("DB_HOST"),

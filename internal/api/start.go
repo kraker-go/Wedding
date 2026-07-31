@@ -29,7 +29,8 @@ func Start(logg *zap.Logger) error {
 
 	db, err := database.ConnectPostgres(*cfg)
 	if err != nil {
-		fmt.Errorf(err.Error())
+		logg.Error("Ошибка подключения к Postgres", zap.Error(err))
+		return fmt.Errorf("не удалось подключиться к БД: %w", err)
 	}
 
 	defer db.Close()
