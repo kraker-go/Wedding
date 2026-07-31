@@ -13,10 +13,6 @@ import (
 )
 
 func Start(logg *zap.Logger) error {
-	cfg, err := config.CfgInit()
-	if err != nil {
-		return fmt.Errorf(err.Error())
-	}
 
 	logg.Info("конфигурация Postgres загружена")
 
@@ -27,7 +23,7 @@ func Start(logg *zap.Logger) error {
 
 	logg.Info("конфигурация сервера загружена")
 
-	db, err := database.ConnectPostgres(*cfg)
+	db, err := database.ConnectPostgres()
 	if err != nil {
 		logg.Error("Ошибка подключения к Postgres", zap.Error(err))
 		return fmt.Errorf("не удалось подключиться к БД: %w", err)
