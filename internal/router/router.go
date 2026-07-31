@@ -9,6 +9,8 @@ import (
 func InitRouter(hand *handler.UserHandler) (*mux.Router, error) {
 	router := mux.NewRouter()
 
+	// ✅ API
+	router.HandleFunc("/user", hand.AddUserHandler).Methods("POST")
 	// ✅ Главная страница
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./HTML/index.html")
@@ -18,9 +20,6 @@ func InitRouter(hand *handler.UserHandler) (*mux.Router, error) {
 	router.PathPrefix("/").Handler(
 		http.StripPrefix("/", http.FileServer(http.Dir("./HTML/"))),
 	)
-
-	// ✅ API
-	router.HandleFunc("/user", hand.AddUserHandler).Methods("POST")
 
 	return router, nil
 }
