@@ -36,10 +36,15 @@ func CfgInit() (*Postgres, error) {
 func ServerInit() (*Server, error) {
 	port := os.Getenv("SERVER")
 	if port == "" {
-		port = ":" + os.Getenv("PORT") // fallback для Render
+		port = os.Getenv("PORT")
 	}
 	if port == "" {
-		port = ":8080" // дефолтный порт
+		port = "8080"
 	}
+
+	if port[0] != ':' {
+		port = ":" + port
+	}
+
 	return &Server{Port: port}, nil
 }
