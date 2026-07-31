@@ -111,7 +111,7 @@ h1 span {
 .date {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;   /* вертикальное выравнивание по центру */
     gap: 35px;
     margin-top: 60px;
 }
@@ -122,6 +122,8 @@ h1 span {
     font-weight: 600;
     color: #74624a;
     line-height: 1;
+    /* 👇 РАСТЯГИВАЕМ НА ВЫСОТУ ДВУХ СТРОК */
+    height: calc(30px * 1.4 * 2);  /* 30px (размер месяца) * 1.4 (line-height) * 2 строки */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -291,7 +293,12 @@ h1 span {
 
     h1 { font-size: 72px; }
     h1 span { font-size: 44px; }
-    .number-date { font-size: 64px; }
+
+    .number-date {
+        font-size: 64px;
+        height: calc(22px * 1.4 * 2);  /* ← ЭТУ СТРОКУ ДОБАВИТЬ */
+    }
+
     .month { font-size: 22px; }
 
     .timer { gap: 14px; }
@@ -312,7 +319,12 @@ h1 span {
     .wrapper { padding: 25px 16px 30px; }
     h1 { font-size: 54px; }
     h1 span { font-size: 34px; }
-    .number-date { font-size: 48px; }
+
+    .number-date {
+        font-size: 48px;
+        height: calc(18px * 1.4 * 2);  /* ← ЭТУ СТРОКУ ДОБАВИТЬ */
+    }
+
     .month { font-size: 18px; }
     .invite { font-size: 16px; }
 
