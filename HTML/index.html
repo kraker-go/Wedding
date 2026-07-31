@@ -12,14 +12,20 @@
 </head>
 <body>
 
-<div class="background"></div>
+<div class="gold-top"></div>
+<div class="gold-bottom"></div>
 
-<div class="container">
+<div class="leaf left-top"></div>
+<div class="leaf right-top"></div>
+<div class="leaf left-bottom"></div>
+<div class="leaf right-bottom"></div>
 
-    <div class="header">
+<div class="wrapper">
 
-        <div class="small-title">
-            ВМЕСТЕ И НАВСЕГДА
+    <section class="hero">
+
+        <div class="subtitle">
+            WEDDING DAY
         </div>
 
         <h1>
@@ -28,86 +34,115 @@
             Милана
         </h1>
 
-        <div class="invite">
-            ПРИГЛАШАЕМ НА СВАДЬБУ
-        </div>
+        <div class="line"></div>
+
+        <p class="invite">
+            С огромной радостью приглашаем Вас
+            разделить с нами один из самых счастливых
+            дней нашей жизни.
+        </p>
 
         <div class="date">
 
-            <div class="day">
+            <div class="number-date">
                 10
             </div>
 
             <div class="month">
+
                 октября
-            </div>
 
-            <div class="year">
+                <br>
+
                 2026
+
             </div>
 
         </div>
 
-    </div>
+    </section>
 
-    <div class="countdown">
+    <section class="timer">
 
-        <div class="time-box">
-            <div id="days" class="number">0</div>
-            <div class="label">дней</div>
+        <div class="timer-card">
+
+            <div id="days" class="timer-number"></div>
+
+            <div class="timer-text">
+
+                Дней
+
+            </div>
+
         </div>
 
-        <div class="time-box">
-            <div id="hours" class="number">0</div>
-            <div class="label">часов</div>
+        <div class="timer-card">
+
+            <div id="hours" class="timer-number"></div>
+
+            <div class="timer-text">
+
+                Часов
+
+            </div>
+
         </div>
 
-        <div class="time-box">
-            <div id="minutes" class="number">0</div>
-            <div class="label">минут</div>
+        <div class="timer-card">
+
+            <div id="minutes" class="timer-number"></div>
+
+            <div class="timer-text">
+
+                Минут
+
+            </div>
+
         </div>
 
-        <div class="time-box">
-            <div id="seconds" class="number">0</div>
-            <div class="label">секунд</div>
+        <div class="timer-card">
+
+            <div id="seconds" class="timer-number"></div>
+
+            <div class="timer-text">
+
+                Секунд
+
+            </div>
+
         </div>
 
-    </div>
+    </section>
 
-    <div class="guest-block">
+    <section class="guest">
 
         <h2>
-            Дорогой гость!
+
+            Дорогой гость
+
         </h2>
 
-        <p class="text">
+        <p>
 
-            Мы будем очень рады видеть Вас
+            Для нас очень важно знать,
+            сможете ли Вы присутствовать
             на нашем празднике.
-
-            <br><br>
-
-            Пожалуйста, подтвердите своё присутствие.
 
         </p>
 
         <form id="guestForm">
 
             <input
-                    type="text"
                     id="firstName"
-                    placeholder="Имя"
-                    required
-            >
+                    type="text"
+                    placeholder="Ваше имя">
 
             <input
-                    type="text"
                     id="lastName"
-                    placeholder="Фамилия"
-                    required
-            >
+                    type="text"
+                    placeholder="Ваша фамилия">
 
-            <button type="submit">
+            <button>
 
                 Подтвердить присутствие
 
@@ -117,7 +152,7 @@
 
         <div id="message"></div>
 
-    </div>
+    </section>
 
 </div>
 
