@@ -111,16 +111,20 @@ h1 span {
 .date {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     gap: 35px;
     margin-top: 60px;
 }
 
 .number-date {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 120px;
-    color: #c7a35a;
+    font-size: 90px;
+    font-weight: 600;
+    color: #74624a;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .month {
@@ -129,6 +133,9 @@ h1 span {
     letter-spacing: 3px;
     color: #74624a;
     line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* ===== ТАЙМЕР — КРУГЛЫЙ ===== */
@@ -174,11 +181,10 @@ h1 span {
 .timer-number {
     font-family: 'Cormorant Garamond', serif;
     font-size: 56px;
-    font-weight: 600;
-    background: linear-gradient(135deg, #c7a35a, #b0883e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;      /* было 600 — стало жирнее */
+    color: #74624a;        /* тот же цвет, что у месяца */
+    background: none;      /* убираем градиент */
+    -webkit-text-fill-color: #74624a;  /* убираем градиентную заливку */
     line-height: 1.1;
     margin-bottom: 2px;
 }
@@ -285,7 +291,7 @@ h1 span {
 
     h1 { font-size: 72px; }
     h1 span { font-size: 44px; }
-    .number-date { font-size: 80px; }
+    .number-date { font-size: 64px; }
     .month { font-size: 22px; }
 
     .timer { gap: 14px; }
@@ -306,7 +312,7 @@ h1 span {
     .wrapper { padding: 25px 16px 30px; }
     h1 { font-size: 54px; }
     h1 span { font-size: 34px; }
-    .number-date { font-size: 58px; }
+    .number-date { font-size: 48px; }
     .month { font-size: 18px; }
     .invite { font-size: 16px; }
 
