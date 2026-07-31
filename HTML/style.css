@@ -32,39 +32,48 @@ h1 span {
 .countdown {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 25px;
-    margin-top: 70px;
+    gap: 35px;
+    margin: 90px 0 60px;
 }
 
 .time-box {
-    width: 140px;
-    padding: 25px;
-    border-radius: 18px;
-    background: rgba(255,255,255,.75);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 35px rgba(0,0,0,.08);
-    text-align: center;
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(205, 170, 90, 0.35);
+    box-shadow:
+            0 20px 45px rgba(0, 0, 0, 0.08),
+            inset 0 0 45px rgba(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.35s ease;
 }
 
 .number {
-    font-size:56px;
-
-    color:#c0974d;
-
-    font-weight:600;
-
-    font-family:"Cormorant Garamond",serif;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 62px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #c7a35a, #b0883e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 4px;
 }
 
 .label {
-    margin-top:8px;
-
-    letter-spacing:2px;
-
-    color:#8c7d69;
-
-    font-size:14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #8c7d69;
+    margin-top: 2px;
 }
 
 .guest-block {
@@ -367,68 +376,78 @@ button:active {
         font-size: 30px;
     }
 
-    .countdown {
-        display: flex;
-
-        justify-content: center;
-
-        gap: 25px;
-
-        margin: 90px 0;
-
-        flex-wrap: wrap;
+    .countdown .time-box {
+        animation: fadeUp 0.9s ease forwards;
+        opacity: 0;
     }
 
-    .time-box {
-        width: 145px;
-
-        height: 145px;
-
-        border-radius: 50%;
-
-        background: rgba(255, 255, 255, .82);
-
-        backdrop-filter: blur(15px);
-
-        border: 1px solid rgba(205, 170, 90, .25);
-
-        display: flex;
-
-        flex-direction: column;
-
-        justify-content: center;
-
-        align-items: center;
-
-        box-shadow: 0 20px 45px rgba(0, 0, 0, .08),
-        inset 0 0 35px rgba(255, 255, 255, .6);
-
-        transition: .35s;
+    .countdown .time-box:nth-child(1) {
+        animation-delay: 0.1s;
     }
 
-    .time-box:hover {
+    .countdown .time-box:nth-child(2) {
+        animation-delay: 0.2s;
+    }
 
-        transform: translateY(-10px);
+    .countdown .time-box:nth-child(3) {
+        animation-delay: 0.3s;
+    }
 
-        box-shadow: 0 35px 60px rgba(180, 140, 70, .25);
+    .countdown .time-box:nth-child(4) {
+        animation-delay: 0.4s;
+    }
 
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @media (max-width: 600px) {
+        .countdown {
+            gap: 18px;
+            margin: 50px 0 30px;
+        }
+
+        .time-box {
+            width: 115px;
+            height: 115px;
+            border: 1px solid rgba(205, 170, 90, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .time-box:hover {
+            transform: translateY(-6px);
+        }
+
+        .number {
+            font-size: 44px;
+        }
+
+        .label {
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .countdown {
+            gap: 12px;
+        }
+        .time-box {
+            width: 90px;
+            height: 90px;
+        }
+        .number {
+            font-size: 34px;
+        }
+        .label {
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
     }
 }
-
-@keyframes fadeUp {
-
-        from{
-
-            opacity:0;
-            transform:translateY(60px);
-
-        }
-
-        to{
-
-            opacity:1;
-            transform:translateY(0);
-
-        }
-
-    }
