@@ -14,42 +14,101 @@ body {
     font-family: 'Montserrat', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    /* 🔥 МРАМОРНЫЙ ФОН С ЗОЛОТИСТЫМИ РАЗВОДАМИ */
-    background:
-            radial-gradient(ellipse at 20% 50%, rgba(215, 185, 120, 0.15) 0%, transparent 60%),
-            radial-gradient(ellipse at 80% 50%, rgba(215, 185, 120, 0.10) 0%, transparent 60%),
-            radial-gradient(ellipse at 50% 0%, rgba(255, 215, 140, 0.08) 0%, transparent 50%),
-            linear-gradient(135deg, #f7f2ea 0%, #e8dfd4 30%, #f2ebe1 60%, #ddd2c4 100%);
+    background-color: #f5efe8;
+    /* Мраморный фон */
+    background-image:
+            radial-gradient(ellipse at 15% 25%, rgba(215, 185, 120, 0.3) 0%, transparent 45%),
+            radial-gradient(ellipse at 85% 65%, rgba(200, 170, 90, 0.25) 0%, transparent 50%),
+            radial-gradient(ellipse at 45% 85%, rgba(230, 200, 150, 0.2) 0%, transparent 40%),
+            radial-gradient(ellipse at 70% 15%, rgba(180, 150, 80, 0.15) 0%, transparent 35%),
+            repeating-linear-gradient(45deg, #f5efe8 0px, #f5efe8 2px, #ede5db 2px, #ede5db 4px, #f5efe8 4px, #f5efe8 6px),
+            repeating-linear-gradient(-45deg, #f5efe8 0px, #f5efe8 3px, #e8dfd4 3px, #e8dfd4 5px, #f5efe8 5px, #f5efe8 8px);
+    background-blend-mode: normal, normal, normal, normal, overlay, overlay;
     background-attachment: fixed;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
 }
 
-/* 🔥 ЗОЛОТИСТЫЕ РАЗВОДЫ (декоративные пятна) */
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-            radial-gradient(circle at 10% 20%, rgba(218, 181, 96, 0.10) 0%, transparent 40%),
-            radial-gradient(circle at 90% 80%, rgba(200, 170, 90, 0.08) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, rgba(230, 200, 150, 0.05) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-}
-
+/* 🔥 КОНВЕРТ / ОТКРЫТКА — ДЕКОРАТИВНАЯ РАМКА */
 .wrapper {
-    max-width: 900px;
+    max-width: 950px;
+    width: 100%;
     margin: auto;
-    padding: 60px 25px 80px;
+    padding: 50px 45px 55px;
     position: relative;
     z-index: 1;
+    background: rgba(255, 252, 248, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 40px 40px 40px 40px;
+    box-shadow:
+            0 0 0 2px #dac194,
+            0 0 0 6px #f5efe8,
+            0 0 0 8px #dac194,
+            0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+}
+
+/* 🖼️ УГЛЫ-ЗАВИТКИ (декор) */
+.wrapper::before,
+.wrapper::after {
+    content: '✦';
+    position: absolute;
+    font-size: 28px;
+    color: #c7a35a;
+    opacity: 0.6;
+}
+.wrapper::before {
+    top: 15px;
+    left: 25px;
+    transform: rotate(-15deg);
+}
+.wrapper::after {
+    bottom: 15px;
+    right: 25px;
+    transform: rotate(15deg);
+}
+
+/* ДОПОЛНИТЕЛЬНЫЙ ДЕКОР ПО УГЛАМ */
+.corner-decor {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-color: #c7a35a;
+    border-style: solid;
+    opacity: 0.3;
+    pointer-events: none;
+}
+.corner-tl {
+    top: 18px;
+    left: 18px;
+    border-width: 2px 0 0 2px;
+    border-radius: 6px 0 0 0;
+}
+.corner-tr {
+    top: 18px;
+    right: 18px;
+    border-width: 2px 2px 0 0;
+    border-radius: 0 6px 0 0;
+}
+.corner-bl {
+    bottom: 18px;
+    left: 18px;
+    border-width: 0 0 2px 2px;
+    border-radius: 0 0 0 6px;
+}
+.corner-br {
+    bottom: 18px;
+    right: 18px;
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 6px 0;
 }
 
 /* ===== HERO ===== */
 .hero {
     text-align: center;
-    animation: fadeUp 1.3s ease forwards;
-    opacity: 0;
 }
 
 .subtitle {
@@ -112,19 +171,19 @@ h1 span {
     line-height: 1.4;
 }
 
-/* ===== ТАЙМЕР — КРУГЛЫЙ, ЗОЛОТОЙ ===== */
+/* ===== ТАЙМЕР — ФИКС ДЛЯ МОБИЛЬНЫХ ===== */
 .timer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 35px;
+    gap: 25px;
     margin: 70px 0 60px;
 }
 
 .timer-card {
-    width: 155px;
-    height: 155px;
+    width: 145px;
+    height: 145px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(15px);
@@ -154,48 +213,48 @@ h1 span {
 
 .timer-number {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 62px;
+    font-size: 56px;
     font-weight: 600;
     background: linear-gradient(135deg, #c7a35a, #b0883e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    line-height: 1;
-    margin-bottom: 4px;
+    line-height: 1.1;
+    margin-bottom: 2px;
 }
 
 .timer-text {
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     color: #8c7d69;
 }
 
 /* ===== ГОСТЕВОЙ БЛОК ===== */
 .guest {
-    margin-top: 60px;
-    padding: 60px 50px;
-    border-radius: 35px;
-    background: rgba(255, 255, 255, 0.68);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(215, 191, 145, 0.35);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+    margin-top: 50px;
+    padding: 50px 45px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(215, 191, 145, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
 .guest h2 {
     font-family: 'Great Vibes', cursive;
-    font-size: 72px;
+    font-size: 64px;
     font-weight: 400;
     color: #8f7347;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .guest p {
-    max-width: 500px;
-    margin: 0 auto 35px;
-    font-size: 18px;
+    max-width: 460px;
+    margin: 0 auto 30px;
+    font-size: 17px;
     line-height: 1.8;
     color: #6d614f;
 }
@@ -203,18 +262,18 @@ h1 span {
 .guest form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    max-width: 450px;
+    gap: 16px;
+    max-width: 420px;
     margin: 0 auto;
 }
 
 .guest input {
-    height: 60px;
+    height: 58px;
     padding: 0 20px;
     border: none;
     border-bottom: 2px solid #d6be8b;
     background: transparent;
-    font-size: 18px;
+    font-size: 17px;
     transition: 0.3s;
 }
 
@@ -224,13 +283,13 @@ h1 span {
 }
 
 .guest button {
-    margin-top: 25px;
-    height: 65px;
+    margin-top: 20px;
+    height: 60px;
     border: none;
     border-radius: 50px;
     background: linear-gradient(135deg, #d9bc7a, #b98d45);
     color: white;
-    font-size: 19px;
+    font-size: 18px;
     letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s;
@@ -242,8 +301,8 @@ h1 span {
 }
 
 #message {
-    margin-top: 25px;
-    font-size: 18px;
+    margin-top: 22px;
+    font-size: 17px;
     font-weight: 600;
 }
 
@@ -252,36 +311,52 @@ h1 span {
 
 /* ===== АНИМАЦИИ ===== */
 @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(60px); }
+    from { opacity: 0; transform: translateY(50px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== АДАПТИВ ===== */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+    body { padding: 15px; }
+    .wrapper { padding: 35px 22px 40px; border-radius: 30px; }
+    .wrapper::before,
+    .wrapper::after { font-size: 20px; }
+    .corner-decor { width: 32px; height: 32px; }
+
     h1 { font-size: 72px; }
-    h1 span { font-size: 46px; }
+    h1 span { font-size: 44px; }
     .number-date { font-size: 80px; }
     .month { font-size: 22px; }
 
-    .timer { gap: 18px; }
+    .timer { gap: 14px; }
     .timer-card {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
     }
-    .timer-number { font-size: 44px; }
-    .timer-text { font-size: 10px; letter-spacing: 2px; }
+    .timer-number { font-size: 40px; }
+    .timer-text { font-size: 10px; letter-spacing: 1.5px; }
 
-    .guest { padding: 35px 25px; }
-    .guest h2 { font-size: 48px; }
-    .guest input { height: 50px; font-size: 16px; }
-    .guest button { height: 55px; font-size: 17px; }
+    .guest { padding: 30px 20px; }
+    .guest h2 { font-size: 44px; }
+    .guest input { height: 50px; font-size: 15px; }
+    .guest button { height: 52px; font-size: 16px; }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 430px) {
+    .wrapper { padding: 25px 16px 30px; }
+    h1 { font-size: 54px; }
+    h1 span { font-size: 34px; }
+    .number-date { font-size: 58px; }
+    .month { font-size: 18px; }
+    .invite { font-size: 16px; }
+
+    .timer { gap: 10px; }
     .timer-card {
-        width: 90px;
-        height: 90px;
+        width: 85px;
+        height: 85px;
+        border-width: 1.5px;
     }
-    .timer-number { font-size: 34px; }
-    .timer-text { font-size: 9px; letter-spacing: 1px; }
+    .timer-number { font-size: 30px; }
+    .timer-text { font-size: 8px; letter-spacing: 1px; }
+    .date { gap: 18px; }
 }
