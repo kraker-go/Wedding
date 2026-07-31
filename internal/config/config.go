@@ -19,7 +19,10 @@ type Server struct {
 }
 
 func CfgInit() (*Postgres, error) {
-	_ = godotenv.Load(".env")
+	if _, err := os.Stat(".env"); err == nil {
+		_ = godotenv.Load(".env")
+	}
+
 	return &Postgres{
 		PORT:     os.Getenv("DB_PORT"),
 		HOST:     os.Getenv("DB_HOST"),
@@ -31,5 +34,12 @@ func CfgInit() (*Postgres, error) {
 }
 
 func ServerInit() (*Server, error) {
-	return &Server{os.Getenv("SERVER")}, nil
+	port := os.Getenv("SERVER")
+	if port == "" {
+		port = ":" + os.Getenv("PORT") // fallback для Render
+	}
+	if port == "" {
+		port = ":8080" // дефолтный порт
+	}
+	return &Server{Port: port}, nil
 }

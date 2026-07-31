@@ -37,7 +37,10 @@ func Start(logg *zap.Logger) error {
 
 	logg.Info("Postgres подключен")
 
-	err = database.InitMigration(db)
+	if err = database.InitMigration(db); err != nil {
+		logg.Error("Ошибка миграции", zap.Error(err))
+		return fmt.Errorf("не удалось применить миграции: %w", err)
+	}
 
 	repo := repository.NewRepository(db)
 	serv := service.NewUserService(repo)
