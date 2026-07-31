@@ -4,159 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Александр & Милана</title>
-
     <link rel="stylesheet" href="style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="gold-top"></div>
-<div class="gold-bottom"></div>
-
-<div class="leaf left-top"></div>
-<div class="leaf right-top"></div>
-<div class="leaf left-bottom"></div>
-<div class="leaf right-bottom"></div>
-
+<!-- 📬 ОТКРЫТКА-КОНВЕРТ -->
 <div class="wrapper">
 
+    <!-- ДЕКОРАТИВНЫЕ УГОЛКИ -->
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="corner-decor corner-bl"></div>
+    <div class="corner-decor corner-br"></div>
+
     <section class="hero">
-
-        <div class="subtitle">
-            WEDDING DAY
-        </div>
-
-        <h1>
-            Александр
-            <span>&</span>
-            Милана
-        </h1>
-
+        <div class="subtitle">WEDDING DAY</div>
+        <h1>Александр <span>&</span> Милана</h1>
         <div class="line"></div>
-
-        <p class="invite">
-            С огромной радостью приглашаем Вас
-            разделить с нами один из самых счастливых
-            дней нашей жизни.
-        </p>
-
+        <p class="invite">С огромной радостью приглашаем Вас разделить с нами один из самых счастливых дней нашей жизни.</p>
         <div class="date">
-
-            <div class="number-date">
-                10
-            </div>
-
-            <div class="month">
-
-                октября
-
-                <br>
-
-                2026
-
-            </div>
-
+            <div class="number-date">10</div>
+            <div class="month">октября <br> 2026</div>
         </div>
-
     </section>
 
     <section class="timer">
-
-        <div class="timer-card">
-
-            <div id="days" class="timer-number"></div>
-
-            <div class="timer-text">
-
-                Дней
-
-            </div>
-
-        </div>
-
-        <div class="timer-card">
-
-            <div id="hours" class="timer-number"></div>
-
-            <div class="timer-text">
-
-                Часов
-
-            </div>
-
-        </div>
-
-        <div class="timer-card">
-
-            <div id="minutes" class="timer-number"></div>
-
-            <div class="timer-text">
-
-                Минут
-
-            </div>
-
-        </div>
-
-        <div class="timer-card">
-
-            <div id="seconds" class="timer-number"></div>
-
-            <div class="timer-text">
-
-                Секунд
-
-            </div>
-
-        </div>
-
+        <div class="timer-card"><div id="days" class="timer-number"></div><div class="timer-text">Дней</div></div>
+        <div class="timer-card"><div id="hours" class="timer-number"></div><div class="timer-text">Часов</div></div>
+        <div class="timer-card"><div id="minutes" class="timer-number"></div><div class="timer-text">Минут</div></div>
+        <div class="timer-card"><div id="seconds" class="timer-number"></div><div class="timer-text">Секунд</div></div>
     </section>
 
     <section class="guest">
-
-        <h2>
-
-            Дорогой гость
-
-        </h2>
-
-        <p>
-
-            Для нас очень важно знать,
-            сможете ли Вы присутствовать
-            на нашем празднике.
-
-        </p>
-
+        <h2>Дорогой гость</h2>
+        <p>Для нас очень важно знать, сможете ли Вы присутствовать на нашем празднике.</p>
         <form id="guestForm">
-
-            <input
-                    id="firstName"
-                    type="text"
-                    placeholder="Ваше имя">
-
-            <input
-                    id="lastName"
-                    type="text"
-                    placeholder="Ваша фамилия">
-
-            <button>
-
-                Подтвердить присутствие
-
-            </button>
-
+            <input id="firstName" type="text" placeholder="Ваше имя">
+            <input id="lastName" type="text" placeholder="Ваша фамилия">
+            <button>Подтвердить присутствие</button>
         </form>
-
         <div id="message"></div>
-
     </section>
 
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
