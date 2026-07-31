@@ -119,19 +119,30 @@ h1 span {
 .number-date {
     font-family: 'Montserrat', 'Arial', sans-serif;
     font-size: 120px;
-    font-weight: 700;
-    color: #5a4a3a;
-    letter-spacing: 2px;
+    font-weight: 800;
+    color: #b8860b;                  /* золотисто-медный */
     line-height: 1.2;
     height: 144px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    /* ОБЪЁМНАЯ ТЕНЬ + СВЕЧЕНИЕ */
     text-shadow:
-            2px 2px 0 #d4c4a8,
-            4px 4px 8px rgba(0,0,0,0.15),
-            0 0 20px rgba(200, 175, 120, 0.3);
-    position: relative;  /* для ::after */
+            1px 1px 0 #e6c87c,
+            2px 2px 0 #c9a84c,
+            4px 4px 12px rgba(0,0,0,0.25),
+            0 0 30px rgba(255, 215, 0, 0.3);
+
+    /* ГРАДИЕНТНАЯ ЗАЛИВКА (эффект драгоценного камня) */
+    background: linear-gradient(145deg, #f9e4a0, #d4af37, #b8860b, #8b6b0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    /* ЛЁГКОЕ ДВИЖЕНИЕ */
+    animation: glowPulse 3s ease-in-out infinite, float 4s ease-in-out infinite;
 }
 +
 .number-date::after {
@@ -389,5 +400,18 @@ h1 span {
     .timer-text {
         font-size: 8px;
         letter-spacing: 1px;
+    }
+    /* ПУЛЬСИРУЮЩЕЕ ЗОЛОТОЕ СВЕЧЕНИЕ */
+    @keyframes glowPulse {
+        0%   { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+        50%  { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.7)); }
+        100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+    }
+
+    /* ЛЁГКОЕ ПЛАВАНИЕ */
+    @keyframes float {
+        0%   { transform: translateY(0px); }
+        50%  { transform: translateY(-6px); }
+        100% { transform: translateY(0px); }
     }
 }
