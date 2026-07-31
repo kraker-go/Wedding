@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Александр & Милана</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="small-title">
+            ВМЕСТЕ И НАВСЕГДА
+        </div>
+
+        <h1>
+            Александр
+            <span>&</span>
+            Милана
+        </h1>
+
+        <div class="invite">
+            ПРИГЛАШАЕМ НА СВАДЬБУ
+        </div>
+
+        <div class="date">
+
+            <div class="day">
+                10
+            </div>
+
+            <div class="month">
+                октября
+            </div>
+
+            <div class="year">
+                2026
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="countdown">
+
+        <div class="time-box">
+            <div id="days" class="number">0</div>
+            <div class="label">дней</div>
+        </div>
+
+        <div class="time-box">
+            <div id="hours" class="number">0</div>
+            <div class="label">часов</div>
+        </div>
+
+        <div class="time-box">
+            <div id="minutes" class="number">0</div>
+            <div class="label">минут</div>
+        </div>
+
+        <div class="time-box">
+            <div id="seconds" class="number">0</div>
+            <div class="label">секунд</div>
+        </div>
+
+    </div>
+
+    <div class="guest-block">
+
+        <h2>
+            Дорогой гость!
+        </h2>
+
+        <p class="text">
+
+            Мы будем очень рады видеть Вас
+            на нашем празднике.
+
+            <br><br>
+
+            Пожалуйста, подтвердите своё присутствие.
+
+        </p>
+
+        <form id="guestForm">
+
+            <input
+                    type="text"
+                    id="firstName"
+                    placeholder="Имя"
+                    required
+            >
+
+            <input
+                    type="text"
+                    id="lastName"
+                    placeholder="Фамилия"
+                    required
+            >
+
+            <button type="submit">
+
+                Подтвердить присутствие
+
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
