@@ -31,9 +31,9 @@ body {
     z-index: 1;
     border-radius: 40px;
     box-shadow:
-            0 0 0 2px #dac194,
-            0 0 0 6px #f9f5ef,
-            0 0 0 8px #dac194,
+            0 0 0 2px #b0b0b0,     /* внешняя тонкая серая */
+            0 0 0 6px #f9f5ef,     /* белая прослойка (можно оставить) */
+            0 0 0 8px #a0a0a0,     /* внешняя толстая серая */
             0 20px 60px rgba(0, 0, 0, 0.10);
     animation: fadeUp 1s ease forwards;
     opacity: 0;
@@ -118,15 +118,19 @@ h1 span {
 
 .number-date {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 90px;
-    font-weight: 600;
-    color: #74624a;
+    font-size: 120px;            /* заметно крупнее */
+    font-weight: 700;
+    color: #5a4a3a;              /* тёмный благородный оттенок */
     line-height: 1;
-    /* 👇 РАСТЯГИВАЕМ НА ВЫСОТУ ДВУХ СТРОК */
-    height: calc(30px * 1.4 * 2);  /* 30px (размер месяца) * 1.4 (line-height) * 2 строки */
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow:
+            2px 2px 0 #d4c4a8,       /* светлая тень — объём */
+            4px 4px 8px rgba(0,0,0,0.15),   /* мягкая тень */
+            0 0 20px rgba(200, 175, 120, 0.3); /* золотое свечение */
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
 }
 
 .month {
