@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', 'Arial', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     background: #f9f5ef;  /* светлый кремовый */
