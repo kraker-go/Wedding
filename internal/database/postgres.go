@@ -7,23 +7,23 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
 	"net/http"
+	"os"
 	"time"
-	"wedding/internal/config"
 )
 
-func ConnectPostgres(cfg config.Postgres) (*sql.DB, error) {
-	str := fmt.Sprintf("port=%s host=%s user=%s password=%s dbname=%s sslmode=%s", cfg.PORT, cfg.HOST, cfg.USER, cfg.PASSWORD, cfg.DBNAME, cfg.SSL_MODE)
-	postgres, err := sql.Open("postgres", str)
+func ConnectPostgres() (*sql.DB, error) {
+	connStr := os.Getenv("DATABASE_URL")
+	if connStr == "" {
+		return nil, fmt.Errorf("переменная DATABASE_URL не установлена")
+	}
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		return nil, fmt.Errorf("Ошибка подключения postgres: %w", err)
+		return nil, err
 	}
-
-	if err = postgres.Ping(); err != nil {
-		return nil, fmt.Errorf("Нет соединения с Postgres: %w", err)
+	if err = db.Ping(); err != nil {
+		return nil, err
 	}
-
-	return postgres, nil
-
+	return db, nil
 }
 func InitMigration(postgres *sql.DB) error {
 	return goose.Up(postgres, "migrations")
