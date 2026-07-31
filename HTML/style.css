@@ -117,12 +117,23 @@ h1 span {
 }
 
 .number-date {
-    font-family: 'Montserrat', 'Arial', sans-serif; /* ← сюда */
+    font-family: 'Montserrat', 'Arial', sans-serif;
     font-size: 120px;
     font-weight: 700;
     color: #5a4a3a;
     letter-spacing: 2px;
+    line-height: 1.2;
+    height: 144px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow:
+            2px 2px 0 #d4c4a8,
+            4px 4px 8px rgba(0,0,0,0.15),
+            0 0 20px rgba(200, 175, 120, 0.3);
+    position: relative;  /* для ::after */
 }
++
 .number-date::after {
     content: '';
     position: absolute;
@@ -135,6 +146,7 @@ h1 span {
     opacity: 0.5;
     pointer-events: none;
 }
+
 .month {
     font-size: 30px;
     text-transform: uppercase;
