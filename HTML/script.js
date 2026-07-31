@@ -90,7 +90,7 @@ form.addEventListener("submit", async function (e) {
 
     try {
 
-        const response = await fetch("http://localhost:8080/user", {
+        const response = await fetch("/user", {
 
             method: "POST",
 
