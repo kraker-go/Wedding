@@ -29,7 +29,7 @@ body {
     padding: 50px 45px 55px;
     position: relative;
     z-index: 1;
-    border-radius: 40px 40px 40px 40px;
+    border-radius: 40px;
     box-shadow:
             0 0 0 2px #dac194,
             0 0 0 6px #f9f5ef,
@@ -38,17 +38,8 @@ body {
     animation: fadeUp 1s ease forwards;
     opacity: 0;
 
-    /* ✅ ПРАВИЛЬНО: картинка + градиенты — всё через запятую */
-    background:
-            url('fon.webp') center/cover no-repeat,
-            radial-gradient(ellipse at 10% 20%, rgba(218, 181, 96, 0.25) 0%, transparent 45%),
-            radial-gradient(ellipse at 90% 80%, rgba(200, 170, 90, 0.20) 0%, transparent 45%),
-            radial-gradient(ellipse at 40% 70%, rgba(230, 200, 150, 0.15) 0%, transparent 40%),
-            radial-gradient(ellipse at 70% 15%, rgba(180, 150, 80, 0.12) 0%, transparent 35%),
-            repeating-linear-gradient(55deg, #fcf9f5 0px, #fcf9f5 2px, #f5efe8 2px, #f5efe8 4px, #fcf9f5 4px, #fcf9f5 7px),
-            repeating-linear-gradient(-55deg, #fcf9f5 0px, #fcf9f5 3px, #ede5db 3px, #ede5db 5px, #fcf9f5 5px, #fcf9f5 8px);
-
-    background-blend-mode: normal, normal, normal, normal, normal, overlay, overlay;
+    /* 🔥 ТОЛЬКО КАРТИНКА, БЕЗ ВСЯКОЙ ХУЙНИ */
+    background: url('fon.webp') center/cover no-repeat;
 }
 
 /* 🖼️ УГЛЫ-ЗАВИТКИ (золотые звёздочки) */
