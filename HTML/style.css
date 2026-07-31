@@ -1,44 +1,128 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html{
 
-    scroll-behavior:smooth;
-
+html {
+    scroll-behavior: smooth;
 }
+
 body {
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(180deg,#fefcf8,#f7f2e8);
-    color: #4b4338;
     min-height: 100vh;
     overflow-x: hidden;
+    /* 🔥 МРАМОРНЫЙ ФОН С ЗОЛОТИСТЫМИ РАЗВОДАМИ */
+    background:
+            radial-gradient(ellipse at 20% 50%, rgba(215, 185, 120, 0.15) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 50%, rgba(215, 185, 120, 0.10) 0%, transparent 60%),
+            radial-gradient(ellipse at 50% 0%, rgba(255, 215, 140, 0.08) 0%, transparent 50%),
+            linear-gradient(135deg, #f7f2ea 0%, #e8dfd4 30%, #f2ebe1 60%, #ddd2c4 100%);
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* 🔥 ЗОЛОТИСТЫЕ РАЗВОДЫ (декоративные пятна) */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+            radial-gradient(circle at 10% 20%, rgba(218, 181, 96, 0.10) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(200, 170, 90, 0.08) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(230, 200, 150, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: auto;
+    padding: 60px 25px 80px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== HERO ===== */
+.hero {
+    text-align: center;
+    animation: fadeUp 1.3s ease forwards;
+    opacity: 0;
+}
+
+.subtitle {
+    letter-spacing: 7px;
+    color: #bb9554;
+    font-size: 13px;
+    margin-bottom: 20px;
 }
 
 h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 120px;
     font-weight: 400;
-    color: #705f46;
+    color: #756243;
     line-height: 1.1;
 }
 
 h1 span {
     display: block;
-    font-size: 42px;
+    font-size: 75px;
+    color: #b89249;
     margin: 12px 0;
 }
 
-.countdown {
+.line {
+    width: 180px;
+    height: 1px;
+    background: #d8c194;
+    margin: 45px auto;
+}
+
+.invite {
+    max-width: 520px;
+    margin: auto;
+    line-height: 2;
+    font-size: 20px;
+    color: #73624c;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    margin-top: 60px;
+}
+
+.number-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    color: #c7a35a;
+    line-height: 1;
+}
+
+.month {
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #74624a;
+    line-height: 1.4;
+}
+
+/* ===== ТАЙМЕР — КРУГЛЫЙ, ЗОЛОТОЙ ===== */
+.timer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 35px;
-    margin: 90px 0 60px;
+    margin: 70px 0 60px;
 }
 
-.time-box {
+.timer-card {
     width: 155px;
     height: 155px;
     border-radius: 50%;
@@ -53,9 +137,22 @@ h1 span {
     justify-content: center;
     align-items: center;
     transition: all 0.35s ease;
+    animation: fadeUp 0.9s ease forwards;
+    opacity: 0;
 }
 
-.number {
+.timer-card:nth-child(1) { animation-delay: 0.1s; }
+.timer-card:nth-child(2) { animation-delay: 0.2s; }
+.timer-card:nth-child(3) { animation-delay: 0.3s; }
+.timer-card:nth-child(4) { animation-delay: 0.4s; }
+
+.timer-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 35px 65px rgba(180, 140, 70, 0.25);
+    border-color: rgba(205, 170, 90, 0.7);
+}
+
+.timer-number {
     font-family: 'Cormorant Garamond', serif;
     font-size: 62px;
     font-weight: 600;
@@ -67,387 +164,124 @@ h1 span {
     margin-bottom: 4px;
 }
 
-.label {
+.timer-text {
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: #8c7d69;
-    margin-top: 2px;
 }
 
-.guest-block {
-    margin-top:90px;
-
-    padding:70px;
-
-    border-radius:35px;
-
-    background:rgba(255,255,255,.68);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(215,191,145,.35);
-
-    box-shadow:
-
-            0 30px 60px rgba(0,0,0,.08);
+/* ===== ГОСТЕВОЙ БЛОК ===== */
+.guest {
+    margin-top: 60px;
+    padding: 60px 50px;
+    border-radius: 35px;
+    background: rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(215, 191, 145, 0.35);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+    text-align: center;
 }
 
-.guest-block h2 {
-    font-family:"Great Vibes",cursive;
-
-    font-size:72px;
-
-    font-weight:400;
-
-    color:#8f7347;
-
-    margin-bottom:20px;
-}
-.gold-top{
-
-    position:absolute;
-
-    top:0;
-
-    width:100%;
-
-    height:260px;
-
-    background:
-
-            radial-gradient(circle at center,
-            rgba(218,181,96,.22),
-            transparent 72%);
-
-    filter:blur(60px);
-
-}
-.text {
-    max-width:600px;
-
-    margin:auto;
-
-    font-size:20px;
-
-    line-height:2;
-
-    color:#6d614f;
-
+.guest h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 72px;
+    font-weight: 400;
+    color: #8f7347;
+    margin-bottom: 20px;
 }
 
-form {
+.guest p {
+    max-width: 500px;
+    margin: 0 auto 35px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #6d614f;
+}
+
+.guest form {
     display: flex;
     flex-direction: column;
     gap: 18px;
+    max-width: 450px;
+    margin: 0 auto;
 }
 
-input {
-    height:65px;
-
-    border:none;
-
-    border-bottom:2px solid #d6be8b;
-
-    background:transparent;
-
-    font-size:19px;
-
-    transition:.3s;
-}
-h1{
-
-    font-family:"Great Vibes",cursive;
-
-    font-size:120px;
-
-    font-weight:400;
-
-    color:#756243;
-
-    line-height:1.1;
-
-}
-.invite{
-
-    max-width:520px;
-
-    margin:auto;
-
-    line-height:2;
-
-    font-size:20px;
-
-    color:#73624c;
-
-}
-.line{
-
-    width:180px;
-
-    height:1px;
-
-    background:#d8c194;
-
-    margin:45px auto;
-
-}
-h1 span{
-
-    display:block;
-
-    font-size:75px;
-
-    color:#b89249;
-
-    margin:12px 0;
-
-}
-.gold-bottom{
-
-    position:absolute;
-
-    bottom:0;
-
-    width:100%;
-
-    height:260px;
-
-    background:
-
-            radial-gradient(circle at center,
-            rgba(205,170,86,.18),
-            transparent 72%);
-
-    filter:blur(60px);
-
-}
-input:focus {
-    border-bottom:2px solid #bb9651;
-
-    box-shadow:none;
+.guest input {
+    height: 60px;
+    padding: 0 20px;
+    border: none;
+    border-bottom: 2px solid #d6be8b;
+    background: transparent;
+    font-size: 18px;
+    transition: 0.3s;
 }
 
-button {
-    margin-top:35px;
-
-    height:65px;
-
-    border-radius:50px;
-
-    background:linear-gradient(135deg,#d9bc7a,#b98d45);
-
-    font-size:19px;
-
-    letter-spacing:1px;
-
+.guest input:focus {
+    outline: none;
+    border-bottom: 2px solid #bb9651;
 }
 
-button:hover {
+.guest button {
+    margin-top: 25px;
+    height: 65px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #d9bc7a, #b98d45);
+    color: white;
+    font-size: 19px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.guest button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(183,139,60,.35);
-}
-
-button:active {
-    transform: scale(.98);
+    box-shadow: 0 10px 25px rgba(183, 139, 60, 0.35);
 }
 
 #message {
     margin-top: 25px;
-    text-align: center;
     font-size: 18px;
     font-weight: 600;
 }
 
-.success {
-    color: #1d9c4a;
+.success { color: #1d9c4a; }
+.error { color: #d33030; }
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.error {
-    color: #d33030;
-}
+/* ===== АДАПТИВ ===== */
+@media (max-width: 600px) {
+    h1 { font-size: 72px; }
+    h1 span { font-size: 46px; }
+    .number-date { font-size: 80px; }
+    .month { font-size: 22px; }
 
-@media (max-width:768px) {
-
-    h1 {
-        font-size: 58px;
-    }
-
-    .day {
-        font-size: 70px;
-    }
-
-    .countdown {
-        gap: 15px;
-    }
-
-    .time-box {
+    .timer { gap: 18px; }
+    .timer-card {
         width: 120px;
-        padding: 18px;
+        height: 120px;
     }
+    .timer-number { font-size: 44px; }
+    .timer-text { font-size: 10px; letter-spacing: 2px; }
 
-    .guest-block {
-        padding: 30px;
-    }
-
-}
-.hero{
-
-    text-align:center;
-
-    animation:fadeUp 1.3s;
-
-}
-.subtitle{
-
-    letter-spacing:7px;
-
-    color:#bb9554;
-
-    font-size:13px;
-
-    margin-bottom:20px;
-
-}
-.date{
-
-    margin-top:70px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:35px;
-
+    .guest { padding: 35px 25px; }
+    .guest h2 { font-size: 48px; }
+    .guest input { height: 50px; font-size: 16px; }
+    .guest button { height: 55px; font-size: 17px; }
 }
 
-.day{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:120px;
-
-    color:#c7a35a;
-
-    line-height:1;
-
-}
-
-.month{
-
-    font-size:30px;
-
-    text-transform:uppercase;
-
-    letter-spacing:3px;
-
-    color:#74624a;
-
-}
-
-.year{
-
-    font-size:22px;
-
-    margin-top:15px;
-
-    color:#a58a60;
-
-}
-.wrapper{
-
-    max-width:900px;
-
-    margin:auto;
-
-    padding:80px 25px;
-
-}
-@media (max-width:500px) {
-
-    h1 {
-        font-size: 46px;
+@media (max-width: 400px) {
+    .timer-card {
+        width: 90px;
+        height: 90px;
     }
-
-    h1 span {
-        font-size: 30px;
-    }
-
-    .countdown .time-box {
-        animation: fadeUp 0.9s ease forwards;
-        opacity: 0;
-    }
-
-    .countdown .time-box:nth-child(1) {
-        animation-delay: 0.1s;
-    }
-
-    .countdown .time-box:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .countdown .time-box:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .countdown .time-box:nth-child(4) {
-        animation-delay: 0.4s;
-    }
-
-    @keyframes fadeUp {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    @media (max-width: 600px) {
-        .countdown {
-            gap: 18px;
-            margin: 50px 0 30px;
-        }
-
-        .time-box {
-            width: 115px;
-            height: 115px;
-            border: 1px solid rgba(205, 170, 90, 0.3);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-        }
-
-        .time-box:hover {
-            transform: translateY(-6px);
-        }
-
-        .number {
-            font-size: 44px;
-        }
-
-        .label {
-            font-size: 10px;
-            letter-spacing: 2px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .countdown {
-            gap: 12px;
-        }
-        .time-box {
-            width: 90px;
-            height: 90px;
-        }
-        .number {
-            font-size: 34px;
-        }
-        .label {
-            font-size: 9px;
-            letter-spacing: 1px;
-        }
-    }
+    .timer-number { font-size: 34px; }
+    .timer-text { font-size: 9px; letter-spacing: 1px; }
 }
