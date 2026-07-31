@@ -117,11 +117,12 @@ h1 span {
 }
 
 .number-date {
-    font-family: 'Montserrat', 'Arial', sans-serif;  /* ← сюда */
+    font-family: 'Montserrat', 'Arial', sans-serif; /* ← сюда */
     font-size: 120px;
     font-weight: 700;
     color: #5a4a3a;
     letter-spacing: 2px;
+}
 .number-date::after {
     content: '';
     position: absolute;
