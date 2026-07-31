@@ -40,6 +40,7 @@ body {
     opacity: 0;
     /* 🔥 МРАМОР ВНУТРИ ОТКРЫТКИ — С ЗОЛОТИСТЫМИ РАЗВОДАМИ */
     background:
+            url('fon.webp') center/cover no-repeat;
         /* Золотистые прожилки внутри открытки */
             radial-gradient(ellipse at 10% 20%, rgba(218, 181, 96, 0.25) 0%, transparent 45%),
             radial-gradient(ellipse at 90% 80%, rgba(200, 170, 90, 0.20) 0%, transparent 45%),
