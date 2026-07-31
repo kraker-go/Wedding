@@ -117,21 +117,11 @@ h1 span {
 }
 
 .number-date {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 120px;            /* заметно крупнее */
+    font-family: 'Montserrat', 'Arial', sans-serif;  /* ← сюда */
+    font-size: 120px;
     font-weight: 700;
-    color: #5a4a3a;              /* тёмный благородный оттенок */
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-shadow:
-            2px 2px 0 #d4c4a8,       /* светлая тень — объём */
-            4px 4px 8px rgba(0,0,0,0.15),   /* мягкая тень */
-            0 0 20px rgba(200, 175, 120, 0.3); /* золотое свечение */
+    color: #5a4a3a;
     letter-spacing: 2px;
-    transition: all 0.3s ease;
-}
 .number-date::after {
     content: '';
     position: absolute;
