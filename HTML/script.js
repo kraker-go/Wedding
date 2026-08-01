@@ -37,7 +37,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ =====
+// ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ 111 =====
 async function loadGuestCount() {
     try {
         const res = await fetch('/user/count');
