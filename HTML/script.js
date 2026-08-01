@@ -83,7 +83,21 @@ async function loadModalGuests() {
         console.error('Ошибка загрузки списка:', e);
     }
 }
+// ===== АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ =====
+document.addEventListener('DOMContentLoaded', function () {
+    const waitingBlock = document.getElementById('waitingBlock');
 
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                waitingBlock.classList.add('visible');
+                observer.unobserve(waitingBlock);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(waitingBlock);
+});
 // ===== МОДАЛЬНОЕ ОКНО =====
 const modal = document.getElementById('guestModal');
 const modalClose = document.getElementById('modalClose');
