@@ -469,7 +469,6 @@ h1 span {
     .timer-text { font-size: 8px; letter-spacing: 1px; }
     .date { gap: 18px; }
 }
-
 @media (max-width: 500px) {
     .timer {
         display: flex;

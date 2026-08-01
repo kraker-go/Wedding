@@ -84,7 +84,6 @@ if (guestCountBlock) {
         modal.style.display = 'flex';
     });
 }
-
 if (modalClose) {
     modalClose.addEventListener('click', () => {
         modal.style.display = 'none';
