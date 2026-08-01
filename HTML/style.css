@@ -319,19 +319,19 @@ h1 span {
 
 /* ===== БЛОК КОЛИЧЕСТВА ГОСТЕЙ ===== */
 .guest-count {
-    margin-top: 25px;
+    margin: 25px auto 0 auto;
     padding: 14px 25px;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(8px);
     border-radius: 40px;
     border: 1px solid rgba(215, 191, 145, 0.3);
-    display: inline-block;
+    display: block;
+    width: fit-content;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 18px;
+    font-size: 24px;
     color: #4a3f35;
     text-align: center;
-    width: auto;
 }
 
 .guest-count:hover {
@@ -342,8 +342,8 @@ h1 span {
 
 .guest-count span {
     font-weight: 700;
-    color: #b89249;
-    font-size: 24px;
+    color: green;
+    font-size: 28px;
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
