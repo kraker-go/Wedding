@@ -55,24 +55,30 @@ async function loadModalGuests() {
         const guests = await res.json();
         const list = document.getElementById('modalGuestList');
         list.innerHTML = '';
+
         if (guests.length === 0) {
             list.innerHTML = '<p style="text-align:center;color:#999;">Пока никто не подтвердил 😔</p>';
             return;
         }
+
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
+
+            // Форматируем дату: "1 августа в 10:50"
             const date = new Date(g.created_at);
             const formattedDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
-                month: 'long',
+                month: 'long'
+            }) + ' в ' + date.toLocaleTimeString('ru-RU', {
                 hour: '2-digit',
                 minute: '2-digit'
             });
+
             div.innerHTML = `
-        <span>${index + 1}. ${g.firstname} ${g.lastname}</span>
-        <span class="date">${formattedDate}</span>
-    `;
+                <span class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</span>
+                <span class="guest-date">${formattedDate}</span>
+            `;
             list.appendChild(div);
         });
     } catch (e) {

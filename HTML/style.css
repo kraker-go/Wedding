@@ -499,3 +499,37 @@ h1 span {
         letter-spacing: 1px;
     }
 }
+
+/* Основной контейнер для каждого гостя */
+.guest-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(215, 191, 145, 0.15);
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    font-size: 16px;
+    color: #4a3f35;
+}
+
+/* Имя гостя (слева) */
+.guest-item .guest-name {
+    font-weight: 400;
+}
+
+/* Дата и время (справа) */
+.guest-item .guest-date {
+    font-size: 14px;
+    color: #8c7d69;
+    white-space: nowrap;
+}
+
+/* Список гостей — убираем отступы */
+#modalGuestList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
