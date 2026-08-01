@@ -378,28 +378,6 @@ h1 span {
     animation: silverShimmer 4s ease-in-out infinite;
 }
 
-@keyframes silverShimmer {
-    0% {
-        background-position: 0% 50%;
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
-    }
-    25% {
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-    }
-    50% {
-        background-position: 100% 50%;
-        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
-        transform: scale(1.05);
-    }
-    75% {
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-    }
-    100% {
-        background-position: 0% 50%;
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
-        transform: scale(1);
-    }
-}
 
 @keyframes silverShimmer {
     /* ... */
@@ -544,7 +522,7 @@ h1 span {
     h1 span { font-size: 34px; }
     .number-date { font-size: 48px; height: calc(18px * 1.4 * 2); }
     .month { font-size: 18px; }
-    .invite { font-size: 16px; }
+    .invite { font-size: 28px; }
     .timer { gap: 10px; }
     .timer-card { width: 85px; height: 85px; border-width: 1.5px; }
     .timer-number { font-size: 30px; }
