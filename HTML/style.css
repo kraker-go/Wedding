@@ -513,6 +513,8 @@ h1 span {
     body { padding: 15px; }
     .wrapper { padding: 35px 22px 40px; border-radius: 30px; }
     .wrapper::before, .wrapper::after { font-size: 20px; }
+    .invite {font-size: 32px;           /* чуть крупнее */line-height: 1.4;          /* уменьшаем межстрочный интервал */}
+    .venue-text {font-size: 32px;line-height: 1.4;}
     .corner-decor { width: 32px; height: 32px; }
     h1 { font-size: 72px; }
     h1 span { font-size: 44px; }
