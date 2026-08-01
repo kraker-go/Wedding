@@ -510,32 +510,6 @@ h1 span {
     }
 }
 
-/* Основной контейнер для каждого гостя */
-#modalGuestList{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    padding:0;
-    margin:0;
-}
-
-.guest-item{
-    display:grid;
-    grid-template-columns:1fr auto;
-    align-items:center;
-    gap:20px;
-
-    padding:14px 18px;
-
-    background:rgba(255,255,255,.65);
-
-    border:1px solid rgba(215,191,145,.25);
-
-    border-radius:14px;
-
-    transition:.25s;
-}
-
 .guest-item:hover{
     transform:translateY(-2px);
     box-shadow:0 8px 20px rgba(0,0,0,.08);

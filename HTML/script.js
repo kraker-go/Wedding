@@ -40,9 +40,18 @@ setInterval(updateCountdown, 1000);
 // ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ =====
 async function loadGuestCount() {
     try {
+        console.log('1. loadGuestCount вызвана');
         const res = await fetch('/user/count');
+        console.log('2. Ответ получен, статус:', res.status);
         const data = await res.json();
-        document.getElementById('guestCount').textContent = data;
+        console.log('3. Данные с сервера:', data);
+        const el = document.getElementById('guestCount');
+        console.log('4. Элемент guestCount найден?', el);
+        if (el) {
+            el.textContent = data;
+        } else {
+            console.error('Элемент guestCount не найден в DOM!');
+        }
     } catch (e) {
         console.error('Ошибка загрузки количества:', e);
     }
