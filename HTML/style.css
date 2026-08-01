@@ -348,6 +348,66 @@ h1 span {
     font-size: 28px;
 }
 
+.ampersand-glow {
+    /* Убираем стандартный цвет */
+    -webkit-text-fill-color: transparent;
+
+    /* Градиентная заливка */
+    background: linear-gradient(
+            135deg,
+            #e8e8e8 0%,
+            #fdfdfd 20%,
+            #b0b0b0 40%,
+            #e0e0e0 60%,
+            #f8f8f8 80%,
+            #a8a8a8 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    /* 3D-эффект от тени */
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.3),
+            0 4px 8px rgba(0, 0, 0, 0.2),
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            0 0 20px rgba(255, 255, 255, 0.2);
+
+    /* Анимация */
+    animation: silverShimmer 4s ease-in-out infinite;
+}
+
+@keyframes silverShimmer {
+    0% {
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+    }
+    25% {
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+    50% {
+        background-position: 100% 50%;
+        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+        transform: scale(1.05);
+    }
+    75% {
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+    100% {
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+        transform: scale(1);
+    }
+}
+
+@keyframes silverShimmer {
+    /* ... */
+    50% {
+        transform: scale(1.05) rotate(2deg); /* добавляем лёгкий поворот */
+        /* ... */
+    }
+    /* ... */
+}
+
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal {
     display: none;
