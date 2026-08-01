@@ -14,14 +14,13 @@ body {
     font-family: 'Montserrat', 'Arial', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    background: #f9f5ef;  /* светлый кремовый */
+    background: #f9f5ef;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 30px;
 }
 
-/* 📬 ОТКРЫТКА — ОСНОВНОЙ БЛОК С МРАМОРОМ ВНУТРИ */
 .wrapper {
     max-width: 950px;
     width: 100%;
@@ -30,19 +29,12 @@ body {
     position: relative;
     z-index: 1;
     border-radius: 40px;
-    box-shadow:
-            0 0 0 2px #b0b0b0,     /* внешняя тонкая серая */
-            0 0 0 6px #f9f5ef,     /* белая прослойка (можно оставить) */
-            0 0 0 8px #a0a0a0,     /* внешняя толстая серая */
-            0 20px 60px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 0 0 2px #b0b0b0, 0 0 0 6px #f9f5ef, 0 0 0 8px #a0a0a0, 0 20px 60px rgba(0, 0, 0, 0.10);
     animation: fadeUp 1s ease forwards;
     opacity: 0;
-
-    /* 🔥 ТОЛЬКО КАРТИНКА, БЕЗ ВСЯКОЙ ХУЙНИ */
     background: url('fon.webp') center/cover no-repeat;
 }
 
-/* 🖼️ УГЛЫ-ЗАВИТКИ (золотые звёздочки) */
 .wrapper::before,
 .wrapper::after {
     content: '✦';
@@ -54,7 +46,6 @@ body {
 .wrapper::before { top: 18px; left: 28px; transform: rotate(-15deg); }
 .wrapper::after { bottom: 18px; right: 28px; transform: rotate(15deg); }
 
-/* ДЕКОРАТИВНЫЕ УГОЛКИ */
 .corner-decor {
     position: absolute;
     width: 50px;
@@ -69,7 +60,6 @@ body {
 .corner-bl { bottom: 18px; left: 18px; border-width: 0 0 2px 2px; border-radius: 0 0 0 6px; }
 .corner-br { bottom: 18px; right: 18px; border-width: 0 2px 2px 0; border-radius: 0 0 6px 0; }
 
-/* ===== ОСТАЛЬНЫЕ СТИЛИ (без изменений) ===== */
 .hero { text-align: center; }
 .subtitle {
     letter-spacing: 7px;
@@ -111,7 +101,7 @@ h1 span {
 .date {
     display: flex;
     justify-content: center;
-    align-items: center;   /* вертикальное выравнивание по центру */
+    align-items: center;
     gap: 35px;
     margin-top: 60px;
 }
@@ -120,31 +110,21 @@ h1 span {
     font-family: 'Montserrat', 'Arial', sans-serif;
     font-size: 120px;
     font-weight: 800;
-    color: #b8860b;                  /* золотисто-медный */
+    color: #b8860b;
     line-height: 1.2;
     height: 144px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-
-    /* ОБЪЁМНАЯ ТЕНЬ + СВЕЧЕНИЕ */
-    text-shadow:
-            1px 1px 0 #e6c87c,
-            2px 2px 0 #c9a84c,
-            4px 4px 12px rgba(0,0,0,0.25),
-            0 0 30px rgba(255, 215, 0, 0.3);
-
-    /* ГРАДИЕНТНАЯ ЗАЛИВКА (эффект драгоценного камня) */
+    text-shadow: 1px 1px 0 #e6c87c, 2px 2px 0 #c9a84c, 4px 4px 12px rgba(0, 0, 0, 0.25), 0 0 30px rgba(255, 215, 0, 0.3);
     background: linear-gradient(145deg, #f9e4a0, #d4af37, #b8860b, #8b6b0b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-
-    /* ЛЁГКОЕ ДВИЖЕНИЕ */
     animation: glowPulse 3s ease-in-out infinite, float 4s ease-in-out infinite;
 }
-+
+
 .number-date::after {
     content: '';
     position: absolute;
@@ -158,6 +138,17 @@ h1 span {
     pointer-events: none;
 }
 
+.number-date::before {
+    content: '✦ ✧ ✦';
+    position: absolute;
+    top: -20px;
+    right: -40px;
+    font-size: 20px;
+    color: #d4af37;
+    opacity: 0.3;
+    animation: sparkle 2s infinite;
+}
+
 .month {
     font-size: 30px;
     text-transform: uppercase;
@@ -169,7 +160,6 @@ h1 span {
     justify-content: center;
 }
 
-/* ===== ТАЙМЕР — КРУГЛЫЙ ===== */
 .timer {
     display: flex;
     justify-content: center;
@@ -186,9 +176,7 @@ h1 span {
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(15px);
     border: 2px solid rgba(205, 170, 90, 0.35);
-    box-shadow:
-            0 20px 45px rgba(0, 0, 0, 0.08),
-            inset 0 0 45px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), inset 0 0 45px rgba(255, 255, 255, 0.6);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -212,10 +200,10 @@ h1 span {
 .timer-number {
     font-family: 'Cormorant Garamond', serif;
     font-size: 56px;
-    font-weight: 700;      /* было 600 — стало жирнее */
-    color: #74624a;        /* тот же цвет, что у месяца */
-    background: none;      /* убираем градиент */
-    -webkit-text-fill-color: #74624a;  /* убираем градиентную заливку */
+    font-weight: 700;
+    color: #74624a;
+    background: none;
+    -webkit-text-fill-color: #74624a;
     line-height: 1.1;
     margin-bottom: 2px;
 }
@@ -228,7 +216,6 @@ h1 span {
     color: #8c7d69;
 }
 
-/* ===== ГОСТЕВОЙ БЛОК ===== */
 .guest {
     margin-top: 50px;
     padding: 50px 45px;
@@ -312,32 +299,157 @@ h1 span {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes glowPulse {
+    0%   { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+    50%  { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.7)); }
+    100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+}
+
+@keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes sparkle {
+    0%   { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+    50%  { opacity: 0.8; transform: scale(1.2) rotate(10deg); }
+    100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+}
+
+/* ===== БЛОК КОЛИЧЕСТВА ГОСТЕЙ ===== */
+.guest-count {
+    margin-top: 25px;
+    padding: 14px 25px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    border: 1px solid rgba(215, 191, 145, 0.3);
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    color: #4a3f35;
+    text-align: center;
+    width: auto;
+}
+
+.guest-count:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: scale(1.02);
+}
+
+.guest-count span {
+    font-weight: 700;
+    color: #b89249;
+    font-size: 24px;
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fcf9f5;
+    padding: 30px 35px 40px;
+    border-radius: 30px;
+    max-width: 450px;
+    width: 90%;
+    max-height: 70vh;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    animation: fadeUp 0.3s ease forwards;
+    position: relative;
+    overflow-y: auto;
+}
+
+.modal-content h3 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+    color: #8f7347;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 32px;
+    color: #999;
+    cursor: pointer;
+    transition: 0.2s;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #333;
+    transform: rotate(90deg);
+}
+
+#modalGuestList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.guest-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(215, 191, 145, 0.2);
+    font-size: 17px;
+    color: #4a3f35;
+}
+
+.guest-item:last-child {
+    border-bottom: none;
+}
+
+.guest-item .date {
+    font-size: 13px;
+    color: #b89249;
+}
+
+/* ===== СТИЛИЗАЦИЯ СКРОЛЛА ===== */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #d6be8b;
+    border-radius: 10px;
+}
+
 /* ===== АДАПТИВ ===== */
 @media (max-width: 700px) {
     body { padding: 15px; }
     .wrapper { padding: 35px 22px 40px; border-radius: 30px; }
-    .wrapper::before,
-    .wrapper::after { font-size: 20px; }
+    .wrapper::before, .wrapper::after { font-size: 20px; }
     .corner-decor { width: 32px; height: 32px; }
-
     h1 { font-size: 72px; }
     h1 span { font-size: 44px; }
-
-    .number-date {
-        font-size: 64px;
-        height: calc(22px * 1.4 * 2);  /* ← ЭТУ СТРОКУ ДОБАВИТЬ */
-    }
-
+    .number-date { font-size: 64px; height: calc(22px * 1.4 * 2); }
     .month { font-size: 22px; }
-
     .timer { gap: 14px; }
-    .timer-card {
-        width: 110px;
-        height: 110px;
-    }
+    .timer-card { width: 110px; height: 110px; }
     .timer-number { font-size: 40px; }
     .timer-text { font-size: 10px; letter-spacing: 1.5px; }
-
     .guest { padding: 30px 20px; }
     .guest h2 { font-size: 44px; }
     .guest input { height: 50px; font-size: 15px; }
@@ -348,39 +460,27 @@ h1 span {
     .wrapper { padding: 25px 16px 30px; }
     h1 { font-size: 54px; }
     h1 span { font-size: 34px; }
-
-    .number-date {
-        font-size: 48px;
-        height: calc(18px * 1.4 * 2);  /* ← ЭТУ СТРОКУ ДОБАВИТЬ */
-    }
-
+    .number-date { font-size: 48px; height: calc(18px * 1.4 * 2); }
     .month { font-size: 18px; }
     .invite { font-size: 16px; }
-
     .timer { gap: 10px; }
-    .timer-card {
-        width: 85px;
-        height: 85px;
-        border-width: 1.5px;
-    }
+    .timer-card { width: 85px; height: 85px; border-width: 1.5px; }
     .timer-number { font-size: 30px; }
     .timer-text { font-size: 8px; letter-spacing: 1px; }
     .date { gap: 18px; }
 }
 
-/* 🔥 НОВЫЙ БЛОК ДЛЯ САМЫХ МАЛЕНЬКИХ ЭКРАНОВ (всё в одну строку) */
 @media (max-width: 500px) {
     .timer {
         display: flex;
-        flex-wrap: nowrap;      /* Запрещаем перенос */
-        gap: 6px;              /* Минимальные отступы */
+        flex-wrap: nowrap;
+        gap: 6px;
         justify-content: center;
-        overflow-x: auto;      /* Если не влезают — скролл */
+        overflow-x: auto;
         padding: 0 5px;
     }
-
     .timer-card {
-        min-width: 65px;       /* Минимальная ширина */
+        min-width: 65px;
         width: auto;
         height: 70px;
         border-radius: 50%;
@@ -390,160 +490,13 @@ h1 span {
         border: 1px solid rgba(205,170,90,0.3);
         box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }
-
     .timer-number {
         font-size: 24px;
         line-height: 1;
         margin-bottom: 0;
     }
-
     .timer-text {
         font-size: 8px;
         letter-spacing: 1px;
-    }
-    /* ПУЛЬСИРУЮЩЕЕ ЗОЛОТОЕ СВЕЧЕНИЕ */
-    @keyframes glowPulse {
-        0%   { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
-        50%  { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.7)); }
-        100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
-    }
-
-    /* ЛЁГКОЕ ПЛАВАНИЕ */
-    @keyframes float {
-        0%   { transform: translateY(0px); }
-        50%  { transform: translateY(-6px); }
-        100% { transform: translateY(0px); }
-    }
-    .number-date::before {
-        content: '✦ ✧ ✦';
-        position: absolute;
-        top: -20px;
-        right: -40px;
-        font-size: 20px;
-        color: #d4af37;
-        opacity: 0.3;
-        animation: sparkle 2s infinite;
-    }
-
-    @keyframes sparkle {
-        0%   { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
-        50%  { opacity: 0.8; transform: scale(1.2) rotate(10deg); }
-        100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
-    }
-
-    .guest-count {
-        margin-top: 25px;
-        padding: 14px 25px;
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(8px);
-        border-radius: 40px;
-        border: 1px solid rgba(215, 191, 145, 0.3);
-        display: inline-block;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 18px;
-        color: #4a3f35;
-        text-align: center;
-        width: auto;
-    }
-
-    .guest-count:hover {
-        background: rgba(255, 255, 255, 0.85);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        transform: scale(1.02);
-    }
-
-    .guest-count span {
-        font-weight: 700;
-        color: #b89249;
-        font-size: 24px;
-    }
-
-    /* ===== МОДАЛЬНОЕ ОКНО ===== */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.35);
-        backdrop-filter: blur(4px);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background: #fcf9f5;
-        padding: 30px 35px 40px;
-        border-radius: 30px;
-        max-width: 450px;
-        width: 90%;
-        max-height: 70vh;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-        animation: fadeUp 0.3s ease forwards;
-        position: relative;
-        overflow-y: auto;
-    }
-
-    .modal-content h3 {
-        font-family: 'Great Vibes', cursive;
-        font-size: 32px;
-        color: #8f7347;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 12px;
-        right: 20px;
-        font-size: 32px;
-        color: #999;
-        cursor: pointer;
-        transition: 0.2s;
-        line-height: 1;
-    }
-
-    .modal-close:hover {
-        color: #333;
-        transform: rotate(90deg);
-    }
-
-    #modalGuestList {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .guest-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 12px;
-        border-bottom: 1px solid rgba(215, 191, 145, 0.2);
-        font-size: 17px;
-        color: #4a3f35;
-    }
-
-    .guest-item:last-child {
-        border-bottom: none;
-    }
-
-    .guest-item .date {
-        font-size: 13px;
-        color: #b89249;
-    }
-
-    /* Стилизация скролла */
-    .modal-content::-webkit-scrollbar {
-        width: 6px;
-    }
-    .modal-content::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .modal-content::-webkit-scrollbar-thumb {
-        background: #d6be8b;
-        border-radius: 10px;
     }
 }
