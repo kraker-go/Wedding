@@ -366,7 +366,7 @@ h1 span {
     padding: 30px 35px 40px;
     border-radius: 30px;
     max-width: 500px;          /* Чуть шире */
-    width: 92%;
+    width: 95%;
     max-height: 70vh;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
     animation: fadeUp 0.3s ease forwards;
@@ -410,7 +410,7 @@ h1 span {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px;         /* Уменьшены отступы внутри блока */
+    padding: 6px 8px;         /* Уменьшены отступы внутри блока */
     background: rgba(255, 255, 255, 0.65);
     border: 1px solid rgba(215, 191, 145, 0.25);
     border-radius: 12px;        /* Чуть меньше скругление */
@@ -425,9 +425,9 @@ h1 span {
 .guest-name {
     font-family: 'Montserrat', 'Arial', sans-serif; /* Один шрифт */
     font-weight: 600;           /* Жирнее */
-    font-size: 20px;            /* Крупнее */
+    font-size: 18px;            /* Крупнее */
     color: #4a3f35;
-    padding-right: 10px;        /* Отступ от края */
+    padding-right: 3px;        /* Отступ от края */
     word-break: break-word;    /* Перенос длинных слов */
 }
 
