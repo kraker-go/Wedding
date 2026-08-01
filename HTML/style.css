@@ -93,8 +93,10 @@ h1 span {
 .invite {
     max-width: 520px;
     margin: auto;
+    font-family: 'Great Vibes', cursive;
     line-height: 2;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 400;
     color: #73624c;
 }
 
@@ -514,16 +516,17 @@ h1 span {
     margin-top: 30px;
     padding: 20px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 20px;
-    border: 1px solid rgba(215, 191, 145, 0.25);
+    background: transparent;
+    border-radius: 0;
+    border: none;
 }
 
 .venue-text {
     font-family: 'Montserrat', 'Arial', sans-serif;
     font-size: 20px;
-    font-weight: 500;
-    color: #4a3f35;
+    font-weight: 400;
+    font-family: 'Great Vibes', cursive;
+    color: #73624c;
     margin: 0;
     line-height: 1.6;
 }
