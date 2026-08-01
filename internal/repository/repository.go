@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	models "wedding/internal/domain"
 )
@@ -36,4 +37,44 @@ func (u UserRepository) AddUser(ctx context.Context, firstname, lastname string)
 		}
 	}
 	return &user, err
+}
+
+const GetAll = "SELECT firstname, lastname, guests.created_at FROM guests ORDER BY guests.created_at DESC"
+
+func (u UserRepository) GetAllUsers(ctx context.Context) ([]models.Guest, error) {
+	rows, err := u.Db.QueryContext(ctx, GetAll)
+	if err != nil {
+		return nil, fmt.Errorf(err.Error())
+	}
+	defer rows.Close()
+	var users []models.Guest
+	for rows.Next() {
+		var user models.Guest
+		err = rows.Scan(&user.FirstName, &user.LastName)
+		if err != nil {
+			return nil, fmt.Errorf(err.Error())
+		}
+		users = append(users, user)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf(err.Error())
+	}
+
+	return users, nil
+}
+
+const GetCount = "SELECT count(*) FROM guests"
+
+func (u UserRepository) GetCount(ctx context.Context) (int, error) {
+	var count int
+	err := u.Db.QueryRowContext(ctx, GetCount).Scan(&count)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return 0, models.ErrorsNotFound
+		}
+
+		return 0, fmt.Errorf(err.Error())
+	}
+
+	return count, nil
 }

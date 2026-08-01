@@ -7,6 +7,8 @@ import (
 
 type CRUD interface {
 	AddUser(context.Context, string, string) (*models.Guest, error)
+	GetAllUsers(context.Context) ([]models.Guest, error)
+	GetCountUsers(context.Context) (int, error)
 }
 
 type UserService struct {
@@ -23,4 +25,12 @@ func (us *UserService) AddUser(ctx context.Context, firstname, lastname string) 
 	}
 
 	return us.serv.AddUser(ctx, firstname, lastname)
+}
+
+func (us *UserService) GetAllUsers(ctx context.Context) ([]models.Guest, error) {
+	return us.serv.GetAllUsers(ctx)
+}
+
+func (us *UserService) GetCountUsers(ctx context.Context) (int, error) {
+	return us.serv.GetCountUsers(ctx)
 }

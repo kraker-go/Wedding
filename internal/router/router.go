@@ -9,14 +9,14 @@ import (
 func InitRouter(hand *handler.UserHandler) (*mux.Router, error) {
 	router := mux.NewRouter()
 
-	// ✅ API
 	router.HandleFunc("/user", hand.AddUserHandler).Methods("POST")
-	// ✅ Главная страница
+	router.HandleFunc("/user/count", hand.GetCountUsersHandler).Methods("GET")
+	router.HandleFunc("/user/get", hand.GetAllUsersHandler).Methods("GET")
+
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./HTML/index.html")
 	}).Methods("GET")
 
-	// ✅ Отдаём CSS, JS из папки HTML
 	router.PathPrefix("/").Handler(
 		http.StripPrefix("/", http.FileServer(http.Dir("./HTML/"))),
 	)

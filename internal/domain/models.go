@@ -8,6 +8,7 @@ import (
 var (
 	ErrorAlreadyExists = errors.New("Вы уже в списке гостей")
 	ErrorNotString     = errors.New("поле не может быть пустым")
+	ErrorsNotFound     = errors.New("список гостей пока пуст ;(")
 )
 
 type Guest struct {
