@@ -430,4 +430,120 @@ h1 span {
         50%  { opacity: 0.8; transform: scale(1.2) rotate(10deg); }
         100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
     }
+
+    .guest-count {
+        margin-top: 25px;
+        padding: 14px 25px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(8px);
+        border-radius: 40px;
+        border: 1px solid rgba(215, 191, 145, 0.3);
+        display: inline-block;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 18px;
+        color: #4a3f35;
+        text-align: center;
+        width: auto;
+    }
+
+    .guest-count:hover {
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transform: scale(1.02);
+    }
+
+    .guest-count span {
+        font-weight: 700;
+        color: #b89249;
+        font-size: 24px;
+    }
+
+    /* ===== МОДАЛЬНОЕ ОКНО ===== */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: #fcf9f5;
+        padding: 30px 35px 40px;
+        border-radius: 30px;
+        max-width: 450px;
+        width: 90%;
+        max-height: 70vh;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        animation: fadeUp 0.3s ease forwards;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .modal-content h3 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 32px;
+        color: #8f7347;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 20px;
+        font-size: 32px;
+        color: #999;
+        cursor: pointer;
+        transition: 0.2s;
+        line-height: 1;
+    }
+
+    .modal-close:hover {
+        color: #333;
+        transform: rotate(90deg);
+    }
+
+    #modalGuestList {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .guest-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(215, 191, 145, 0.2);
+        font-size: 17px;
+        color: #4a3f35;
+    }
+
+    .guest-item:last-child {
+        border-bottom: none;
+    }
+
+    .guest-item .date {
+        font-size: 13px;
+        color: #b89249;
+    }
+
+    /* Стилизация скролла */
+    .modal-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    .modal-content::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+        background: #d6be8b;
+        border-radius: 10px;
+    }
 }
