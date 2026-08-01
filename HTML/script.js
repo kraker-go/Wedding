@@ -76,9 +76,14 @@ async function loadModalGuests() {
             });
 
             div.innerHTML = `
-                <span class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</span>
-                <span class="guest-date">${formattedDate}</span>
-            `;
+    <div class="guest-name">
+        ${index + 1}. ${g.firstname} ${g.lastname}
+    </div>
+
+    <div class="guest-date">
+        ${formattedDate}
+    </div>
+`;
             list.appendChild(div);
         });
     } catch (e) {
