@@ -37,7 +37,18 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ 111 =====
+// ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ =====
+async function loadGuestCount() {
+    try {
+        const res = await fetch('/user/count');
+        const data = await res.json();
+        document.getElementById('guestCount').textContent = data;
+    } catch (e) {
+        console.error('Ошибка загрузки количества:', e);
+    }
+}
+
+// ===== ЗАГРУЗКА ПОЛНОГО СПИСКА ДЛЯ МОДАЛКИ =====
 async function loadModalGuests() {
     try {
         const res = await fetch('/user/get');
@@ -64,32 +75,6 @@ async function loadModalGuests() {
     }
 }
 
-            // Форматируем дату: "1 августа в 10:50"
-            const date = new Date(g.created_at);
-            const formattedDate = date.toLocaleDateString('ru-RU', {
-                day: 'numeric',
-                month: 'long'
-            }) + ' в ' + date.toLocaleTimeString('ru-RU', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            div.innerHTML = `
-    <div class="guest-name">
-        ${index + 1}. ${g.firstname} ${g.lastname}
-    </div>
-
-    <div class="guest-date">
-        ${formattedDate}
-    </div>
-`;
-            list.appendChild(div);
-        });
-    } catch (e) {
-        console.error('Ошибка загрузки списка:', e);
-    }
-}
-
 // ===== МОДАЛЬНОЕ ОКНО =====
 const modal = document.getElementById('guestModal');
 const modalClose = document.getElementById('modalClose');
@@ -101,6 +86,7 @@ if (guestCountBlock) {
         modal.style.display = 'flex';
     });
 }
+
 if (modalClose) {
     modalClose.addEventListener('click', () => {
         modal.style.display = 'none';
@@ -141,7 +127,7 @@ form.addEventListener("submit", async function (e) {
             message.className = "success";
             message.innerHTML = "✔ Спасибо! Ваше присутствие подтверждено.";
             form.reset();
-            await loadGuestCount();  // ← обновляем счётчик
+            await loadGuestCount();
         } else {
             const text = await response.text();
             message.className = "error";
