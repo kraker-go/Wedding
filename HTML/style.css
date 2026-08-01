@@ -351,7 +351,6 @@ h1 span {
 }
 
 .ampersand-glow {
-    display: inline-block;
     position: relative;
     font-family: 'Great Vibes', cursive;
     font-size: 75px; /* подгони под свой размер */
