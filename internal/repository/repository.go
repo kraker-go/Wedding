@@ -50,7 +50,7 @@ func (u UserRepository) GetAllUsers(ctx context.Context) ([]models.Guest, error)
 	var users []models.Guest
 	for rows.Next() {
 		var user models.Guest
-		err = rows.Scan(&user.FirstName, &user.LastName)
+		err = rows.Scan(&user.FirstName, &user.LastName, &user.CreatedAt)
 		if err != nil {
 			return nil, fmt.Errorf(err.Error())
 		}

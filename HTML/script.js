@@ -62,10 +62,17 @@ async function loadModalGuests() {
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
+            const date = new Date(g.created_at);
+            const formattedDate = date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
             div.innerHTML = `
-                <span>${index + 1}. ${g.firstname} ${g.lastname}</span>
-                <span class="date">${new Date(g.created_at).toLocaleDateString('ru-RU')}</span>
-            `;
+        <span>${index + 1}. ${g.firstname} ${g.lastname}</span>
+        <span class="date">${formattedDate}</span>
+    `;
             list.appendChild(div);
         });
     } catch (e) {
