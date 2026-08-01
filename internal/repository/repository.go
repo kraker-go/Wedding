@@ -65,7 +65,7 @@ func (u UserRepository) GetAllUsers(ctx context.Context) ([]models.Guest, error)
 
 const GetCount = "SELECT count(*) FROM guests"
 
-func (u UserRepository) GetCount(ctx context.Context) (int, error) {
+func (u UserRepository) GetCountUsers(ctx context.Context) (int, error) {
 	var count int
 	err := u.Db.QueryRowContext(ctx, GetCount).Scan(&count)
 	if err != nil {
