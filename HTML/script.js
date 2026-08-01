@@ -153,3 +153,31 @@ form.addEventListener("submit", async function (e) {
 document.addEventListener('DOMContentLoaded', () => {
     loadGuestCount();
 });
+
+// ===== ИНИЦИАЛИЗАЦИЯ КАРУСЕЛИ =====
+document.addEventListener('DOMContentLoaded', function () {
+    const swiper = new Swiper('.photo-swiper', {
+        loop: true,                   // Бесконечный цикл
+        autoplay: {
+            delay: 4000,              // Автопрокрутка каждые 4 секунды
+            disableOnInteraction: false, // Не отключать после клика
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,           // Можно переключать по точкам
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect: 'slide',               // Плавный сдвиг (можно 'fade', 'cube', 'coverflow')
+        speed: 600,                    // Скорость анимации (мс)
+        grabCursor: true,              // Курсор «рука» при наведении
+        breakpoints: {
+            // Адаптив: на маленьких экранах можно отключить автопрокрутку
+            640: {
+                autoplay: false,
+            }
+        }
+    });
+});

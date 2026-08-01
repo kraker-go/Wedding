@@ -510,24 +510,6 @@ h1 span {
     }
 }
 
-.guest-item:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-
-.guest-name{
-    font-family:"Cormorant Garamond",serif;
-    font-size:24px;
-    color:#6f5b40;
-}
-
-.guest-date{
-    font-size:13px;
-    color:#9a8b73;
-    white-space:nowrap;
-    text-align:right;
-}
-
 .venue-block {
     margin-top: 30px;
     padding: 20px;
@@ -567,4 +549,78 @@ h1 span {
     background: rgba(0, 0, 0, 0.3);
     padding: 10px 25px;
     border-radius: 12px;
+}
+
+/* ===== КАРУСЕЛЬ ФОТОГРАФИЙ (Swiper) ===== */
+.photo-swiper {
+    margin-top: 30px;
+    width: 100%;
+    height: 350px;               /* Высота карусели (подбери под свои фото) */
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(215, 191, 145, 0.25);
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f5ef;          /* Фон для незагруженных фото */
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;            /* Фото заполняют блок без искажений */
+    display: block;
+}
+
+/* Стилизация точек пагинации */
+.swiper-pagination-bullet {
+    background: #b89249;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    background: #b89249;
+    opacity: 1;
+}
+
+/* Стилизация кнопок навигации */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #b89249;
+    background: rgba(255, 255, 255, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 700px) {
+    .photo-swiper {
+        height: 250px;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+    }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 14px;
+    }
 }
