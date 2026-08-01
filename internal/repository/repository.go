@@ -39,7 +39,7 @@ func (u UserRepository) AddUser(ctx context.Context, firstname, lastname string)
 	return &user, err
 }
 
-const GetAll = "SELECT firstname, lastname, guests.created_at FROM guests ORDER BY guests.created_at DESC"
+const GetAll = "SELECT firstname, lastname FROM guests "
 
 func (u UserRepository) GetAllUsers(ctx context.Context) ([]models.Guest, error) {
 	rows, err := u.Db.QueryContext(ctx, GetAll)
@@ -50,7 +50,7 @@ func (u UserRepository) GetAllUsers(ctx context.Context) ([]models.Guest, error)
 	var users []models.Guest
 	for rows.Next() {
 		var user models.Guest
-		err = rows.Scan(&user.FirstName, &user.LastName, &user.CreatedAt)
+		err = rows.Scan(&user.FirstName, &user.LastName)
 		if err != nil {
 			return nil, fmt.Errorf(err.Error())
 		}

@@ -365,8 +365,8 @@ h1 span {
     background: #fcf9f5;
     padding: 30px 35px 40px;
     border-radius: 30px;
-    max-width: 450px;
-    width: 90%;
+    max-width: 500px;          /* Чуть шире */
+    width: 92%;
     max-height: 70vh;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
     animation: fadeUp 0.3s ease forwards;
@@ -401,25 +401,34 @@ h1 span {
 #modalGuestList {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px;                  /* Уменьшенный отступ между гостями */
+    padding: 0;
+    margin: 0;
 }
 
 .guest-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(215, 191, 145, 0.2);
-    font-size: 17px;
+    align-items: center;
+    padding: 12px 18px;         /* Уменьшены отступы внутри блока */
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(215, 191, 145, 0.25);
+    border-radius: 12px;        /* Чуть меньше скругление */
+    transition: .25s;
+}
+
+.guest-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.guest-name {
+    font-family: 'Montserrat', 'Arial', sans-serif; /* Один шрифт */
+    font-weight: 600;           /* Жирнее */
+    font-size: 20px;            /* Крупнее */
     color: #4a3f35;
-}
-
-.guest-item:last-child {
-    border-bottom: none;
-}
-
-.guest-item .date {
-    font-size: 13px;
-    color: #b89249;
+    padding-right: 10px;        /* Отступ от края */
+    word-break: break-word;    /* Перенос длинных слов */
 }
 
 /* ===== СТИЛИЗАЦИЯ СКРОЛЛА ===== */
@@ -435,6 +444,7 @@ h1 span {
     background: #d6be8b;
     border-radius: 10px;
 }
+
 
 /* ===== АДАПТИВ22 ===== */
 @media (max-width: 700px) {

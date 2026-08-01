@@ -38,17 +38,6 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ 111 =====
-async function loadGuestCount() {
-    try {
-        const res = await fetch('/user/count');
-        const data = await res.json();
-        document.getElementById('guestCount').textContent = data;
-    } catch (e) {
-        console.error('Ошибка загрузки количества:', e);
-    }
-}
-
-// ===== ЗАГРУЗКА ПОЛНОГО СПИСКА ДЛЯ МОДАЛКИ =====
 async function loadModalGuests() {
     try {
         const res = await fetch('/user/get');
@@ -64,6 +53,16 @@ async function loadModalGuests() {
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
+
+            div.innerHTML = `
+                <span class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</span>
+            `;
+            list.appendChild(div);
+        });
+    } catch (e) {
+        console.error('Ошибка загрузки списка:', e);
+    }
+}
 
             // Форматируем дату: "1 августа в 10:50"
             const date = new Date(g.created_at);
