@@ -563,6 +563,9 @@ h1 span {
     .timer-number { font-size: 30px; }
     .timer-text { font-size: 8px; letter-spacing: 1px; }
     .date { gap: 18px; }
+    .waiting-title {
+        font-size: 44px;
+    }
 }
 @media (max-width: 500px) {
     .timer {
@@ -645,7 +648,9 @@ h1 span {
     overflow: hidden;
     border: 1px solid rgba(215, 191, 145, 0.25);
 }
-
+.waiting-title {
+    font-size: 44px;
+}
 .swiper-slide {
     display: flex;
     justify-content: center;
@@ -726,7 +731,8 @@ h1 span {
 
 .waiting-title {
     font-family: 'Great Vibes', cursive;
-    font-size: 48px;
+    font-size: 64px;
+    font-weight: 400;
     color: #b89249;
     margin-bottom: 20px;
     opacity: 0;
@@ -799,7 +805,7 @@ h1 span {
 /* Адаптив */
 @media (max-width: 500px) {
     .waiting-title {
-        font-size: 36px;
+        font-size: 44px;
     }
     .calendar {
         font-size: 16px;
