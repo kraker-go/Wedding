@@ -733,21 +733,21 @@ h1 span {
 /* Начальное состояние: карточка смещена вправо и прозрачна */
 .timer-card {
     opacity: 0;
-    transform: translateX(80px); /* Прилетает справа */
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(80px) scale(0.9) rotate(5deg);
+    transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Конечное состояние: карточка на месте и видна */
 .timer-card.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1) rotate(0deg);
 }
 
 /* Задержки для каждой карточки, чтобы они появлялись по очереди */
-.timer-card:nth-child(1) { transition-delay: 0.1s; }
-.timer-card:nth-child(2) { transition-delay: 0.3s; }
-.timer-card:nth-child(3) { transition-delay: 0.5s; }
-.timer-card:nth-child(4) { transition-delay: 0.7s; }
+.timer-card:nth-child(1) { transition-delay: 0.5s; }
+.timer-card:nth-child(2) { transition-delay: 1s; }
+.timer-card:nth-child(3) { transition-delay: 1.5s; }
+.timer-card:nth-child(4) { transition-delay: 2s; }
 
 /* ============================================================
    АДАПТИВ (медиа-запросы)
