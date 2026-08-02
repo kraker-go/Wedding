@@ -196,3 +196,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+// ============================================================
+// АНИМАЦИЯ ПОЯВЛЕНИЯ ТАЙМЕРА (как у календаря)
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    const timerCards = document.querySelectorAll('.timer-card');
+    const timerSection = document.querySelector('.timer'); // Родительский блок
+
+    if (timerSection && timerCards.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Добавляем класс 'visible' к каждой карточке с задержкой
+                    timerCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, index * 200); // Задержка 0.2с между карточками
+                    });
+                    observer.unobserve(timerSection); // Отключаем observer после запуска
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(timerSection);
+    }
+});
