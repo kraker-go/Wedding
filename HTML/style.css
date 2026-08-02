@@ -928,3 +928,26 @@ h1 span {
     border: none;
     display: block;
 }
+
+/* сердца*/
+.hero::before{
+    content:"♡♡";
+    position:absolute;
+
+    font-size:180px;
+
+    opacity:0;
+
+    transition:2s;
+
+    color:rgba(255,255,255,.08);
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+.hero.show-hearts::before{
+    opacity:1;
+}

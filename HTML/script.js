@@ -258,3 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(hero);
     }
 });
+
+setTimeout(() => {
+    document.querySelector(".hero").classList.add("show-hearts");
+}, 4500);
