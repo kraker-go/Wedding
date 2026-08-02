@@ -899,3 +899,32 @@ h1 span {
         font-size: 44px;
     }
 }
+
+#location {
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#location h2 {
+    margin-bottom: 15px;
+}
+
+.address {
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.map-container {
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+    display: block;
+}
