@@ -945,7 +945,7 @@ h1 span {
 
     transform: translate(-50%, -50%);
 
-    width: 800px;      /* потом подберем */
+    width: 850px;      /* потом подберем */
 
     opacity: 0;
 
@@ -964,4 +964,16 @@ h1 span {
 
 .hero.show-hearts .hero-bg {
     opacity: 0.12;   /* можно менять от 0.05 до 0.25 */
+    transform: translate(-50%, -50%) scale(1.05);
+}
+@media (max-width: 600px) {
+
+    .hero-bg {
+
+        width: 450px;
+
+        top: 30%;
+
+    }
+
 }
