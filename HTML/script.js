@@ -1,9 +1,11 @@
+// ============================================================
+// 1. ПОЛУЧЕНИЕ ЭЛЕМЕНТОВ
+// ============================================================
 const form = document.getElementById("guestForm");
 const firstName = document.getElementById("firstName");
 const lastName = document.getElementById("lastName");
 const message = document.getElementById("message");
 
-// ===== ТАЙМЕР =====
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
@@ -11,138 +13,84 @@ const secondsEl = document.getElementById("seconds");
 
 const weddingDate = new Date("2026-10-10T00:00:00").getTime();
 
-function animateNumber(el, value){
-
-    if(el.textContent == value) return;
-
+// ============================================================
+// 2. ТАЙМЕР С АНИМАЦИЕЙ ЧИСЕЛ
+// ============================================================
+function animateNumber(el, value) {
+    if (el.textContent == value) return;
     el.style.transform = "scale(.8)";
     el.style.opacity = ".5";
-
-    setTimeout(()=>{
-
+    setTimeout(() => {
         el.textContent = value;
-
         el.style.transform = "scale(1)";
         el.style.opacity = "1";
-
-    },120);
+    }, 120);
 }
 
 function updateCountdown() {
-    const now = new Date().getTime();
+    const now = Date.now();
     const distance = weddingDate - now;
-
     if (distance <= 0) {
-        animateNumber(daysEl,0);
-        animateNumber(hoursEl,0);
-        animateNumber(minutesEl,0);
-        animateNumber(secondsEl,0);
+        animateNumber(daysEl, 0);
+        animateNumber(hoursEl, 0);
+        animateNumber(minutesEl, 0);
+        animateNumber(secondsEl, 0);
         return;
     }
-
-    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-    animateNumber(daysEl,d);
-    animateNumber(hoursEl,h);
-    animateNumber(minutesEl,m);
-    animateNumber(secondsEl,s);
+    const d = Math.floor(distance / (1000*60*60*24));
+    const h = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const m = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const s = Math.floor((distance % (1000*60)) / 1000);
+    animateNumber(daysEl, d);
+    animateNumber(hoursEl, h);
+    animateNumber(minutesEl, m);
+    animateNumber(secondsEl, s);
 }
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ===== ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ =====
+// ============================================================
+// 3. ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ
+// ============================================================
 async function loadGuestCount() {
     try {
-        console.log('1. loadGuestCount вызвана');
         const res = await fetch('/user/count');
-        console.log('2. Ответ получен, статус:', res.status);
         const data = await res.json();
-        console.log('3. Данные с сервера:', data);
         const el = document.getElementById('guestCount');
-        console.log('4. Элемент guestCount найден?', el);
-        if (el) {
-            el.textContent = data;
-        } else {
-            console.error('Элемент guestCount не найден в DOM!');
-        }
+        if (el) el.textContent = data;
     } catch (e) {
         console.error('Ошибка загрузки количества:', e);
     }
 }
 
-// ===== ЗАГРУЗКА ПОЛНОГО СПИСКА ДЛЯ МОДАЛКИ =====
+// ============================================================
+// 4. ЗАГРУЗКА СПИСКА ГОСТЕЙ ДЛЯ МОДАЛКИ
+// ============================================================
 async function loadModalGuests() {
     try {
         const res = await fetch('/user/get');
         const guests = await res.json();
         const list = document.getElementById('modalGuestList');
         list.innerHTML = '';
-
         if (guests.length === 0) {
             list.innerHTML = '<p style="text-align:center;color:#999;">Пока никто не подтвердил 😔</p>';
             return;
         }
-
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
-
-            div.innerHTML = `
-<div class="guest-name">
-${index + 1}. ${g.firstname} ${g.lastname}
-</div>
-`;
-
+            div.innerHTML = `<div class="guest-name">${index+1}. ${g.firstname} ${g.lastname}</div>`;
             list.appendChild(div);
         });
     } catch (e) {
         console.error('Ошибка загрузки списка:', e);
     }
 }
-// ===== АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ =====
-document.addEventListener('DOMContentLoaded', function () {
-    const waitingBlock = document.getElementById('waitingBlock');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                waitingBlock.classList.add('visible');
-                observer.unobserve(waitingBlock);
-            }
-        });
-    }, { threshold: 0.3 });
-
-    observer.observe(waitingBlock);
-});
-// ===== МОДАЛЬНОЕ ОКНО =====
-const modal = document.getElementById('guestModal');
-const modalClose = document.getElementById('modalClose');
-const guestCountBlock = document.getElementById('guestCountBlock');
-
-if (guestCountBlock) {
-    guestCountBlock.addEventListener('click', async () => {
-        await loadModalGuests();
-        modal.style.display = 'flex';
-    });
-}
-
-if (modalClose) {
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
-// ===== ОТПРАВКА ФОРМЫ =====
+// ============================================================
+// 5. ОТПРАВКА ФОРМЫ
+// ============================================================
 form.addEventListener("submit", async function (e) {
     e.preventDefault();
     message.innerHTML = "";
@@ -162,10 +110,9 @@ form.addEventListener("submit", async function (e) {
     try {
         const response = await fetch("/user", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         });
-
         if (response.ok) {
             message.className = "success";
             message.innerHTML = "✔ Спасибо! Ваше присутствие подтверждено.";
@@ -183,53 +130,80 @@ form.addEventListener("submit", async function (e) {
     }
 });
 
-// ===== ЗАГРУЗКА ПРИ СТАРТЕ =====
-document.addEventListener("DOMContentLoaded", () => {
+// ============================================================
+// 6. МОДАЛЬНОЕ ОКНО
+// ============================================================
+const modal = document.getElementById('guestModal');
+const modalClose = document.getElementById('modalClose');
+const guestCountBlock = document.getElementById('guestCountBlock');
 
-    const cards = document.querySelectorAll(".timer-card");
-
-    cards.forEach((card, index) => {
-
-        setTimeout(() => {
-
-            card.classList.add("show");
-
-            setTimeout(() => {
-                card.classList.add("breathe");
-            }, 900); // после окончания прилета
-
-        }, index * 220);
-
+if (guestCountBlock) {
+    guestCountBlock.addEventListener('click', async () => {
+        await loadModalGuests();
+        modal.style.display = 'flex';
     });
-
+}
+if (modalClose) {
+    modalClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
+window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
 });
 
-// ===== ИНИЦИАЛИЗАЦИЯ КАРУСЕЛИ =====
+// ============================================================
+// 7. АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ
+// ============================================================
 document.addEventListener('DOMContentLoaded', function () {
+    const waitingBlock = document.getElementById('waitingBlock');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                waitingBlock.classList.add('visible');
+                observer.unobserve(waitingBlock);
+            }
+        });
+    }, { threshold: 0.3 });
+    observer.observe(waitingBlock);
+});
 
+// ============================================================
+// 8. ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    // Загружаем счётчик гостей
+    loadGuestCount();
+
+    // Анимация появления карточек таймера
+    const cards = document.querySelectorAll('.timer-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('show');
+        }, index * 220);
+    });
+
+    // Инициализация Swiper (карусель)
     const swiper = new Swiper('.photo-swiper', {
-        loop: true,                   // Бесконечный цикл
+        loop: true,
         autoplay: {
-            delay: 5000,              // Автопрокрутка каждые 4 секунды
-            disableOnInteraction: false, // Не отключать после клика
+            delay: 5000,
+            disableOnInteraction: false,
         },
         pagination: {
             el: '.swiper-pagination',
-            clickable: true,           // Можно переключать по точкам
+            clickable: true,
         },
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
         effect: 'fade',
-        fadeEffect: {crossFade: true,},
-        speed: 1200,                   // Скорость анимации (мс)
-        grabCursor: true,              // Курсор «рука» при наведении
+        fadeEffect: { crossFade: true },
+        speed: 1200,
+        grabCursor: true,
         breakpoints: {
-            // Адаптив: на маленьких экранах можно отключить автопрокрутку
-            640: {
-                autoplay: false,
-            }
+            640: { autoplay: false }
         }
     });
 });
