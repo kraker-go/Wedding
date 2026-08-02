@@ -33,10 +33,10 @@ function updateCountdown() {
     const distance = weddingDate - now;
 
     if (distance <= 0) {
-        daysEl.textContent = "0";
-        hoursEl.textContent = "0";
-        minutesEl.textContent = "0";
-        secondsEl.textContent = "0";
+        animateNumber(daysEl,0);
+        animateNumber(hoursEl,0);
+        animateNumber(minutesEl,0);
+        animateNumber(secondsEl,0);
         return;
     }
 
@@ -184,8 +184,16 @@ form.addEventListener("submit", async function (e) {
 });
 
 // ===== ЗАГРУЗКА ПРИ СТАРТЕ =====
-document.addEventListener('DOMContentLoaded', () => {
-    loadGuestCount();
+document.addEventListener("DOMContentLoaded", () => {
+
+    const cards = document.querySelectorAll(".timer-card");
+
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add("show");
+        }, index * 220);
+    });
+
 });
 
 // ===== ИНИЦИАЛИЗАЦИЯ КАРУСЕЛИ =====
