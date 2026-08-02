@@ -796,11 +796,12 @@ h1 span {
         flex-wrap: nowrap;
         gap: 6px;
         justify-content: center;
-        overflow-x: auto;
         padding: 0 5px;
+        margin: 40px 0 30px;  /* уменьшаем отступы сверху/снизу */
+        overflow-x: auto;     /* если всё же не влезают — скролл */
     }
     .timer-card {
-        min-width: 65px;
+        min-width: 56px;
         width: auto;
         height: 70px;
         border-radius: 50%;
@@ -810,7 +811,9 @@ h1 span {
         border: 1px solid rgba(205,170,90,0.3);
         box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }
-    .timer-number { font-size: 24px; line-height: 1; margin-bottom: 0; }
+    .timer-number { font-size: 22px !important;  /* принудительно уменьшаем цифры */
+        line-height: 1;
+        margin-bottom: 0;}
     .timer-text { font-size: 8px; letter-spacing: 1px; }
 
     .waiting-title { font-size: 44px; }
@@ -831,4 +834,14 @@ h1 span {
     .timer-text { font-size: 8px; letter-spacing: 1px; }
     .date { gap: 18px; }
     .waiting-title { font-size: 44px; }
+    .timer-card {
+        min-width: 48px;
+        height: 60px;
+    }
+    .timer-number {
+        font-size: 18px !important;
+    }
+    .timer-text {
+        font-size: 7px;
+    }
 }
