@@ -207,13 +207,12 @@ h1 span {
 }
 
 .timer-card.show:hover {
-{
     transform: translateY(-8px) scale(1.03);
     box-shadow: 0 35px 65px rgba(180, 140, 70, 0.25);
     border-color: rgba(205, 170, 90, 0.7);
 }
 
-    .timer-number {
+.timer-number {
         transition: transform .25s ease,
         opacity .25s ease;
         font-family: 'Cormorant Garamond', serif;
@@ -226,7 +225,7 @@ h1 span {
         margin-bottom: 2px;
     }
 
-    .timer-card.show {
+.timer-card.show {
         opacity: 1;
         transform: translate(0, 0);
         animation: breathe 4s ease-in-out infinite;
@@ -234,7 +233,7 @@ h1 span {
         opacity .6s;
     }
 
-    .timer-text {
+.timer-text {
         font-family: 'Montserrat', sans-serif;
         font-size: 11px;
         text-transform: uppercase;
@@ -1112,4 +1111,3 @@ h1 span {
     .author-footer .author-link {
         font-weight: 500;
     }
-}
