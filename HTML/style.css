@@ -1,8 +1,7 @@
 /* ============================================================
    ПОДКЛЮЧЕНИЕ ШРИФТОВ
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap');
 /* ============================================================
    СБРОС СТИЛЕЙ
    ============================================================ */
@@ -844,6 +843,7 @@ h1 span {
 .name-left,
 .name-right,
 .ampersand-glow {
+    font-family: 'Alex Brush', cursive;
     opacity: 0;
     transition: opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -851,6 +851,13 @@ h1 span {
 
 .name-left {
     transform: translateX(-120px);
+
+}
+
+/* Увеличиваем размер имён */
+.name-left,
+.name-right {
+    font-size: 100px;         /* ← измени под свой вкус */
 }
 
 .name-right {
