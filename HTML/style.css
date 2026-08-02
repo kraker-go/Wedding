@@ -696,7 +696,7 @@ h1 span {
 .photo-swiper {
     margin-top: 30px;
     width: 100%;
-    height: 350px;               /* Высота карусели (подбери под свои фото) */
+    height: 500px;               /* Высота карусели (подбери под свои фото) */
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(215, 191, 145, 0.25);
@@ -715,8 +715,8 @@ h1 span {
     transition: transform 8s linear;
     width: 100%;
     height: 100%;
-    object-fit: cover;            /* Фото заполняют блок без искажений */
-    display: block;
+    object-fit: contain;
+    background: #f9f5ef;
 }
 
 .swiper-slide-active img{
@@ -761,7 +761,7 @@ h1 span {
 /* Адаптив для мобильных */
 @media (max-width: 700px) {
     .photo-swiper {
-        height: 250px;
+        height: 300px;
     }
     .swiper-button-next,
     .swiper-button-prev {
