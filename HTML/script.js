@@ -259,6 +259,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-setTimeout(() => {
-    document.querySelector(".hero").classList.add("show-hearts");
-}, 4500);
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.querySelector(".hero").classList.add("show-hearts");
+    }, 4000);
+});

@@ -63,7 +63,9 @@ body {
 /* ============================================================
    ШАПКА (HERO)
    ============================================================ */
-.hero { text-align: center; }
+.hero {  position: relative;
+    text-align: center;
+    overflow: hidden; }
 
 .subtitle {
     letter-spacing: 7px;
@@ -929,25 +931,37 @@ h1 span {
     display: block;
 }
 
-/* сердца*/
-.hero::before{
-    content:"♡♡";
-    position:absolute;
-
-    font-size:180px;
-
-    opacity:0;
-
-    transition:2s;
-
-    color:rgba(255,255,255,.08);
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
+/* сердца */
+.hero {
+    position: relative;
+    overflow: hidden;
 }
 
-.hero.show-hearts::before{
-    opacity:1;
+.hero-bg {
+    position: absolute;
+
+    left: 50%;
+    top: 42%;
+
+    transform: translate(-50%, -50%);
+
+    width: 420px;      /* потом подберем */
+
+    opacity: 0;
+
+    transition: opacity 2s ease;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+/* весь текст поверх картинки */
+.hero > *:not(.hero-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+.hero.show-hearts .hero-bg {
+    opacity: 0.12;   /* можно менять от 0.05 до 0.25 */
 }
