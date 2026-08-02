@@ -874,3 +874,30 @@ h1 span {
         padding: 10px 6px;
     }
 }
+
+/* ===== ПОДПИСЬ АВТОРА ===== */
+.author-footer {
+    margin-top: 50px;
+    padding: 20px 0 10px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #a0907a;
+    border-top: 1px solid rgba(215, 191, 145, 0.25);
+}
+
+.author-footer a {
+    color: #b89249;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.author-footer a:hover {
+    color: #8f7347;
+    text-decoration: underline;
+}
+
+.author-footer .author-link {
+    font-weight: 500;
+}
