@@ -202,6 +202,7 @@ h1 span {
 }
 
 .timer-number {
+    transition: transform .2s ease, opacity .2s ease;
     font-family: 'Cormorant Garamond', serif;
     font-size: 56px;
     font-weight: 700;
@@ -281,11 +282,44 @@ h1 span {
     letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 
 .guest button:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(183, 139, 60, 0.35);
+}
+
+.guest button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:70%;
+
+    height:100%;
+
+    background:linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+    );
+
+    transform:skewX(-25deg);
+
+    transition:left .8s;
+}
+
+.guest button:hover::before{
+
+    left:160%;
 }
 
 #message {
@@ -483,29 +517,48 @@ h1 span {
     margin: 0;
 }
 
-.guest-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 8px;         /* Уменьшены отступы внутри блока */
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(215, 191, 145, 0.25);
-    border-radius: 12px;        /* Чуть меньше скругление */
-    transition: .25s;
+/* ===== Компактный список гостей ===== */
+
+#modalGuestList{
+
+    padding:0;
+
+    margin:0;
+
 }
 
-.guest-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+.guest-item{
+
+    padding:7px 2px;
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+
 }
 
-.guest-name {
-    font-family: 'Montserrat', 'Arial', sans-serif; /* Один шрифт */
-    font-weight: 600;           /* Жирнее */
-    font-size: 18px;            /* Крупнее */
-    color: #4a3f35;
-    padding-right: 3px;        /* Отступ от края */
-    word-break: break-word;    /* Перенос длинных слов */
+.guest-item:last-child{
+
+    border:none;
+
+}
+
+.guest-name{
+
+    width:100%;
+
+    font-size:19px;
+
+    font-weight:700;
+
+    color:#4d4235;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    letter-spacing:.2px;
+
 }
 
 /* ===== СТИЛИЗАЦИЯ СКРОЛЛА ===== */
@@ -659,10 +712,15 @@ h1 span {
 }
 
 .swiper-slide img {
+    transition: transform 8s linear;
     width: 100%;
     height: 100%;
     object-fit: cover;            /* Фото заполняют блок без искажений */
     display: block;
+}
+
+.swiper-slide-active img{
+    transform: scale(1.08);
 }
 
 /* Стилизация точек пагинации */
@@ -670,6 +728,7 @@ h1 span {
     background: #b89249;
     opacity: 0.5;
 }
+
 
 .swiper-pagination-bullet-active {
     background: #b89249;

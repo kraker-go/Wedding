@@ -11,6 +11,23 @@ const secondsEl = document.getElementById("seconds");
 
 const weddingDate = new Date("2026-10-10T00:00:00").getTime();
 
+function animateNumber(el, value){
+
+    if(el.textContent == value) return;
+
+    el.style.transform = "scale(.8)";
+    el.style.opacity = ".5";
+
+    setTimeout(()=>{
+
+        el.textContent = value;
+
+        el.style.transform = "scale(1)";
+        el.style.opacity = "1";
+
+    },120);
+}
+
 function updateCountdown() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
@@ -28,10 +45,10 @@ function updateCountdown() {
     const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-    daysEl.textContent = d;
-    hoursEl.textContent = h;
-    minutesEl.textContent = m;
-    secondsEl.textContent = s;
+    animateNumber(daysEl,d);
+    animateNumber(hoursEl,h);
+    animateNumber(minutesEl,m);
+    animateNumber(secondsEl,s);
 }
 
 updateCountdown();
@@ -75,8 +92,11 @@ async function loadModalGuests() {
             div.className = 'guest-item';
 
             div.innerHTML = `
-                <span class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</span>
-            `;
+<div class="guest-name">
+${index + 1}. ${g.firstname} ${g.lastname}
+</div>
+`;
+
             list.appendChild(div);
         });
     } catch (e) {
@@ -170,10 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== ИНИЦИАЛИЗАЦИЯ КАРУСЕЛИ =====
 document.addEventListener('DOMContentLoaded', function () {
+
     const swiper = new Swiper('.photo-swiper', {
         loop: true,                   // Бесконечный цикл
         autoplay: {
-            delay: 4000,              // Автопрокрутка каждые 4 секунды
+            delay: 5000,              // Автопрокрутка каждые 4 секунды
             disableOnInteraction: false, // Не отключать после клика
         },
         pagination: {
@@ -184,8 +205,9 @@ document.addEventListener('DOMContentLoaded', function () {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        effect: 'slide',               // Плавный сдвиг (можно 'fade', 'cube', 'coverflow')
-        speed: 600,                    // Скорость анимации (мс)
+        effect: 'fade',
+        fadeEffect: {crossFade: true,},
+        speed: 1200,                   // Скорость анимации (мс)
         grabCursor: true,              // Курсор «рука» при наведении
         breakpoints: {
             // Адаптив: на маленьких экранах можно отключить автопрокрутку
