@@ -243,12 +243,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     // 2. Через 2 секунды прилетает Милана
                     setTimeout(() => {
                         nameRight.classList.add('visible');
-                    }, 2200);
+                    }, 1600);
 
                     // 3. Амперсанд проявляется через 2.5 секунды (между ними)
                     setTimeout(() => {
                         ampersand.classList.add('visible');
-                    }, 2500);
+                    }, 2600);
 
                     observer.unobserve(hero);
                 }
