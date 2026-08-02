@@ -835,3 +835,42 @@ h1 span {
     .date { gap: 18px; }
     .waiting-title { font-size: 36px; }
 }
+
+/* ============================================================
+   АНИМАЦИЯ ИМЁН И АМПЕРСАНДА
+   ============================================================ */
+
+/* Начальное состояние: имена сдвинуты, амперсанд уменьшен, всё прозрачно */
+.name-left,
+.name-right,
+.ampersand-glow {
+    opacity: 0;
+    transition: opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.name-left {
+    transform: translateX(-120px);
+}
+
+.name-right {
+    transform: translateX(120px);
+}
+
+.ampersand-glow {
+    transform: scale(0.3) rotate(-15deg);
+    animation: none; /* отключаем мерцание до появления */
+}
+
+/* Конечное состояние при добавлении класса .visible */
+.name-left.visible,
+.name-right.visible,
+.ampersand-glow.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+}
+
+/* Включаем мерцание амперсанда только когда он видим */
+.ampersand-glow.visible {
+    animation: diamondShine 3.5s ease-in-out infinite;
+}

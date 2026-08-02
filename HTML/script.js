@@ -221,3 +221,40 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(timerSection);
     }
 });
+
+// ============================================================
+// АНИМАЦИЯ ПОЯВЛЕНИЯ ИМЁН И АМПЕРСАНДА
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    const hero = document.querySelector('.hero');
+    const nameLeft = document.querySelector('.name-left');
+    const nameRight = document.querySelector('.name-right');
+    const ampersand = document.querySelector('.ampersand-glow');
+
+    if (hero && nameLeft && nameRight && ampersand) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 1. Александр прилетает первым
+                    setTimeout(() => {
+                        nameLeft.classList.add('visible');
+                    }, 200);
+
+                    // 2. Через 2 секунды прилетает Милана
+                    setTimeout(() => {
+                        nameRight.classList.add('visible');
+                    }, 2200);
+
+                    // 3. Амперсанд проявляется через 2.5 секунды (между ними)
+                    setTimeout(() => {
+                        ampersand.classList.add('visible');
+                    }, 2500);
+
+                    observer.unobserve(hero);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(hero);
+    }
+});
