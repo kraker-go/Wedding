@@ -14,39 +14,32 @@ const secondsEl = document.getElementById("seconds");
 const weddingDate = new Date("2026-10-10T00:00:00").getTime();
 
 // ============================================================
-// 2. ТАЙМЕР С АНИМАЦИЕЙ ЧИСЕЛ
+// 2. ТАЙМЕР (БЕЗ АНИМАЦИИ)
 // ============================================================
-function animateNumber(el, value) {
-    if (el.textContent == value) return;
-    el.style.transform = "scale(.8)";
-    el.style.opacity = ".5";
-    setTimeout(() => {
-        el.textContent = value;
-        el.style.transform = "scale(1)";
-        el.style.opacity = "1";
-    }, 120);
-}
-
 function updateCountdown() {
     const now = Date.now();
     const distance = weddingDate - now;
+
     if (distance <= 0) {
-        animateNumber(daysEl, 0);
-        animateNumber(hoursEl, 0);
-        animateNumber(minutesEl, 0);
-        animateNumber(secondsEl, 0);
+        daysEl.textContent = "0";
+        hoursEl.textContent = "0";
+        minutesEl.textContent = "0";
+        secondsEl.textContent = "0";
         return;
     }
-    const d = Math.floor(distance / (1000*60*60*24));
-    const h = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    const m = Math.floor((distance % (1000*60*60)) / (1000*60));
-    const s = Math.floor((distance % (1000*60)) / 1000);
-    animateNumber(daysEl, d);
-    animateNumber(hoursEl, h);
-    animateNumber(minutesEl, m);
-    animateNumber(secondsEl, s);
+
+    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.textContent = d;
+    hoursEl.textContent = h;
+    minutesEl.textContent = m;
+    secondsEl.textContent = s;
 }
 
+// Запускаем сразу и обновляем каждую секунду
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
@@ -80,7 +73,7 @@ async function loadModalGuests() {
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
-            div.innerHTML = `<div class="guest-name">${index+1}. ${g.firstname} ${g.lastname}</div>`;
+            div.innerHTML = `<div class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</div>`;
             list.appendChild(div);
         });
     } catch (e) {
@@ -153,19 +146,21 @@ window.addEventListener('click', (e) => {
 });
 
 // ============================================================
-// 7. АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ
+// 7. АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ (оставляем)
 // ============================================================
 document.addEventListener('DOMContentLoaded', function () {
     const waitingBlock = document.getElementById('waitingBlock');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                waitingBlock.classList.add('visible');
-                observer.unobserve(waitingBlock);
-            }
-        });
-    }, { threshold: 0.3 });
-    observer.observe(waitingBlock);
+    if (waitingBlock) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    waitingBlock.classList.add('visible');
+                    observer.unobserve(waitingBlock);
+                }
+            });
+        }, { threshold: 0.3 });
+        observer.observe(waitingBlock);
+    }
 });
 
 // ============================================================
@@ -175,35 +170,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Загружаем счётчик гостей
     loadGuestCount();
 
-    // Анимация появления карточек таймера
-    const cards = document.querySelectorAll('.timer-card');
-    cards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('show');
-        }, index * 220);
-    });
-
     // Инициализация Swiper (карусель)
-    const swiper = new Swiper('.photo-swiper', {
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        speed: 1200,
-        grabCursor: true,
-        breakpoints: {
-            640: { autoplay: false }
-        }
-    });
+    if (typeof Swiper !== 'undefined') {
+        const swiper = new Swiper('.photo-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+            fadeEffect: { crossFade: true },
+            speed: 1200,
+            grabCursor: true,
+            breakpoints: {
+                640: { autoplay: false }
+            }
+        });
+    }
 });
