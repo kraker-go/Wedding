@@ -262,5 +262,5 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.querySelector(".hero").classList.add("show-hearts");
-    }, 4000);
+    }, 2200);
 });
