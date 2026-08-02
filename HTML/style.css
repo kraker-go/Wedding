@@ -1,7 +1,7 @@
 /* ============================================================
    ПОДКЛЮЧЕНИЕ ШРИФТОВ
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Satisfy&display=swap');
 /* ============================================================
    СБРОС СТИЛЕЙ
    ============================================================ */
@@ -850,7 +850,7 @@ h1 span {
 
 /* Разные шрифты для имён */
 .name-left {
-    font-family: 'Alex Brush', cursive;
+    font-family: 'Satisfy', cursive;
     transform: translateX(-120px);
 }
 
