@@ -189,9 +189,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll(".timer-card");
 
     cards.forEach((card, index) => {
+
         setTimeout(() => {
+
             card.classList.add("show");
+
+            setTimeout(() => {
+                card.classList.add("breathe");
+            }, 900); // после окончания прилета
+
         }, index * 220);
+
     });
 
 });
