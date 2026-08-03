@@ -23,7 +23,7 @@ func ConnectPostgres(str config.Config) (*sql.DB, error) {
 	log.Printf("Connecting to DB: host=%s port=%s dbname=%s user=%s password=%s  sslmode=%s", str.DB_HOST, str.DB_PORT, str.DB_DBNAME, str.DB_USER, str.DB_PASSWORD, str.DB_SSL_MODE)
 
 	if err = db.Ping(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("ping failed: %w", err)
 	}
 	return db, nil
 }
