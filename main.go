@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"go.uber.org/zap"
+	"os"
 	"wedding/internal/api"
 	"wedding/internal/logger"
 )
@@ -12,10 +14,9 @@ func main() {
 		panic(err)
 	}
 	err = api.Start(logg)
-	if err != nil {
-		logg.Fatal("Ошибка запуска", zap.Error(err))
-	}
-
+	// Принудительно выводим ошибку в stderr (гарантированно попадёт в логи)
+	fmt.Fprintf(os.Stderr, "FATAL: %v\n", err)
+	logg.Fatal("Ошибка запуска", zap.Error(err))
 	select {}
 }
 
