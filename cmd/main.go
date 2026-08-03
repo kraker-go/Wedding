@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"go.uber.org/zap"
 	"wedding/internal/api"
 	"wedding/internal/logger"
 )
@@ -13,7 +13,8 @@ func main() {
 	}
 	err = api.Start(logg)
 	if err != nil {
-		fmt.Println(err)
+		logg.Fatal("Ошибка запуска", zap.Error(err))
 	}
+
 	select {}
 }

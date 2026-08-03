@@ -7,19 +7,17 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
 	"net/http"
-	"os"
 	"time"
+	"wedding/internal/config"
 )
 
-func ConnectPostgres() (*sql.DB, error) {
-	connStr := os.Getenv("DATABASE_URL")
-	if connStr == "" {
-		return nil, fmt.Errorf("переменная DATABASE_URL не установлена")
-	}
+func ConnectPostgres(str config.Config) (*sql.DB, error) {
+	connStr := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s  sslmode=%s", str.DB_HOST, str.DB_PORT, str.DB_DBNAME, str.DB_USER, str.DB_PASSWORD, str.DB_SSL_MODE)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		return nil, err
 	}
+
 	if err = db.Ping(); err != nil {
 		return nil, err
 	}
