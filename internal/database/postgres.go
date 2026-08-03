@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
+	"log"
 	"net/http"
 	"time"
 	"wedding/internal/config"
@@ -15,8 +16,11 @@ func ConnectPostgres(str config.Config) (*sql.DB, error) {
 	connStr := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s  sslmode=%s", str.DB_HOST, str.DB_PORT, str.DB_DBNAME, str.DB_USER, str.DB_PASSWORD, str.DB_SSL_MODE)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		return nil, err
+
+		return nil, fmt.Errorf("failed to connect to postgres: %w", err)
 	}
+	// ВРЕМЕННО: выведи строку подключения в лог (без пароля!)
+	log.Printf("Connecting to DB: host=%s port=%s dbname=%s user=%s password=%s  sslmode=%s", str.DB_HOST, str.DB_PORT, str.DB_DBNAME, str.DB_USER, str.DB_PASSWORD, str.DB_SSL_MODE)
 
 	if err = db.Ping(); err != nil {
 		return nil, err
