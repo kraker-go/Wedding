@@ -304,3 +304,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// ============================================================
+// ПОДСКАЗКА ПРИ ФОКУСЕ НА ПОЛЕ ИМЕНИ
+// ============================================================
+const hint = document.getElementById('familyHint');
+
+function showHint() {
+    if (hint) hint.classList.add('visible');
+}
+
+function hideHint() {
+    if (hint && document.activeElement !== firstName) {
+        hint.classList.remove('visible');
+    }
+}
+
+if (firstName && hint) {
+    firstName.addEventListener('focus', showHint);
+    firstName.addEventListener('blur', hideHint);
+}
