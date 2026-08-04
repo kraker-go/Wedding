@@ -977,6 +977,51 @@ h1 span {
     }
 
 }
+/* ===== ПОДПИСИ ПОД ФОТО ===== */
+.couple-labels {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px; /* подогнать под расстояние между кругами */
+    margin-top: 16px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.couple-labels.visible {
+    opacity: 1;
+}
+
+.label-left,
+.label-right {
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    color: #8f7347;
+    text-align: center;
+    width: 160px; /* ширина как у кругов, чтобы центрировалось */
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+    .couple-labels {
+        gap: 40px;
+    }
+    .label-left,
+    .label-right {
+        font-size: 24px;
+        width: 120px;
+    }
+}
+@media (max-width: 430px) {
+    .couple-labels {
+        gap: 30px;
+    }
+    .label-left,
+    .label-right {
+        font-size: 20px;
+        width: 100px;
+    }
+}
 
 /* ===== КРУГЛЫЕ ФОТО С АНИМАЦИЕЙ ПРИЛЁТА ===== */
 .couple-photos {

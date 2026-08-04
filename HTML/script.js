@@ -281,3 +281,25 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(coupleSection);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const coupleSection = document.getElementById('couplePhotos');
+    const labels = document.getElementById('coupleLabels');
+
+    if (coupleSection && labels) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Добавляем класс visible кругам (это уже есть в твоём коде, но оставим для ясности)
+                    // Здесь мы просто ждём 2 секунды после появления блока и показываем подписи
+                    setTimeout(() => {
+                        labels.classList.add('visible');
+                    }, 2200); // 2.2 сек (чтобы круги успели встать)
+                    observer.unobserve(coupleSection);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(coupleSection);
+    }
+});
