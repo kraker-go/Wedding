@@ -264,3 +264,20 @@ window.addEventListener("load", () => {
         document.querySelector(".hero").classList.add("show-hearts");
     }, 2200);
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const coupleSection = document.getElementById('couplePhotos');
+
+    if (coupleSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    coupleSection.classList.add('visible');
+                    observer.unobserve(coupleSection);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(coupleSection);
+    }
+});
