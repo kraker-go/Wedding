@@ -39,6 +39,7 @@ function updateCountdown() {
     secondsEl.textContent = s;
 }
 
+// Запускаем сразу и обновляем каждую секунду
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
@@ -145,123 +146,161 @@ window.addEventListener('click', (e) => {
 });
 
 // ============================================================
-// 7. ПОДСКАЗКА ПРИ ФОКУСЕ НА ПОЛЕ
-// ============================================================
-const hint = document.getElementById('familyHint');
-
-function showHint() {
-    if (hint) hint.classList.add('visible');
-}
-
-function hideHint() {
-    if (hint && document.activeElement !== firstName) {
-        hint.classList.remove('visible');
-    }
-}
-
-if (firstName && hint) {
-    firstName.addEventListener('focus', showHint);
-    firstName.addEventListener('blur', hideHint);
-}
-
-// ============================================================
-// 8. ВСЕ АНИМАЦИИ И ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+// 7. АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ (оставляем)
 // ============================================================
 document.addEventListener('DOMContentLoaded', function () {
-
-    // ---- 8.1. Загрузка счётчика гостей ----
-    loadGuestCount();
-
-    // ---- 8.2. Анимация блока «Ждём вас!» ----
     const waitingBlock = document.getElementById('waitingBlock');
     if (waitingBlock) {
-        const observerWaiting = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     waitingBlock.classList.add('visible');
-                    observerWaiting.unobserve(waitingBlock);
+                    observer.unobserve(waitingBlock);
                 }
             });
         }, { threshold: 0.3 });
-        observerWaiting.observe(waitingBlock);
+        observer.observe(waitingBlock);
     }
+});
 
-    // ---- 8.3. Анимация появления таймера ----
-    const timerCards = document.querySelectorAll('.timer-card');
-    const timerSection = document.querySelector('.timer');
-    if (timerSection && timerCards.length) {
-        const observerTimer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    timerCards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.classList.add('visible');
-                        }, index * 200);
-                    });
-                    observerTimer.unobserve(timerSection);
-                }
-            });
-        }, { threshold: 0.3 });
-        observerTimer.observe(timerSection);
-    }
+// ============================================================
+// 8. ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    // Загружаем счётчик гостей
+    loadGuestCount();
 
-    // ---- 8.4. Анимация появления имён и амперсанда ----
-    const hero = document.querySelector('.hero');
-    const nameLeft = document.querySelector('.name-left');
-    const nameRight = document.querySelector('.name-right');
-    const ampersand = document.querySelector('.ampersand-glow');
-    if (hero && nameLeft && nameRight && ampersand) {
-        const observerHero = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => nameLeft.classList.add('visible'), 200);
-                    setTimeout(() => nameRight.classList.add('visible'), 1600);
-                    setTimeout(() => ampersand.classList.add('visible'), 2600);
-                    observerHero.unobserve(hero);
-                }
-            });
-        }, { threshold: 0.3 });
-        observerHero.observe(hero);
-    }
-
-    // ---- 8.5. Анимация кругов с фото и подписей ----
-    const coupleSection = document.getElementById('couplePhotos');
-    const labels = document.getElementById('coupleLabels');
-    if (coupleSection) {
-        const observerCouple = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    coupleSection.classList.add('visible');
-                    if (labels) {
-                        setTimeout(() => {
-                            labels.classList.add('visible');
-                        }, 2200);
-                    }
-                    observerCouple.unobserve(coupleSection);
-                }
-            });
-        }, { threshold: 0.3 });
-        observerCouple.observe(coupleSection);
-    }
-
-    // ---- 8.6. Инициализация Swiper ----
+    // Инициализация Swiper (карусель)
     if (typeof Swiper !== 'undefined') {
-        new Swiper('.photo-swiper', {
+        const swiper = new Swiper('.photo-swiper', {
             loop: true,
-            autoplay: { delay: 5000, disableOnInteraction: false },
-            pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
             effect: 'fade',
             fadeEffect: { crossFade: true },
             speed: 1200,
             grabCursor: true,
-            breakpoints: { 640: { autoplay: false } }
+            breakpoints: {
+                640: { autoplay: false }
+            }
         });
     }
-
-    // ---- 8.7. Показ сердец (hero-bg) ----
-    setTimeout(() => {
-        if (hero) hero.classList.add('show-hearts');
-    }, 2200);
-
 });
+// ============================================================
+// АНИМАЦИЯ ПОЯВЛЕНИЯ ТАЙМЕРА (как у календаря)
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    const timerCards = document.querySelectorAll('.timer-card');
+    const timerSection = document.querySelector('.timer'); // Родительский блок
+
+    if (timerSection && timerCards.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Добавляем класс 'visible' к каждой карточке с задержкой
+                    timerCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, index * 200); // Задержка 0.2с между карточками
+                    });
+                    observer.unobserve(timerSection); // Отключаем observer после запуска
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(timerSection);
+    }
+});
+
+// ============================================================
+// АНИМАЦИЯ ПОЯВЛЕНИЯ ИМЁН И АМПЕРСАНДА
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+    const hero = document.querySelector('.hero');
+    const nameLeft = document.querySelector('.name-left');
+    const nameRight = document.querySelector('.name-right');
+    const ampersand = document.querySelector('.ampersand-glow');
+
+    if (hero && nameLeft && nameRight && ampersand) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 1. Александр прилетает первым
+                    setTimeout(() => {
+                        nameLeft.classList.add('visible');
+                    }, 200);
+
+                    // 2. Через 2 секунды прилетает Милана
+                    setTimeout(() => {
+                        nameRight.classList.add('visible');
+                    }, 1600);
+
+                    // 3. Амперсанд проявляется через 2.5 секунды (между ними)
+                    setTimeout(() => {
+                        ampersand.classList.add('visible');
+                    }, 2600);
+
+                    observer.unobserve(hero);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(hero);
+    }
+});
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.querySelector(".hero").classList.add("show-hearts");
+    }, 2200);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const coupleSection = document.getElementById('couplePhotos');
+
+    if (coupleSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    coupleSection.classList.add('visible');
+                    observer.unobserve(coupleSection);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(coupleSection);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const coupleSection = document.getElementById('couplePhotos');
+    const labels = document.getElementById('coupleLabels');
+
+    if (coupleSection && labels) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Добавляем класс visible кругам (это уже есть в твоём коде, но оставим для ясности)
+                    // Здесь мы просто ждём 2 секунды после появления блока и показываем подписи
+                    setTimeout(() => {
+                        labels.classList.add('visible');
+                    }, 2200); // 2.2 сек (чтобы круги успели встать)
+                    observer.unobserve(coupleSection);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(coupleSection);
+    }
+});
+
