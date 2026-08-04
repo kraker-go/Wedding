@@ -323,3 +323,13 @@ if (firstName && hint) {
     firstName.addEventListener('focus', showHint);
     firstName.addEventListener('blur', hideHint);
 }
+
+const overlay = document.getElementById('overlay');
+
+// В обработчике клика по счётчику:
+overlay.style.display = 'block';
+modal.style.display = 'block';
+
+// При закрытии:
+overlay.style.display = 'none';
+modal.style.display = 'none';
