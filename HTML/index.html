@@ -71,10 +71,19 @@
     </section>
 
     <!-- ===== СЧЁТЧИК ГОСТЕЙ ===== -->
+    <div class="guest-dropdown">
     <div class="guest-count" id="guestCountBlock">
         👥 Всего гостей: <span id="guestCount">0</span>
     </div>
-
+    <!-- ===== МОДАЛЬНОЕ ОКНО (список гостей) ===== -->
+    <div class="modal" id="guestModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <h3>👥 Список гостей</h3>
+            <div id="modalGuestList"></div>
+        </div>
+    </div>
+    </div>
     <!-- ===== МЕСТО ПРОВЕДЕНИЯ ===== -->
     <div class="venue-block">
         <p class="venue-text">
@@ -125,14 +134,7 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО (список гостей) ===== -->
-    <div class="modal" id="guestModal">
-        <div class="modal-content">
-            <span class="modal-close" id="modalClose">&times;</span>
-            <h3>👥 Список гостей</h3>
-            <div id="modalGuestList"></div>
-        </div>
-    </div>
+
 
     <!-- ===== КАРТА ===== -->
     <section id="location">
