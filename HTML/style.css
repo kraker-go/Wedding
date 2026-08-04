@@ -977,3 +977,52 @@ h1 span {
     }
 
 }
+
+/* фото отдельно */
+.couple-photos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 40px 0 30px;
+}
+
+.photo-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #dac194;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.photo-circle:hover {
+    transform: scale(1.05);
+}
+
+.photo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* АДАПТИВ ДЛЯ МОБИЛЬНЫХ */
+@media (max-width: 600px) {
+    .couple-photos {
+        gap: 20px;
+    }
+    .photo-circle {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 430px) {
+    .photo-circle {
+        width: 100px;
+        height: 100px;
+    }
+}
