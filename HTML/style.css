@@ -995,7 +995,7 @@ h1 span {
 .label-left,
 .label-right {
     font-family: 'Great Vibes', cursive;
-    font-size: 28px;
+    font-size: 38px;
     color: #8f7347;
     text-align: center;
     width: 160px; /* ширина как у кругов, чтобы центрировалось */
@@ -1008,7 +1008,7 @@ h1 span {
     }
     .label-left,
     .label-right {
-        font-size: 24px;
+        font-size: 30px;
         width: 120px;
     }
 }
@@ -1018,7 +1018,7 @@ h1 span {
     }
     .label-left,
     .label-right {
-        font-size: 20px;
+        font-size: 28px;
         width: 100px;
     }
 }
