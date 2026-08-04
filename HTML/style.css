@@ -1002,12 +1002,12 @@ h1 span {
 
 /* Левая картинка стартует слева */
 .photo-circle-left {
-    transform: translateX(-300px) scale(0.8);
+    transform: translateX(-300px) ;
 }
 
 /* Правая картинка стартует справа */
 .photo-circle-right {
-    transform: translateX(300px) scale(0.8);
+    transform: translateX(300px);
 }
 
 /* Когда блок становится видимым, запускаем анимацию */
@@ -1029,17 +1029,17 @@ h1 span {
 
 /* Ключевые кадры */
 @keyframes slideInLeft {
-    0%   { transform: translateX(-300px) scale(0.8); opacity: 0; }
-    60%  { transform: translateX(20px) scale(1.05); opacity: 1; }
-    80%  { transform: translateX(-10px) scale(0.98); }
-    100% { transform: translateX(0) scale(1); opacity: 1; }
+    0%   { transform: translateX(-300px) ; opacity: 0; }
+    60%  { transform: translateX(20px) ; opacity: 1; }
+    80%  { transform: translateX(-10px) ; }
+    100% { transform: translateX(0) ; opacity: 1; }
 }
 
 @keyframes slideInRight {
-    0%   { transform: translateX(300px) scale(0.8); opacity: 0; }
-    60%  { transform: translateX(-20px) scale(1.05); opacity: 1; }
-    80%  { transform: translateX(10px) scale(0.98); }
-    100% { transform: translateX(0) scale(1); opacity: 1; }
+    0%   { transform: translateX(300px); opacity: 0; }
+    60%  { transform: translateX(-20px) ; opacity: 1; }
+    80%  { transform: translateX(10px) ; }
+    100% { transform: translateX(0) ; opacity: 1; }
 }
 
 /* Адаптив для мобильных */
