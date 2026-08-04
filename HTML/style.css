@@ -615,6 +615,7 @@ h1 span {
 .waiting-block {
     margin-top: 50px;
     text-align: center;
+    font-weight: bold;
     opacity: 0;
     transform: translateY(60px);
     transition: opacity 0.8s ease, transform 0.8s ease;
