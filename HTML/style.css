@@ -982,7 +982,7 @@ h1 span {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 60px; /* подогнать под расстояние между кругами */
+    gap: 100px; /* подогнать под расстояние между кругами */
     margin-top: 16px;
     opacity: 0;
     transition: opacity 1s ease;
