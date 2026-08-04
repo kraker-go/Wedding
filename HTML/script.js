@@ -133,7 +133,7 @@ const guestCountBlock = document.getElementById('guestCountBlock');
 if (guestCountBlock) {
     guestCountBlock.addEventListener('click', async () => {
         await loadModalGuests();
-        modal.style.display = 'flex';
+        modal.style.display = 'block';
     });
 }
 if (modalClose) {
