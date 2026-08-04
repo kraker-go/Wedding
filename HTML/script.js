@@ -303,3 +303,23 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(coupleSection);
     }
 });
+
+// ===== ПОДСКАЗКА ПРИ ФОКУСЕ НА ПОЛЕ =====
+const firstName = document.getElementById('firstName');
+const hint = document.getElementById('familyHint');
+
+function showHint() {
+    hint.classList.add('visible');
+}
+
+function hideHint() {
+    // Скрываем, только если фокус не на поле имени
+    if (document.activeElement !== firstName) {
+        hint.classList.remove('visible');
+    }
+}
+
+if (firstName && hint) {
+    firstName.addEventListener('focus', showHint);
+    firstName.addEventListener('blur', hideHint);
+}

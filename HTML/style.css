@@ -1105,3 +1105,24 @@ h1 span {
         gap: 15px;
     }
 }
+
+/* ===== ПОДСКАЗКА ПРИ ФОКУСЕ ===== */
+.form-hint {
+    display: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #b89249;
+    margin-top: 8px;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.form-hint.visible {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    0%   { opacity: 0; transform: translateY(-5px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
