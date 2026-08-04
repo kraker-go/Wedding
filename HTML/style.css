@@ -995,7 +995,8 @@ h1 span {
 .label-left,
 .label-right {
     font-family: 'Great Vibes', cursive;
-    font-size: 38px;
+    font-size: 40px;
+    font-weight: bold;
     color: #8f7347;
     text-align: center;
     width: 160px; /* ширина как у кругов, чтобы центрировалось */
