@@ -1,10 +1,5 @@
-/* ============================================================
-   ПОДКЛЮЧЕНИЕ ШРИФТОВ
-   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Satisfy&display=swap');
-/* ============================================================
-   СБРОС СТИЛЕЙ
-   ============================================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -15,9 +10,6 @@ html {
     scroll-behavior: smooth;
 }
 
-/* ============================================================
-   ОБЩИЕ СТИЛИ
-   ============================================================ */
 body {
     font-family: 'Montserrat', 'Arial', sans-serif;
     min-height: 100vh;
@@ -29,9 +21,6 @@ body {
     padding: 30px;
 }
 
-/* ============================================================
-   ОТКРЫТКА (ОСНОВНОЙ БЛОК)
-   ============================================================ */
 .wrapper {
     max-width: 950px;
     width: 100%;
@@ -46,9 +35,6 @@ body {
     background: url('fon.webp') center/cover no-repeat;
 }
 
-/* ============================================================
-   ДЕКОРАТИВНЫЕ ЗВЁЗДОЧКИ
-   ============================================================ */
 .wrapper::before,
 .wrapper::after {
     content: '✦';
@@ -60,12 +46,11 @@ body {
 .wrapper::before { top: 18px; left: 28px; transform: rotate(-15deg); }
 .wrapper::after { bottom: 18px; right: 28px; transform: rotate(15deg); }
 
-/* ============================================================
-   ШАПКА (HERO)
-   ============================================================ */
-.hero {  position: relative;
+.hero {
+    position: relative;
     text-align: center;
-    overflow: hidden; }
+    overflow: hidden;
+}
 
 .subtitle {
     letter-spacing: 7px;
@@ -108,9 +93,6 @@ h1 span {
     overflow-wrap: break-word;
 }
 
-/* ============================================================
-   ДАТА (число, месяц, год)
-   ============================================================ */
 .date {
     display: flex;
     justify-content: center;
@@ -173,9 +155,6 @@ h1 span {
     justify-content: center;
 }
 
-/* ============================================================
-   ТАЙМЕР (СТАТИЧНЫЙ, БЕЗ АНИМАЦИЙ)
-   ============================================================ */
 .timer {
     display: flex;
     justify-content: center;
@@ -197,7 +176,20 @@ h1 span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transform: translateX(80px) scale(0.9) rotate(5deg);
+    transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+.timer-card.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+}
+
+.timer-card:nth-child(1) { transition-delay: 0.5s; }
+.timer-card:nth-child(2) { transition-delay: 1s; }
+.timer-card:nth-child(3) { transition-delay: 1.5s; }
+.timer-card:nth-child(4) { transition-delay: 2s; }
 
 .timer-number {
     font-family: 'Cormorant Garamond', serif;
@@ -218,9 +210,6 @@ h1 span {
     color: #8c7d69;
 }
 
-/* ============================================================
-   БЛОК ПОДТВЕРЖДЕНИЯ (гость)
-   ============================================================ */
 .guest {
     margin-top: 50px;
     padding: 50px 45px;
@@ -316,9 +305,6 @@ h1 span {
 .success { color: #1d9c4a; }
 .error   { color: #d33030; }
 
-/* ============================================================
-   БЛОК КОЛИЧЕСТВА ГОСТЕЙ
-   ============================================================ */
 .guest-count {
     margin: 25px auto 0 auto;
     padding: 14px 25px;
@@ -347,9 +333,6 @@ h1 span {
     font-size: 28px;
 }
 
-/* ============================================================
-   АМПЕРСАНД (бриллиантовый эффект)
-   ============================================================ */
 .ampersand-glow {
     position: relative;
     font-family: 'Great Vibes', cursive;
@@ -387,9 +370,6 @@ h1 span {
     animation-delay: 0.8s;
 }
 
-/* ============================================================
-   АНИМАЦИИ (ключевые кадры)
-   ============================================================ */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(50px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -428,9 +408,6 @@ h1 span {
     100% { background-position: -200% 50%; filter: drop-shadow(0 0 8px rgba(255,255,255,0.2)); transform: scale(1) rotate(0); }
 }
 
-/* ============================================================
-   МОДАЛЬНОЕ ОКНО (список гостей)
-   ============================================================ */
 .modal {
     display: none;
     position: fixed;
@@ -482,9 +459,6 @@ h1 span {
     transform: rotate(90deg);
 }
 
-/* ============================================================
-   СПИСОК ГОСТЕЙ (внутри модалки)
-   ============================================================ */
 #modalGuestList {
     display: flex;
     flex-direction: column;
@@ -513,7 +487,6 @@ h1 span {
     letter-spacing: .2px;
 }
 
-/* Стилизация скролла модалки */
 .modal-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -525,9 +498,6 @@ h1 span {
     border-radius: 10px;
 }
 
-/* ============================================================
-   МЕСТО ПРОВЕДЕНИЯ (адрес)
-   ============================================================ */
 .venue-block {
     margin-top: 30px;
     padding: 20px;
@@ -546,9 +516,6 @@ h1 span {
     line-height: 1.6;
 }
 
-/* ============================================================
-   КАРУСЕЛЬ (Swiper)
-   ============================================================ */
 .photo-swiper {
     margin-top: 30px;
     width: 100%;
@@ -609,9 +576,6 @@ h1 span {
     font-weight: bold;
 }
 
-/* ============================================================
-   БЛОК «ЖДЁМ ВАС!» + КАЛЕНДАРЬ
-   ============================================================ */
 .waiting-block {
     margin-top: 50px;
     text-align: center;
@@ -699,9 +663,6 @@ h1 span {
     box-shadow: 0 0 20px rgba(184,146,73,0.3);
 }
 
-/* ============================================================
-   ПОДПИСЬ АВТОРА
-   ============================================================ */
 .author-footer {
     margin-top: 50px;
     padding: 20px 0 10px;
@@ -728,130 +689,13 @@ h1 span {
     font-weight: 500;
 }
 
-/* ============================================================
-   АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ТАЙМЕРА
-   ============================================================ */
-
-/* Начальное состояние: карточка смещена вправо и прозрачна */
-.timer-card {
-    opacity: 0;
-    transform: translateX(80px) scale(0.9) rotate(5deg);
-    transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Конечное состояние: карточка на месте и видна */
-.timer-card.visible {
-    opacity: 1;
-    transform: translateX(0) scale(1) rotate(0deg);
-}
-
-/* Задержки для каждой карточки, чтобы они появлялись по очереди */
-.timer-card:nth-child(1) { transition-delay: 0.5s; }
-.timer-card:nth-child(2) { transition-delay: 1s; }
-.timer-card:nth-child(3) { transition-delay: 1.5s; }
-.timer-card:nth-child(4) { transition-delay: 2s; }
-
-/* ============================================================
-   АДАПТИВ (медиа-запросы)
-   ============================================================ */
-@media (max-width: 700px) {
-    body { padding: 15px; }
-    .wrapper { padding: 35px 22px 40px; border-radius: 30px; }
-    .wrapper::before, .wrapper::after { font-size: 20px; }
-
-    .invite {
-        font-size: 28px;
-        line-height: 1.4;
-        max-width: 90%;
-        margin: 0 auto;
-    }
-    .venue-text {
-        font-size: 32px;
-        line-height: 1.4;
-    }
-    h1 { font-size: 72px; }
-    h1 span { font-size: 44px; }
-    .number-date { font-size: 64px; height: calc(22px * 1.4 * 2); }
-    .month { font-size: 22px; }
-
-    .timer { gap: 14px; }
-    .timer-card { width: 110px; height: 110px; }
-    .timer-number { font-size: 40px; }
-    .timer-text { font-size: 10px; letter-spacing: 1.5px; }
-
-    .guest { padding: 30px 20px; }
-    .guest h2 { font-size: 44px; }
-    .guest input { height: 50px; font-size: 15px; }
-    .guest button { height: 52px; font-size: 16px; }
-
-    .photo-swiper { height: 300px; }
-    .swiper-button-next,
-    .swiper-button-prev { width: 30px; height: 30px; }
-    .swiper-button-next::after,
-    .swiper-button-prev::after { font-size: 14px; }
-}
-
-@media (max-width: 500px) {
-    .timer {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 6px;
-        justify-content: center;
-        padding: 0 5px;
-        margin: 40px 0 30px;
-    }
-    .timer-card {
-        width: 70px;
-        height: 70px;
-        flex-shrink: 0;
-        background: rgba(255,255,255,0.85);
-        border: 1px solid rgba(205,170,90,0.3);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    }
-    .timer-number {
-        font-size: 24px;
-        line-height: 1;
-        margin-bottom: 0;
-    }
-    .timer-text {
-        font-size: 9px;
-        letter-spacing: 1px;
-    }
-
-    .waiting-title { font-size: 44px; }
-    .calendar { font-size: 16px; max-width: 100%; }
-    .calendar td { padding: 10px 6px; }
-}
-
-@media (max-width: 430px) {
-    .wrapper { padding: 25px 16px 30px; }
-    h1 { font-size: 54px; }
-    h1 span { font-size: 34px; }
-    .number-date { font-size: 48px; height: calc(18px * 1.4 * 2); }
-    .month { font-size: 18px; }
-    .invite { font-size: 28px; }
-    .timer { gap: 4px; }
-    .timer-card { width: 60px; height: 60px; }
-    .timer-number { font-size: 20px; }
-    .timer-text { font-size: 8px; }
-    .date { gap: 18px; }
-    .waiting-title { font-size: 36px; }
-}
-
-/* ============================================================
-   АНИМАЦИЯ ИМЁН И АМПЕРСАНДА
-   ============================================================ */
-
-/* Начальное состояние: имена сдвинуты, амперсанд уменьшен, всё прозрачно */
 .name-left,
 .name-right,
 .ampersand-glow {
     opacity: 0;
-    transition: opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
-    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Разные шрифты для имён */
 .name-left {
     font-family: 'Great Vibes', cursive;
     transform: translateX(-120px);
@@ -862,20 +706,17 @@ h1 span {
     transform: translateX(120px);
 }
 
-/* Амперсанд остаётся на Great Vibes */
 .ampersand-glow {
     font-family: 'Great Vibes', cursive;
     transform: scale(0.3) rotate(-15deg);
-    animation: none; /* отключаем мерцание до появления */
+    animation: none;
 }
 
-/* Увеличиваем размер имён (общий для обоих) */
 .name-left,
 .name-right {
-    font-size: 100px;         /* ← базовый размер для ПК */
+    font-size: 100px;
 }
 
-/* Конечное состояние при добавлении класса .visible */
 .name-left.visible,
 .name-right.visible,
 .ampersand-glow.visible {
@@ -883,12 +724,10 @@ h1 span {
     transform: translateX(0) scale(1) rotate(0deg);
 }
 
-/* Включаем мерцание амперсанда только когда он видим */
 .ampersand-glow.visible {
     animation: diamondShine 3.5s ease-in-out infinite;
 }
 
-/* ===== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ===== */
 @media (max-width: 700px) {
     .name-left,
     .name-right {
@@ -932,58 +771,40 @@ h1 span {
     display: block;
 }
 
-/* сердца */
-.hero {
-    position: relative;
-    overflow: hidden;
-}
-
 .hero-bg {
     position: absolute;
-
     left: 50%;
     top: 22%;
-
     transform: translate(-50%, -50%);
-
-    width: 850px;      /* потом подберем */
-
+    width: 850px;
     opacity: 0;
-
     transition: opacity 2s ease;
-
     pointer-events: none;
-
     z-index: 0;
 }
 
-/* весь текст поверх картинки */
 .hero > *:not(.hero-bg) {
     position: relative;
     z-index: 1;
 }
 
 .hero.show-hearts .hero-bg {
-    opacity: 0.12;   /* можно менять от 0.05 до 0.25 */
+    opacity: 0.12;
     transform: translate(-50%, -50%) scale(1.05);
 }
+
 @media (max-width: 600px) {
-
     .hero-bg {
-
         width: 400px;
-
         top: 20%;
-
     }
-
 }
-/* ===== ПОДПИСИ ПОД ФОТО ===== */
+
 .couple-labels {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px; /* подогнать под расстояние между кругами */
+    gap: 100px;
     margin-top: 16px;
     opacity: 0;
     transition: opacity 1s ease;
@@ -1000,10 +821,9 @@ h1 span {
     font-weight: bold;
     color: #8f7347;
     text-align: center;
-    width: 160px; /* ширина как у кругов, чтобы центрировалось */
+    width: 160px;
 }
 
-/* Адаптив */
 @media (max-width: 600px) {
     .couple-labels {
         gap: 40px;
@@ -1013,6 +833,7 @@ h1 span {
         width: 120px;
     }
 }
+
 @media (max-width: 430px) {
     .couple-labels {
         gap: 30px;
@@ -1024,7 +845,6 @@ h1 span {
     }
 }
 
-/* ===== КРУГЛЫЕ ФОТО С АНИМАЦИЕЙ ПРИЛЁТА ===== */
 .couple-photos {
     display: flex;
     justify-content: center;
@@ -1043,7 +863,6 @@ h1 span {
     flex-shrink: 0;
     transition: transform 0.3s ease;
     opacity: 0;
-    /* Фоновая картинка */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1068,6 +887,7 @@ h1 span {
 .couple-photos.visible .photo-circle-left {
     animation-delay: 0.1s;
 }
+
 .couple-photos.visible .photo-circle-right {
     animation-delay: 0.4s;
 }
@@ -1086,7 +906,6 @@ h1 span {
     100% { transform: translateX(0); opacity: 1; }
 }
 
-/* Адаптив */
 @media (max-width: 600px) {
     .photo-circle {
         width: 160px;
@@ -1096,6 +915,7 @@ h1 span {
         gap: 30px;
     }
 }
+
 @media (max-width: 430px) {
     .photo-circle {
         width: 130px;
@@ -1106,7 +926,6 @@ h1 span {
     }
 }
 
-/* ===== ПОДСКАЗКА ПРИ ФОКУСЕ ===== */
 .form-hint {
     display: none;
     font-family: 'Montserrat', sans-serif;
