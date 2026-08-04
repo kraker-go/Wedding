@@ -129,20 +129,26 @@ form.addEventListener("submit", async function (e) {
 const modal = document.getElementById('guestModal');
 const modalClose = document.getElementById('modalClose');
 const guestCountBlock = document.getElementById('guestCountBlock');
+const overlay = document.getElementById('overlay');
 
 if (guestCountBlock) {
     guestCountBlock.addEventListener('click', async () => {
         await loadModalGuests();
         modal.style.display = 'block';
+        if (overlay) overlay.style.display = 'block';
     });
 }
 if (modalClose) {
     modalClose.addEventListener('click', () => {
         modal.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
     });
 }
 window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.style.display = 'none';
+    if (e.target === modal) {
+        modal.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+    }
 });
 
 // ============================================================
@@ -324,12 +330,3 @@ if (firstName && hint) {
     firstName.addEventListener('blur', hideHint);
 }
 
-const overlay = document.getElementById('overlay');
-
-// В обработчике клика по счётчику:
-overlay.style.display = 'block';
-modal.style.display = 'block';
-
-// При закрытии:
-overlay.style.display = 'none';
-modal.style.display = 'none';
