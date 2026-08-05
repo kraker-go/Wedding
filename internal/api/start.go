@@ -1,7 +1,10 @@
+// internal/api/start.go
 package api
 
 import (
 	"fmt"
+	"wedding/internal/server"
+
 	"go.uber.org/zap"
 	"net/http"
 	"wedding/internal/config"
@@ -12,35 +15,26 @@ import (
 	"wedding/internal/service"
 )
 
-func Start(logg *zap.Logger) error {
-
-	logg.Info("конфигурация Postgres загружена")
+// StartServer создаёт и возвращает настроенный *http.Server
+func StartServer(logg *zap.Logger) (*http.Server, error) {
 	cfg, err := config.InitConfig()
 	if err != nil {
-		logg.Error("конфиг", zap.Error(err))
-		return fmt.Errorf("api %w", err)
+		return nil, fmt.Errorf("config init: %w", err)
 	}
 
 	port, err := config.ServerInit()
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return nil, err
 	}
-
-	logg.Info("конфигурация сервера загружена")
 
 	db, err := database.ConnectPostgres(*cfg)
 	if err != nil {
-		logg.Error("Ошибка подключения к Postgres", zap.Error(err))
-		return fmt.Errorf("не удалось подключиться к БД: %w", err)
+		return nil, fmt.Errorf("db connect: %w", err)
 	}
-
-	defer db.Close()
-
-	logg.Info("Postgres подключен")
+	// не закрываем здесь, закроем при остановке приложения
 
 	if err = database.InitMigration(db); err != nil {
-		logg.Error("Ошибка миграции", zap.Error(err))
-		return fmt.Errorf("не удалось применить миграции: %w", err)
+		return nil, fmt.Errorf("migration: %w", err)
 	}
 
 	repo := repository.NewRepository(db)
@@ -49,20 +43,14 @@ func Start(logg *zap.Logger) error {
 
 	rout, err := router.InitRouter(hand)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return nil, err
 	}
 
-	startServer, err := database.ConnectServer(port.Port, rout)
+	srv, err := server.ConnectServer(port.Port, rout) // <- теперь это импорт server (нет цикла)
 	if err != nil {
-		return fmt.Errorf(err.Error())
+		return nil, err
 	}
 
-	logg.Info("Сервер запущен")
-
-	if err = startServer.ListenAndServe(); err != nil &&
-		err != http.ErrServerClosed {
-		return fmt.Errorf("ошибка запуска сервер %w", err)
-	}
-
-	return nil
+	// Возвращаем сервер, но не запускаем его
+	return srv, nil
 }

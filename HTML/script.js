@@ -58,29 +58,145 @@ async function loadGuestCount() {
 }
 
 // ============================================================
-// 4. ЗАГРУЗКА СПИСКА ГОСТЕЙ ДЛЯ МОДАЛКИ
-// ============================================================
+// ===== ЗАГРУЗКА СПИСКА ГОСТЕЙ С INLINE-РЕДАКТИРОВАНИЕМ =====
 async function loadModalGuests() {
     try {
         const res = await fetch('/user/get');
         const guests = await res.json();
         const list = document.getElementById('modalGuestList');
+        const msg = document.getElementById('guestListMessage');
+        msg.textContent = '';
+        msg.className = '';
         list.innerHTML = '';
+
         if (guests.length === 0) {
             list.innerHTML = '<p style="text-align:center;color:#999;">Пока никто не подтвердил 😔</p>';
             return;
         }
+
         guests.forEach((g, index) => {
             const div = document.createElement('div');
             div.className = 'guest-item';
-            div.innerHTML = `<div class="guest-name">${index + 1}. ${g.firstname} ${g.lastname}</div>`;
+            div.dataset.id = g.id;
+
+            // Контейнер для отображения имени
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'guest-name';
+            nameSpan.textContent = `${index + 1}. ${g.firstname} ${g.lastname}`;
+
+            // Контейнер для редактирования (скрыт по умолчанию)
+            const editContainer = document.createElement('span');
+            editContainer.className = 'edit-container';
+            editContainer.style.display = 'none';
+
+            const inputFirst = document.createElement('input');
+            inputFirst.type = 'text';
+            inputFirst.className = 'edit-input';
+            inputFirst.value = g.firstname;
+
+            const inputLast = document.createElement('input');
+            inputLast.type = 'text';
+            inputLast.className = 'edit-input';
+            inputLast.value = g.lastname;
+
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = '💾';
+            saveBtn.className = 'action-icon edit';
+            saveBtn.title = 'Сохранить';
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = '✖';
+            cancelBtn.className = 'action-icon delete';
+            cancelBtn.title = 'Отмена';
+
+            editContainer.appendChild(inputFirst);
+            editContainer.appendChild(inputLast);
+            editContainer.appendChild(saveBtn);
+            editContainer.appendChild(cancelBtn);
+
+            // Кнопка редактирования (карандаш)
+            const editBtn = document.createElement('button');
+            editBtn.className = 'action-icon edit';
+            editBtn.textContent = '✏️';
+            editBtn.title = 'Редактировать';
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Скрываем имя, показываем поля
+                nameSpan.style.display = 'none';
+                editContainer.style.display = 'inline-block';
+                editBtn.style.display = 'none';
+            });
+
+            // Кнопка удаления
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'action-icon delete';
+            deleteBtn.textContent = '🗑️';
+            deleteBtn.title = 'Удалить';
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteGuest(g.id);
+            });
+
+            const actions = document.createElement('span');
+            actions.appendChild(editBtn);
+            actions.appendChild(deleteBtn);
+
+            div.appendChild(nameSpan);
+            div.appendChild(editContainer);
+            div.appendChild(actions);
             list.appendChild(div);
+
+            // Обработчик сохранения
+            saveBtn.addEventListener('click', async () => {
+                const newFirst = inputFirst.value.trim();
+                const newLast = inputLast.value.trim();
+                if (!newFirst || !newLast) {
+                    msg.textContent = 'Заполните все поля.';
+                    msg.className = 'error';
+                    return;
+                }
+                try {
+                    const res = await fetch(`/user/update/${g.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: g.id, firstname: newFirst, lastname: newLast })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        msg.textContent = data.message || '✅ Обновлено';
+                        msg.className = 'success';
+                        // Возвращаем отображение имени
+                        nameSpan.textContent = `${index + 1}. ${newFirst} ${newLast}`;
+                        nameSpan.style.display = 'inline';
+                        editContainer.style.display = 'none';
+                        editBtn.style.display = 'inline-block';
+                        // Обновляем данные в объекте (для повторного редактирования)
+                        g.firstname = newFirst;
+                        g.lastname = newLast;
+                        // Можно перезагрузить список, чтобы обновить всё
+                        // loadModalGuests(); // раскомментируй, если хочешь полный перезапуск
+                    } else {
+                        const text = await res.text();
+                        msg.textContent = '❌ Ошибка: ' + text;
+                        msg.className = 'error';
+                    }
+                } catch (err) {
+                    msg.textContent = '❌ Сервер недоступен.';
+                    msg.className = 'error';
+                }
+            });
+
+            // Обработчик отмены
+            cancelBtn.addEventListener('click', () => {
+                nameSpan.style.display = 'inline';
+                editContainer.style.display = 'none';
+                editBtn.style.display = 'inline-block';
+            });
         });
     } catch (e) {
         console.error('Ошибка загрузки списка:', e);
     }
 }
-
 // ============================================================
 // 5. ОТПРАВКА ФОРМЫ
 // ============================================================
@@ -330,3 +446,93 @@ if (firstName && hint) {
     firstName.addEventListener('blur', hideHint);
 }
 
+// ===== ПОКАЗ СООБЩЕНИЙ В СПИСКЕ ГОСТЕЙ =====
+function showGuestListMessage(text, isSuccess = true) {
+    const msg = document.getElementById('guestListMessage');
+    msg.textContent = text;
+    msg.className = isSuccess ? 'success' : 'error';
+    // Автоматически скрыть через 3 секунды
+    clearTimeout(msg._hideTimer);
+    msg._hideTimer = setTimeout(() => {
+        msg.textContent = '';
+        msg.className = '';
+    }, 3000);
+}
+
+// ===== УДАЛЕНИЕ ГОСТЯ =====
+async function deleteGuest(id) {
+    if (!confirm('Удалить гостя из списка?')) return;
+
+    try {
+        const res = await fetch(`/user/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            const data = await res.json();
+            showGuestListMessage(data.message || '✅ Гость удалён', true);
+            loadModalGuests();    // обновляем список
+            loadGuestCount();     // обновляем счётчик
+        } else {
+            const text = await res.text();
+            showGuestListMessage('❌ Ошибка: ' + text, false);
+        }
+    } catch (err) {
+        showGuestListMessage('❌ Сервер недоступен', false);
+    }
+}
+
+// ===== РЕДАКТИРОВАНИЕ ГОСТЯ =====
+function openEditModal(id, firstname, lastname) {
+    console.log('openEditModal called with id:', id);
+    document.getElementById('editId').value = id;
+    document.getElementById('editFirstName').value = firstname;
+    document.getElementById('editLastName').value = lastname;
+    document.getElementById('editModal').style.display = 'flex';
+    document.getElementById('editMessage').innerHTML = '';
+}
+
+// Закрыть редактирование
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// Обработчик формы редактирования (должен быть добавлен один раз)
+document.getElementById('editForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const id = document.getElementById('editId').value;
+    const firstname = document.getElementById('editFirstName').value.trim();
+    const lastname = document.getElementById('editLastName').value.trim();
+
+    if (!firstname || !lastname) {
+        document.getElementById('editMessage').innerHTML = 'Заполните все поля.';
+        return;
+    }
+
+    try {
+        const res = await fetch(`/user/update/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, firstname, lastname })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            document.getElementById('editMessage').innerHTML = data.message || '✅ Данные обновлены!';
+            // Скрыть модалку и обновить список через секунду
+            setTimeout(() => {
+                closeEditModal();
+                loadModalGuests();
+                loadGuestCount();
+            }, 1000);
+        } else {
+            const text = await res.text();
+            document.getElementById('editMessage').innerHTML = '❌ Ошибка: ' + text;
+        }
+    } catch (err) {
+        document.getElementById('editMessage').innerHTML = '❌ Сервер недоступен.';
+    }
+});
+
+// Закрытие редактирования по клику вне окна
+document.getElementById('editModalClose')?.addEventListener('click', closeEditModal);
+window.addEventListener('click', function(e) {
+    const modal = document.getElementById('editModal');
+    if (e.target === modal) closeEditModal();
+});
