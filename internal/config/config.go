@@ -18,7 +18,7 @@ type Config struct {
 }
 
 func InitConfig() (*Config, error) {
-	_ = godotenv.Load(".env_local")
+	_ = godotenv.Load(".env")
 
 	return &Config{
 		DB_HOST:     os.Getenv("DB_HOST"),
