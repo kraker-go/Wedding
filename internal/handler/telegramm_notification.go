@@ -59,16 +59,16 @@ func formatMessage(g models.Guest, action string) string {
 	switch action {
 	case "add":
 		return fmt.Sprintf("🎉 Новый гость!\nИмя: %s %s", g.FirstName, g.LastName)
-	case "update":
-		return fmt.Sprintf("🔄 Гость обновлён!\nИмя: %s %s", g.FirstName, g.LastName)
 	case "delete":
 		return fmt.Sprintf("Гость удалился!\nИмя: %s %s", g.FirstName, g.LastName)
+	case "update":
+		return fmt.Sprintf("🔄 Гость обновлён!\nИмя: %s %s", g.FirstName, g.LastName)
 	default:
 		return fmt.Sprintf("ℹ️ Гость: %s %s", g.FirstName, g.LastName)
 	}
 }
 
-// Notify отправляет данные в канал (неблокирующий)
+// Notify отправляет данные в канал (неблокирующий)))
 func (n *Notifier) Notify(guest models.Guest, action string) {
 	select {
 	case n.ch <- Notification{Guest: guest, Action: action}:
