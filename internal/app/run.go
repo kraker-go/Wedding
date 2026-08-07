@@ -20,15 +20,13 @@ func Run() {
 		panic(err)
 	}
 
-	// Создаём сервер
 	srv, err := api.StartServer(logg)
 	if err != nil {
 		logg.Fatal("Ошибка создания сервера", zap.Error(err))
 	}
 
-	// Запускаем в горутине
 	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err = srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logg.Fatal("Ошибка запуска сервера", zap.Error(err))
 		}
 	}()
@@ -45,7 +43,7 @@ func Run() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	if err := srv.Shutdown(ctx); err != nil {
+	if err = srv.Shutdown(ctx); err != nil {
 		logg.Error("Ошибка при остановке сервера", zap.Error(err))
 	} else {
 		logg.Info("Сервер остановлен")

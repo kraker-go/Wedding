@@ -40,6 +40,10 @@ func (uh *UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	if err == nil && uh.notifier != nil {
+		go uh.notifier.Notify(user, "update") // ✅ отправляет в уже существующий канал
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err = json.NewEncoder(w).Encode(map[string]string{

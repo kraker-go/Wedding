@@ -31,6 +31,19 @@ func InitConfig() (*Config, error) {
 
 }
 
+type Telegramm struct {
+	Bot    string
+	ChatID string
+}
+
+func InitTelegramm() (*Telegramm, error) {
+	_ = godotenv.Load(".env")
+	return &Telegramm{
+		Bot:    os.Getenv("TG_BOT"),
+		ChatID: os.Getenv("CHAT_ID"),
+	}, nil
+}
+
 func ServerInit() (*Server, error) {
 	port := os.Getenv("PORT")
 	if port == "" {

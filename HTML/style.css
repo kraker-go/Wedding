@@ -22,17 +22,17 @@ body {
     font-family: 'Montserrat', 'Arial', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    background: url('fon.webp') center/cover fixed no-repeat;
-    background: #f9f5ef;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-}
+    /* background: url('fon.webp') center/cover fixed no-repeat;*/
+     background: url('Bali.jpg')center/cover no-repeat fixed;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding: 30px;
+ }
 
-/* ============================================================
-   ОТКРЫТКА (ОСНОВНОЙ БЛОК)
-   ============================================================ */
+ /* ============================================================
+    ОТКРЫТКА (ОСНОВНОЙ БЛОК)
+    ============================================================ */
 .wrapper {
     max-width: 950px;
     width: 100%;

@@ -12,7 +12,7 @@ type CRUD interface {
 	GetAllUsers(context.Context) ([]models.Guest, error)
 	GetCountUsers(context.Context) (int, error)
 	UpdateUser(context.Context, *models.Guest) error
-	DeleteUser(context.Context, int) error
+	DeleteUser(context.Context, int) (*models.Guest, error)
 }
 
 type UserService struct {
@@ -80,6 +80,6 @@ func (us *UserService) GetCountUsers(ctx context.Context) (int, error) {
 	return us.serv.GetCountUsers(ctx)
 }
 
-func (us *UserService) DeleteUser(ctx context.Context, id int) error {
+func (us *UserService) DeleteUser(ctx context.Context, id int) (*models.Guest, error) {
 	return us.serv.DeleteUser(ctx, id)
 }

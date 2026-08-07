@@ -22,7 +22,7 @@ func (uh *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	err = uh.hand.DeleteUser(ctx, id)
+	user, err := uh.hand.DeleteUser(ctx, id)
 	if err != nil {
 		if errors.Is(err, models.ErrorsNotFound) {
 			http.Error(w, "Гость не найден", http.StatusNotFound)
@@ -32,7 +32,9 @@ func (uh *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request)
 		}
 		return
 	}
-
+	if err == nil && uh.notifier != nil {
+		go uh.notifier.Notify(*user, "delete") // ✅ отправляет в уже существующий канал
+	}
 	uh.logg.Info("гость успешно удален")
 
 	w.Header().Set("Content-Type", "application/json")

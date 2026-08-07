@@ -6,10 +6,11 @@ import (
 )
 
 type UserHandler struct {
-	hand *service.UserService
-	logg *zap.Logger
+	hand     *service.UserService
+	logg     *zap.Logger
+	notifier *Notifier
 }
 
-func NewUserHandler(hand *service.UserService, logg *zap.Logger) *UserHandler {
-	return &UserHandler{hand: hand, logg: logg}
+func NewUserHandler(hand *service.UserService, logg *zap.Logger, not *Notifier) *UserHandler {
+	return &UserHandler{hand: hand, logg: logg, notifier: not}
 }

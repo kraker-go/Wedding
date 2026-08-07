@@ -31,26 +31,31 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 	if err != nil {
 		return nil, fmt.Errorf("db connect: %w", err)
 	}
-	// не закрываем здесь, закроем при остановке приложения
 
 	if err = database.InitMigration(db); err != nil {
 		return nil, fmt.Errorf("migration: %w", err)
 	}
 
+	tg, err := config.InitTelegramm()
+	if err != nil {
+		return nil, fmt.Errorf("telegram init: %w", err)
+	}
+
+	notif := handler.Telegramm(tg.Bot, tg.ChatID)
+
 	repo := repository.NewRepository(db)
 	serv := service.NewUserService(repo)
-	hand := handler.NewUserHandler(serv, logg)
+	hand := handler.NewUserHandler(serv, logg, notif)
 
 	rout, err := router.InitRouter(hand)
 	if err != nil {
 		return nil, err
 	}
 
-	srv, err := server.ConnectServer(port.Port, rout) // <- теперь это импорт server (нет цикла)
+	srv, err := server.ConnectServer(port.Port, rout)
 	if err != nil {
 		return nil, err
 	}
 
-	// Возвращаем сервер, но не запускаем его
 	return srv, nil
 }

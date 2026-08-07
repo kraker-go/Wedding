@@ -33,6 +33,9 @@ func (uh *UserHandler) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err == nil && uh.notifier != nil {
+		go uh.notifier.Notify(user, "add") // ✅ отправляет в уже существующий канал
+	}
 	uh.logg.Info("Гость успешно добавлен !")
 
 	w.Header().Set("Content-Type", "application/json")

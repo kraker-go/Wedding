@@ -25,3 +25,5 @@ const GetAll = "SELECT id, firstname, lastname, created_at FROM guests ORDER BY 
 const Delete = "DELETE FROM guests WHERE id = $1"
 
 const Update = "UPDATE guests SET firstname = $1, lastname = $2 WHERE id = $3"
+
+const GetUserByID = "SELECT id, firstname, lastname, created_at FROM guests WHERE id = $1"
