@@ -22,10 +22,9 @@ body {
     font-family: 'Montserrat', 'Arial', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    /* background: url('fon.webp') center/cover fixed no-repeat;*/
-     background: url('Bali.jpg')center/cover no-repeat fixed;
      display: flex;
      justify-content: center;
+     background: url('Bali.jpg')center/cover no-repeat fixed;
      align-items: center;
      padding: 30px;
  }
