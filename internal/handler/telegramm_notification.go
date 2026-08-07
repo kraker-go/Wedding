@@ -77,7 +77,7 @@ func (n *Notifier) Notify(guest models.Guest, action string) {
 	}
 }
 
-// Shutdown останавливает воркер (для graceful shutdown)
+// Shutdown останавливает воркер (для graceful shutdown)))
 func (n *Notifier) Shutdown() {
 	close(n.ch)
 	n.wg.Wait()
