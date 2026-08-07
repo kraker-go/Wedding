@@ -38,7 +38,7 @@ func Telegramm(botToken, chatID string) *Notifier {
 	return n
 }
 
-// worker читает из канала и отправляет сообщения
+// worker читает из канала и отправляет
 func (n *Notifier) worker() {
 	defer n.wg.Done()
 	for guest := range n.ch {
