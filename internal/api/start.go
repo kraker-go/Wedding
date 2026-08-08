@@ -27,8 +27,6 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 		return nil, err
 	}
 
-	logg.Info("Starting server on port", zap.String("port", port.Port))
-
 	db, err := database.ConnectPostgres(*cfg)
 	if err != nil {
 		return nil, fmt.Errorf("db connect: %w", err)
@@ -54,7 +52,13 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 		return nil, err
 	}
 
-	srv, err := server.ConnectServer(port.Port, rout)
+	logg.Info("Starting server on port", zap.String("port", port.Port))
+	srv := &http.Server{
+		Addr:    port.Port,
+		Handler: rout,
+	}
+
+	srv, err = server.ConnectServer(port.Port, rout)
 	if err != nil {
 		return nil, err
 	}
