@@ -18,6 +18,7 @@ type Notification struct {
 
 type Notifier struct {
 	ch     chan Notification
+	msgCh  chan string
 	wg     sync.WaitGroup
 	bot    *tgbot.Bot
 	chatID string
@@ -30,6 +31,7 @@ func Telegramm(botToken, chatID string) *Notifier {
 	}
 	n := &Notifier{
 		ch:     make(chan Notification, 100),
+		msgCh:  make(chan string, 100),
 		bot:    bot,
 		chatID: chatID,
 	}
@@ -41,17 +43,26 @@ func Telegramm(botToken, chatID string) *Notifier {
 // worker читает из канала и отправляет
 func (n *Notifier) worker() {
 	defer n.wg.Done()
-	for guest := range n.ch {
-		msg := formatMessage(guest.Guest, guest.Action)
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		_, err := n.bot.SendMessage(ctx, &tgbot.SendMessageParams{
-			ChatID: n.chatID,
-			Text:   msg,
-		})
-		if err != nil {
-			log.Printf("Не удалось отправить уведомление: %v", err)
+	for {
+		select {
+		case notif := <-n.ch:
+			msg := formatMessage(notif.Guest, notif.Action)
+			n.sendMessage(msg)
+		case text := <-n.msgCh:
+			n.sendMessage(text)
 		}
+	}
+}
+
+func (n *Notifier) sendMessage(text string) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, err := n.bot.SendMessage(ctx, &tgbot.SendMessageParams{
+		ChatID: n.chatID,
+		Text:   text,
+	})
+	if err != nil {
+		log.Printf("Не удалось отправить уведомление: %v", err)
 	}
 }
 
@@ -81,4 +92,11 @@ func (n *Notifier) Notify(guest models.Guest, action string) {
 func (n *Notifier) Shutdown() {
 	close(n.ch)
 	n.wg.Wait()
+}
+func (n *Notifier) NotifyMessage(text string) {
+	select {
+	case n.msgCh <- text:
+	default:
+		log.Println("Канал уведомлений переполнен, сообщение потеряно")
+	}
 }
