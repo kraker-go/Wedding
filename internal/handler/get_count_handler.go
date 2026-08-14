@@ -30,8 +30,7 @@ func (uh *UserHandler) GetCountUsersHandler(w http.ResponseWriter, r *http.Reque
 				"IP: " + ip + "\n" +
 				"Город: " + city + "\n" +
 				"Устройство: " + userAgent + "\n" +
-				"Время: " + time.Now().Format("2006-01-02 15:04:05") + "\n" +
-				"Всего гостей: " + string(rune(count))
+				"Время: " + time.Now().Format("2006-01-02 15:04")
 
 			uh.notifier.NotifyMessage(msg)
 		}()

@@ -28,7 +28,7 @@ func GetCityByIP(ip string) (string, error) {
 	defer resp.Body.Close()
 
 	var result GeoInfo
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", err
 	}
 

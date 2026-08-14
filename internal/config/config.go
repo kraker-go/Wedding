@@ -18,7 +18,7 @@ type Config struct {
 }
 
 func InitConfig() (*Config, error) {
-	_ = godotenv.Load(".env_local")
+	_ = godotenv.Load(".env")
 
 	return &Config{
 		DB_HOST:     os.Getenv("DB_HOST"),
@@ -37,7 +37,7 @@ type Telegramm struct {
 }
 
 func InitTelegramm() (*Telegramm, error) {
-	_ = godotenv.Load(".env_local")
+	_ = godotenv.Load(".env")
 	return &Telegramm{
 		Bot:    os.Getenv("TG_BOT"),
 		ChatID: os.Getenv("CHAT_ID"),
