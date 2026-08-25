@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
-	"time"
-	"wedding/internal/handler/geo"
 )
 
 func (uh *UserHandler) GetCountUsersHandler(w http.ResponseWriter, r *http.Request) {
@@ -18,22 +16,6 @@ func (uh *UserHandler) GetCountUsersHandler(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		uh.logg.Error(err.Error())
 		return
-	}
-	if uh.notifier != nil {
-		go func() {
-			ip := getClientIP(r)
-			userAgent := r.UserAgent()
-			// Получаем город по IP (асинхронно, с таймаутом)
-			city, _ := geo.GetCityByIP(ip) // ошибку игнорируем, просто не покажем город
-
-			msg := "👀 **Посещение сайта**\n" +
-				"IP: " + ip + "\n" +
-				"Город: " + city + "\n" +
-				"Устройство: " + userAgent + "\n" +
-				"Время: " + time.Now().Format("2006-01-02 15:04")
-
-			uh.notifier.NotifyMessage(msg)
-		}()
 	}
 
 	uh.logg.Info("количество гостей определено")

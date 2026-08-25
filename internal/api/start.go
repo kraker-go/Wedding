@@ -15,7 +15,6 @@ import (
 	"wedding/internal/service"
 )
 
-// StartServer создаёт и возвращает настроенный *http.Server
 func StartServer(logg *zap.Logger) (*http.Server, error) {
 	cfg, err := config.InitConfig()
 	if err != nil {
@@ -41,11 +40,13 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 		return nil, fmt.Errorf("telegram init: %w", err)
 	}
 
-	notif := handler.Telegramm(tg.Bot, tg.ChatID)
+	notif := handler.Telegramm(tg.Bot, tg.ChatID, nil)
 
 	repo := repository.NewRepository(db)
 	serv := service.NewUserService(repo)
 	hand := handler.NewUserHandler(serv, logg, notif)
+
+	notif.SetHandler(hand)
 
 	rout, err := router.InitRouter(hand)
 	if err != nil {

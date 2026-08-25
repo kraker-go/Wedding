@@ -48,12 +48,33 @@ setInterval(updateCountdown, 1000);
 // ============================================================
 async function loadGuestCount() {
     try {
+
         const res = await fetch('/user/count');
-        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error('Ошибка HTTP: ' + res.status);
+        }
+
+        const data = await res.text();
+
         const el = document.getElementById('guestCount');
-        if (el) el.textContent = data;
+
+        if (!el) {
+            console.error('Элемент #guestCount не найден');
+            return;
+        }
+
+        el.textContent = data;
+
+        console.log('Количество гостей:', data);
+
     } catch (e) {
-        console.error('Ошибка загрузки количества:', e);
+
+        console.error(
+            'Ошибка загрузки количества:',
+            e
+        );
+
     }
 }
 
@@ -163,18 +184,14 @@ async function loadModalGuests() {
                     });
                     if (res.ok) {
                         const data = await res.json();
-                        msg.textContent = data.message || '✅ Обновлено';
+                        msg.textContent = data.message || '✏️ Запрос на обновление данных ... ';
                         msg.className = 'success';
-                        // Возвращаем отображение имени
                         nameSpan.textContent = `${index + 1}. ${newFirst} ${newLast}`;
                         nameSpan.style.display = 'inline';
                         editContainer.style.display = 'none';
                         editBtn.style.display = 'inline-block';
-                        // Обновляем данные в объекте (для повторного редактирования)
                         g.firstname = newFirst;
                         g.lastname = newLast;
-                        // Можно перезагрузить список, чтобы обновить всё
-                        // loadModalGuests(); // раскомментируй, если хочешь полный перезапуск
                     } else {
                         const text = await res.text();
                         msg.textContent = '❌ Ошибка: ' + text;
@@ -200,73 +217,104 @@ async function loadModalGuests() {
 // ============================================================
 // 5. ОТПРАВКА ФОРМЫ
 // ============================================================
-form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    message.innerHTML = "";
-    message.className = "";
+if (form) {
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        message.innerHTML = "";
+        message.className = "";
 
-    const data = {
-        firstname: firstName.value.trim(),
-        lastname: lastName.value.trim()
-    };
+        const data = {
+            firstname: firstName.value.trim(),
+            lastname: lastName.value.trim()
+        };
 
-    if (!data.firstname || !data.lastname) {
-        message.className = "error";
-        message.innerHTML = "Заполните все поля.";
-        return;
-    }
-
-    try {
-        const response = await fetch("/user", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-        if (response.ok) {
-            message.className = "success";
-            message.innerHTML = "✔ Спасибо! Ваше присутствие подтверждено.";
-            form.reset();
-            await loadGuestCount();
-        } else {
-            const text = await response.text();
+        if (!data.firstname || !data.lastname) {
             message.className = "error";
-            message.innerHTML = "Ошибка: " + text;
+            message.innerHTML = "Заполните все поля.";
+            return;
         }
-    } catch (err) {
-        message.className = "error";
-        message.innerHTML = "Сервер недоступен.";
-        console.error(err);
-    }
-});
+
+        try {
+            const response = await fetch("/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                message.className = "success";
+                message.innerHTML =
+                    "✔ Спасибо! Ваше присутствие подтверждено.";
+
+                form.reset();
+
+                await loadGuestCount();
+
+            } else {
+
+                const text = await response.text();
+
+                message.className = "error";
+                message.innerHTML =
+                    "Ошибка: " + text;
+            }
+
+        } catch (err) {
+
+            message.className = "error";
+            message.innerHTML =
+                "Сервер недоступен.";
+
+            console.error(err);
+        }
+    });
+}
 
 // ============================================================
-// 6. МОДАЛЬНОЕ ОКНО
+// 6. МОДАЛЬНОЕ ОКНО СПИСКА ГОСТЕЙ
 // ============================================================
-const modal = document.getElementById('guestModal');
-const modalClose = document.getElementById('modalClose');
-const guestCountBlock = document.getElementById('guestCountBlock');
-const overlay = document.getElementById('overlay');
 
-if (guestCountBlock) {
-    guestCountBlock.addEventListener('click', async () => {
+const modal = document.getElementById("guestModal");
+const modalClose = document.getElementById("modalClose");
+const guestCountBlock = document.getElementById("guestCountBlock");
+const overlay = document.getElementById("overlay");
+
+if (guestCountBlock && modal) {
+
+    guestCountBlock.addEventListener("click", async function () {
+
         await loadModalGuests();
-        modal.style.display = 'block';
-        if (overlay) overlay.style.display = 'block';
-    });
-}
-if (modalClose) {
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        if (overlay) overlay.style.display = 'none';
-    });
-}
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-        if (overlay) overlay.style.display = 'none';
-    }
-});
 
+        modal.style.display = "block";
+
+        if (overlay) {
+            overlay.style.display = "block";
+        }
+    });
+}
+
+if (modalClose && modal) {
+
+    modalClose.addEventListener("click", function () {
+
+        modal.style.display = "none";
+
+        if (overlay) {
+            overlay.style.display = "none";
+        }
+    });
+}
+
+if (overlay && modal) {
+
+    overlay.addEventListener("click", function () {
+
+        modal.style.display = "none";
+        overlay.style.display = "none";
+    });
+}
 // ============================================================
 // 7. АНИМАЦИЯ БЛОКА «ЖДЁМ ВАС!» ПРИ ПРОКРУТКЕ (оставляем)
 // ============================================================
@@ -286,38 +334,136 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================================
-// 8. ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+// 8. ЗАГРУЗКА ФОТОГРАФИЙ ИЗ /uploads/
 // ============================================================
-document.addEventListener('DOMContentLoaded', function () {
-    // Загружаем счётчик гостей
-    loadGuestCount();
 
-    // Инициализация Swiper (карусель)
-    if (typeof Swiper !== 'undefined') {
-        const swiper = new Swiper('.photo-swiper', {
-            loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            effect: 'fade',
-            fadeEffect: { crossFade: true },
-            speed: 1200,
-            grabCursor: true,
-            breakpoints: {
-                640: { autoplay: false }
-            }
-        });
+document.addEventListener('DOMContentLoaded', async function () {
+
+    const wrapper = document.getElementById('mainPhotoWrapper');
+
+    if (!wrapper) {
+        return;
     }
+
+    try {
+
+        const response = await fetch('/upload');
+
+        if (!response.ok) {
+            throw new Error('Ошибка получения фотографий');
+        }
+
+        const photos = await response.json();
+
+        wrapper.innerHTML = '';
+
+        photos.forEach(function (photo) {
+
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+
+            const img = document.createElement('img');
+
+            img.src = '/uploads/' + encodeURIComponent(photo);
+            img.alt = 'Фото';
+
+            slide.appendChild(img);
+            wrapper.appendChild(slide);
+
+        });
+
+        // ====================================================
+        // SWIPER
+        // ====================================================
+
+        if (typeof Swiper !== 'undefined') {
+
+            new Swiper('.photo-swiper', {
+
+                loop: photos.length > 4,
+
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false
+                },
+
+                slidesPerView: 4,
+                spaceBetween: 10,
+
+                grabCursor: true,
+
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+
+                breakpoints: {
+
+                    0: {
+                        slidesPerView: 4,
+                        spaceBetween: 6
+                    },
+
+                    500: {
+                        slidesPerView: 4,
+                        spaceBetween: 8
+                    },
+
+                    900: {
+                        slidesPerView: 4,
+                        spaceBetween: 10
+                    }
+
+                }
+
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            'Ошибка загрузки фотографий:',
+            error
+        );
+
+    }
+
 });
+
+// ============================================================
+// КЛИК ПО ФОТО → ГАЛЕРЕЯ
+// ============================================================
+
+document
+    .querySelector('.photo-swiper')
+    ?.addEventListener('click', function (event) {
+
+        const slide =
+            event.target.closest('.swiper-slide');
+
+        if (!slide) {
+            return;
+        }
+
+        const slides =
+            Array.from(
+                document.querySelectorAll(
+                    '.photo-swiper .swiper-slide'
+                )
+            );
+
+        const index =
+            slides.indexOf(slide);
+
+        if (index === -1) {
+            return;
+        }
+
+        window.location.href =
+            'gallery.html?photo=' + index;
+
+    });
 // ============================================================
 // АНИМАЦИЯ ПОЯВЛЕНИЯ ТАЙМЕРА (как у календаря)
 // ============================================================
@@ -459,23 +605,42 @@ function showGuestListMessage(text, isSuccess = true) {
     }, 3000);
 }
 
-// ===== УДАЛЕНИЕ ГОСТЯ =====
+// ===== ЗАПРОС НА УДАЛЕНИЕ ГОСТЯ =====
 async function deleteGuest(id) {
-    if (!confirm('Удалить гостя из списка?')) return;
+    if (!confirm('Отправить запрос на удаление гостя?')) {
+        return;
+    }
 
     try {
-        const res = await fetch(`/user/${id}`, { method: 'DELETE' });
+        const res = await fetch(`/user/${id}`, {
+            method: 'DELETE'
+        });
+
         if (res.ok) {
             const data = await res.json();
-            showGuestListMessage(data.message || '✅ Гость удалён', true);
-            loadModalGuests();    // обновляем список
-            loadGuestCount();     // обновляем счётчик
+
+            showGuestListMessage(
+                data.message || '🗑️ Запрос на удаление отправлен ...',
+                true
+            );
+
         } else {
             const text = await res.text();
-            showGuestListMessage('❌ Ошибка: ' + text, false);
+
+            showGuestListMessage(
+                '❌ Ошибка: ' + text,
+                false
+            );
         }
+
     } catch (err) {
-        showGuestListMessage('❌ Сервер недоступен', false);
+
+        showGuestListMessage(
+            '❌ Сервер недоступен.',
+            false
+        );
+
+        console.error(err);
     }
 }
 
@@ -535,4 +700,149 @@ document.getElementById('editModalClose')?.addEventListener('click', closeEditMo
 window.addEventListener('click', function(e) {
     const modal = document.getElementById('editModal');
     if (e.target === modal) closeEditModal();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    fetch('/visit').catch(err => {
+        console.error('Ошибка регистрации посещения:', err);
+    });
+
+    const video = document.getElementById('weddingVideo');
+    const musicButton = document.getElementById('musicToggle');
+    const venueText = document.getElementById('venueText');
+
+    if (!video) return;
+
+
+    // ====================================================
+    // НАЧАЛЬНОЕ СОСТОЯНИЕ ВИДЕО
+    // ====================================================
+
+    video.muted = true;
+    video.volume = 0;
+
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+
+    video.play().catch(function () {});
+
+
+    // ====================================================
+// ПОЯВЛЕНИЕ ТЕКСТА НА ВИДЕО
+// ====================================================
+
+    if (video && venueText) {
+
+        const venueObserver = new IntersectionObserver(
+            function (entries) {
+
+                const entry = entries[0];
+
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                // Запускаем всю CSS-анимацию
+                venueText.classList.add('animate');
+
+                // Больше не отслеживаем
+                venueObserver.unobserve(video);
+
+            },
+            {
+                threshold: 0.25
+            }
+        );
+
+        venueObserver.observe(video);
+    }
+
+
+    // ====================================================
+    // КЛИК ПО ВИДЕО
+    // ====================================================
+
+    video.addEventListener('click', function () {
+
+        // Всегда начинаем видео с начала
+        video.currentTime = 0;
+
+        // Включаем звук
+        video.muted = false;
+        video.volume = 1;
+
+        video.removeAttribute('muted');
+
+        // Запускаем видео
+        video.play().catch(function () {});
+
+
+        // Android / Chrome / Firefox / Edge
+        if (video.requestFullscreen) {
+
+            video.requestFullscreen().catch(function () {});
+
+            return;
+        }
+
+
+        // iPhone / iPad Safari
+        if (typeof video.webkitEnterFullscreen === 'function') {
+
+            try {
+                video.webkitEnterFullscreen();
+            } catch (error) {
+                console.log('Fullscreen недоступен');
+            }
+        }
+
+    });
+
+
+    // ====================================================
+    // КНОПКА ЗВУКА
+    // ====================================================
+
+    if (musicButton) {
+
+        musicButton.textContent = '🔊';
+
+        musicButton.addEventListener('click', function () {
+
+            if (video.muted) {
+
+                // Включить звук
+                video.muted = false;
+                video.volume = 1;
+
+                musicButton.textContent = '🔊';
+                musicButton.setAttribute(
+                    'aria-label',
+                    'Выключить звук'
+                );
+
+                video.play().catch(function () {});
+
+            } else {
+
+                // Выключить звук
+                video.muted = true;
+                video.volume = 0;
+
+                musicButton.textContent = '🔇';
+                musicButton.setAttribute(
+                    'aria-label',
+                    'Включить звук'
+                );
+            }
+
+        });
+
+    }
+
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadGuestCount();
 });

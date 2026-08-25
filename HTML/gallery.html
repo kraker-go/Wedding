@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Галерея — Александр & Милана</title>
+
+    <link
+            rel="icon"
+            href="fav.png"
+            type="image/png"
+    >
+
+    <!-- Шрифты -->
+    <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+    >
+
+    <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+    >
+
+    <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    >
+
+    <!-- Swiper -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    >
+
+    <!-- Стили галереи -->
+    <link
+            rel="stylesheet"
+            href="gallery.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="gallery-page">
+
+
+    <!-- ====================================================
+         НАЗАД
+         ==================================================== -->
+
+    <a
+            href="index.html"
+            class="gallery-back"
+    >
+        ← Назад
+    </a>
+
+
+    <!-- ====================================================
+         ЗАГОЛОВОК
+         ==================================================== -->
+
+    <h1>
+        Галерея
+    </h1>
+
+    <p class="gallery-subtitle">
+        Александр & Милана
+    </p>
+
+
+    <!-- ====================================================
+         ДОБАВИТЬ ФОТО
+         ==================================================== -->
+
+    <label
+            for="photoInput"
+            class="upload-button"
+    >
+        + Добавить фото
+    </label>
+
+    <input
+            id="photoInput"
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+    >
+
+    
+    <div
+            class="gallery-grid"
+            id="galleryGrid"
+    >
+    </div>
+
+
+</div>
+
+
+<!-- ========================================================
+     FULLSCREEN ГАЛЕРЕЯ
+     ======================================================== -->
+
+<div
+        class="gallery-lightbox"
+        id="galleryLightbox"
+>
+
+    <button
+            type="button"
+            class="lightbox-close"
+            id="lightboxClose"
+            aria-label="Закрыть"
+    >
+        ×
+    </button>
+
+    <div class="lightbox-swiper swiper">
+
+        <div
+                class="swiper-wrapper"
+                id="lightboxWrapper"
+        ></div>
+
+        <div
+                class="swiper-button-prev"
+        ></div>
+
+        <div
+                class="swiper-button-next"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================
+     SCRIPTS
+     ======================================================== -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+></script>
+
+<script src="gallery.js"></script>
+
+
+</body>
+
+</html>

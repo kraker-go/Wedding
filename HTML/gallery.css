@@ -1,0 +1,365 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    min-height: 100%;
+
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+
+body {
+    padding: 30px;
+
+    background:
+            url('Bali.jpg')
+            center / cover
+            no-repeat fixed;
+}
+
+
+.gallery-page {
+    position: relative;
+
+    max-width: 950px;
+
+    margin: auto;
+
+    padding: 45px 40px 60px;
+
+    border-radius: 40px;
+
+    background:
+            url('fon.webp')
+            center / cover
+            no-repeat;
+
+    box-shadow:
+            0 0 0 2px #b0b0b0,
+            0 0 0 6px #f9f5ef,
+            0 0 0 8px #a0a0a0,
+            0 20px 60px rgba(0,0,0,0.12);
+}
+
+
+/* ============================================================
+   НАЗАД
+   ============================================================ */
+
+.gallery-back {
+    display: inline-block;
+
+    color: #8f7347;
+
+    text-decoration: none;
+
+    font-size: 16px;
+}
+
+
+/* ============================================================
+   ЗАГОЛОВОК
+   ============================================================ */
+
+.gallery-page h1 {
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 72px;
+    font-weight: 400;
+
+    color: #8f7347;
+}
+
+
+.gallery-subtitle {
+
+    margin-top: -5px;
+    margin-bottom: 25px;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    color: #74624a;
+}
+
+
+/* ============================================================
+   ДОБАВИТЬ ФОТО
+   ============================================================ */
+
+.upload-button {
+
+    display: block;
+
+    width: fit-content;
+
+    margin: 0 auto 35px;
+
+    padding: 14px 30px;
+
+    border-radius: 50px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #d9bc7a,
+                    #b98d45
+            );
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 8px 25px rgba(183,139,60,0.25);
+
+    transition: 0.3s ease;
+}
+
+
+.upload-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 12px 30px rgba(183,139,60,0.35);
+}
+
+
+/* ============================================================
+   СЕТКА
+   ============================================================ */
+
+.gallery-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+
+.gallery-grid img {
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 16px;
+
+    border:
+            1px solid rgba(215,191,145,0.35);
+
+    box-shadow:
+            0 8px 25px rgba(0,0,0,0.08);
+
+    cursor: pointer;
+
+    transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+}
+
+
+.gallery-grid img:hover {
+
+    transform: scale(1.03);
+
+    box-shadow:
+            0 12px 30px rgba(0,0,0,0.15);
+}
+
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+/* ============================================================
+   FULLSCREEN ГАЛЕРЕЯ
+   ============================================================ */
+
+.gallery-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    background: rgba(20, 16, 12, 0.94);
+
+    backdrop-filter: blur(14px);
+
+    z-index: 100000;
+}
+
+.gallery-lightbox.active {
+    display: block;
+}
+
+
+/* ============================================================
+   SWIPER
+   ============================================================ */
+
+.lightbox-swiper {
+
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox-swiper .swiper-wrapper {
+
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox-swiper .swiper-slide {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox-swiper .swiper-slide img {
+
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 86vw;
+    max-height: 88vh;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+    box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+
+/* ============================================================
+   КРЕСТИК
+   ============================================================ */
+
+.lightbox-close {
+
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.9);
+
+    color: #6d614f;
+
+    font-size: 34px;
+    line-height: 44px;
+
+    cursor: pointer;
+
+    z-index: 100002;
+
+    box-shadow:
+            0 5px 20px rgba(0,0,0,0.25);
+}
+
+.lightbox-close:hover {
+    transform: scale(1.05);
+}
+
+
+/* ============================================================
+   СТРЕЛКИ
+   ============================================================ */
+
+.lightbox-swiper .swiper-button-next,
+.lightbox-swiper .swiper-button-prev {
+
+    color: #ffffff;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(5px);
+}
+
+.lightbox-swiper .swiper-button-next::after,
+.lightbox-swiper .swiper-button-prev::after {
+
+    font-size: 20px;
+
+}
+
+
+/* ============================================================
+   МОБИЛЬНЫЕ
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .lightbox-swiper .swiper-slide img {
+
+        max-width: 92vw;
+        max-height: 82vh;
+
+        border-radius: 8px;
+    }
+
+    .lightbox-close {
+
+        top: 15px;
+        right: 15px;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    .lightbox-swiper .swiper-button-next,
+    .lightbox-swiper .swiper-button-prev {
+
+        width: 38px;
+        height: 38px;
+    }
+
+}

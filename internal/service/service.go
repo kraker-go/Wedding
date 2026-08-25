@@ -9,10 +9,13 @@ import (
 
 type CRUD interface {
 	AddUser(context.Context, string, string) (*models.Guest, error)
+	GetUser(context.Context, int) (*models.Guest, error)
 	GetAllUsers(context.Context) ([]models.Guest, error)
 	GetCountUsers(context.Context) (int, error)
-	UpdateUser(context.Context, *models.Guest) error
-	DeleteUser(context.Context, int) (*models.Guest, error)
+	RequestUpdateUser(context.Context, int, *models.Guest) error
+	UpdateUser(context.Context, int) error
+	DeleteUser(context.Context, int) error
+	RequestDeleteUser(context.Context, int) error
 }
 
 type UserService struct {
@@ -54,17 +57,27 @@ func (us *UserService) AddUser(ctx context.Context, firstname, lastname string) 
 
 	return user, nil
 }
+func (us *UserService) RequestUpdateUser(ctx context.Context, guestID int, user *models.Guest) error {
 
-func (us *UserService) UpdateUser(ctx context.Context, user *models.Guest) error {
 	if err := validateName(user.FirstName, 24); err != nil {
 		return err
 	}
+
 	if err := validateName(user.LastName, 30); err != nil {
 		return err
 	}
 
-	err := us.serv.UpdateUser(ctx, user)
+	err := us.serv.RequestUpdateUser(ctx, guestID, user)
+	if err != nil {
+		return fmt.Errorf("Service: %w", err)
+	}
 
+	return nil
+}
+
+func (us *UserService) UpdateUser(ctx context.Context, id int) error {
+
+	err := us.serv.UpdateUser(ctx, id)
 	if err != nil {
 		return fmt.Errorf("Service %w", err)
 	}
@@ -72,6 +85,10 @@ func (us *UserService) UpdateUser(ctx context.Context, user *models.Guest) error
 	return nil
 }
 
+func (us *UserService) GetUser(ctx context.Context, id int) (*models.Guest, error) {
+	user, err := us.serv.GetUser(ctx, id)
+	return user, err
+}
 func (us *UserService) GetAllUsers(ctx context.Context) ([]models.Guest, error) {
 	return us.serv.GetAllUsers(ctx)
 }
@@ -80,6 +97,10 @@ func (us *UserService) GetCountUsers(ctx context.Context) (int, error) {
 	return us.serv.GetCountUsers(ctx)
 }
 
-func (us *UserService) DeleteUser(ctx context.Context, id int) (*models.Guest, error) {
+func (us *UserService) RequestDeleteUser(ctx context.Context, id int) error {
+	return us.serv.RequestDeleteUser(ctx, id)
+}
+
+func (us *UserService) DeleteUser(ctx context.Context, id int) error {
 	return us.serv.DeleteUser(ctx, id)
 }

@@ -8,7 +8,7 @@
     <!-- Подключение Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Основные стили -->
-    <link rel="stylesheet" href="style.css?v=5" />
+    <link rel="stylesheet" href="style.css?v=8" />
 </head>
 <body>
 
@@ -54,6 +54,18 @@
         </div>
     </section>
 
+    <!-- ===== ФОТО ЖЕНИХА И НЕВЕСТЫ ===== -->
+    <section class="couple-photos" id="couplePhotos">
+        <div class="photo-circle photo-circle-left" style="background-image: url('жених.jpg');"></div>
+        <div class="photo-circle photo-circle-right" style="background-image: url('невеста.jpg');"></div>
+    </section>
+
+    <!-- ===== ПОДПИСИ ПОД ФОТО ===== -->
+    <div class="couple-labels" id="coupleLabels">
+        <span class="label-left">Жених</span>
+        <span class="label-right">Невеста</span>
+    </div>
+
     <!-- ===== ФОРМА ПОДТВЕРЖДЕНИЯ ===== -->
     <section class="guest">
         <h2>Дорогой гость</h2>
@@ -72,71 +84,83 @@
 
     <!-- ===== СЧЁТЧИК ГОСТЕЙ ===== -->
     <div class="guest-dropdown">
-    <div class="guest-count" id="guestCountBlock">
-        👥 Всего гостей: <span id="guestCount">0</span>
-    </div>
-    <!-- ===== МОДАЛЬНОЕ ОКНО (список гостей) ===== -->
-        <div class="modal" id="guestModal">
-            <div class="modal-content">
-                <span class="modal-close" id="modalClose">&times;</span>
-                <h3>👥 Список гостей</h3>
-                <div id="modalGuestList"></div>
-                <!-- ↓↓↓ НОВЫЙ БЛОК ДЛЯ СООБЩЕНИЙ ↓↓↓ -->
-                <div id="guestListMessage" style="margin-top: 12px; font-weight: 600; text-align: center;"></div>
-            </div>
+
+        <div class="guest-count" id="guestCountBlock">
+            👥 Список гостей: <span id="guestCount">0</span>
         </div>
+
     </div>
-    
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО СПИСКА ГОСТЕЙ ===== -->
+    <div class="modal" id="guestModal">
+
+        <div class="modal-content">
+
+            <span class="modal-close" id="modalClose">&times;</span>
+
+            <h3>👥 Список гостей</h3>
+
+            <!-- Сообщение об операции -->
+            <div id="guestListMessage"></div>
+
+            <!-- Список гостей -->
+            <div id="modalGuestList"></div>
+
+        </div>
+
+    </div>
+
     <!-- ===== МЕСТО ПРОВЕДЕНИЯ ===== -->
     <div class="venue-block">
-        <p class="venue-text">
-            Ваши улыбки и смех подарят нам незабываемое счастье в этот день,
-            а пожелания в конвертах помогут осуществить наши мечты!<br>
-        С любовью,<br>
-        Александр и Милана ❤</p>
-    </div>
 
-    <!-- ===== ФОТО ЖЕНИХА И НЕВЕСТЫ ===== -->
-    <section class="couple-photos" id="couplePhotos">
-        <div class="photo-circle photo-circle-left" style="background-image: url('жених.jpg');"></div>
-        <div class="photo-circle photo-circle-right" style="background-image: url('невеста.jpg');"></div>
-    </section>
+        <video
+                id="weddingVideo"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                controlsList="nodownload noplaybackrate"
+                disablePictureInPicture
+        >
+            <source src="video.mp4" type="video/mp4">
+        </video>
 
-    <!-- ===== ПОДПИСИ ПОД ФОТО ===== -->
-    <div class="couple-labels" id="coupleLabels">
-        <span class="label-left">Жених</span>
-        <span class="label-right">Невеста</span>
+        <div class="venue-overlay"></div>
+
+        <p id="venueText" class="venue-text-animated">
+
+            <span class="venue-line">Ваши улыбки и смех</span>
+            <span class="venue-line">подарят нам незабываемое</span>
+            <span class="venue-line">счастье в этот день,</span>
+            <span class="venue-line">а пожелания в конвертах</span>
+            <span class="venue-line">помогут осуществить</span>
+            <span class="venue-line">наши мечты!</span>
+
+            <span class="venue-signature">
+        <span>С любовью,</span>
+        <span>Александр и Милана ❤</span>
+    </span>
+
+        </p>
     </div>
 
     <!-- ===== КАРУСЕЛЬ ФОТОГРАФИЙ (Swiper) ===== -->
-    <div class="swiper photo-swiper">
-        <div class="swiper-wrapper">
-            <!-- Слайд 1 -->
-            <div class="swiper-slide">
-                <img src="foto.jpg" alt="" />
-            </div>
-            <!-- Слайд 2 -->
-            <div class="swiper-slide">
-                <img src="foto2.jpg" alt="" />
-            </div>
-            <!-- Слайд 3 -->
-            <div class="swiper-slide">
-                <img src="foto3.jpg" alt="" />
-            </div>
-            <!-- Слайд 4 -->
-            <div class="swiper-slide">
-                <img src="foto4_.jpg" alt="" />
-            </div>
+    <div class="photo-swiper swiper">
+
+        <div class="swiper-wrapper" id="mainPhotoWrapper">
+            <!-- Фотографии загружаются через JavaScript -->
         </div>
 
-        <!-- Кнопки навигации -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-
-        <!-- Пагинация (точки) -->
         <div class="swiper-pagination"></div>
+
     </div>
 
+    <!-- ===== КНОПКА ГАЛЕРЕИ ===== -->
+
+    <a href="gallery.html" class="gallery-link">
+        Галерея фотографий →
+    </a>
 
 
     <!-- ===== КАРТА ===== -->
@@ -208,9 +232,17 @@
 
 </div> <!-- /wrapper -->
 
-<!-- Подключаем скрипты -->
-<script src="script.js?v=5"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- ===== КНОПКА МУЗЫКИ (теперь вне wrapper) ===== -->
+<button
+        id="musicToggle"
+        class="music-toggle"
+        type="button"
+        aria-label="Выключить звук"
+>
+    🔇
+</button>
 
+<script src="script.js?v=8"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>
