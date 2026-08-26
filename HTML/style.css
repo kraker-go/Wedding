@@ -322,36 +322,124 @@ h1 span {
    КНОПКА «СПИСОК ГОСТЕЙ»
    ============================================================ */
 
-.guest-count { margin: 25px auto 0; padding: 14px 25px; background: linear-gradient( 145deg, #f5ead5 0%, #d8c29a 45%, #b99a63 100% ); border-radius: 40px; border: 1px solid rgba(255,255,255,0.7); display: block; width: fit-content; cursor: pointer; font-size: 24px; color: #3f352b; text-align: center; /* ОБЪЁМ */ box-shadow: inset 0 2px 3px rgba(255,255,255,0.8), inset 0 -3px 5px rgba(90,65,30,0.25), 0 3px 0 #9a7b48, 0 7px 12px rgba(70,50,25,0.25), 0 12px 25px rgba(70,50,25,0.12); /* Лёгкое оживление */ animation: guestPulse 2.8s ease-in-out infinite; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; } .guest-count:hover { background: linear-gradient( 145deg, #fff3dc 0%, #e2cca3 45%, #c2a46d 100% ); transform: translateY(-2px); box-shadow: inset 0 2px 4px rgba(255,255,255,0.9), inset 0 -3px 5px rgba(90,65,30,0.2), 0 4px 0 #9a7b48, 0 9px 18px rgba(70,50,25,0.3), 0 15px 30px rgba(70,50,25,0.15); } .guest-count:active { transform: translateY(3px); box-shadow: inset 0 3px 6px rgba(70,50,25,0.25), 0 1px 0 #9a7b48, 0 3px 7px rgba(70,50,25,0.25); } /* Пульсация */ @keyframes guestPulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } } /* Количество гостей */ .guest-count span { font-weight: 800; color: green; font-size: 28px; text-shadow: 0 1px 1px rgba(255,255,255,0.35); }
+.gold-button {
+    display: block;
+    width: fit-content;
+
+    margin: 25px auto 10px;
+    padding: 14px 25px;
+
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    background: linear-gradient(
+            145deg,
+            #f5ead5 0%,
+            #d8c29a 45%,
+            #b99a63 100%
+    );
+
+    color: #3f352b;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-shadow:
+            inset 0 2px 3px rgba(255,255,255,0.8),
+            inset 0 -3px 5px rgba(90,65,30,0.25),
+            0 3px 0 #9a7b48,
+            0 7px 12px rgba(70,50,25,0.25),
+            0 12px 25px rgba(70,50,25,0.12);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+}
 
 
 /* ============================================================
    НАВЕДЕНИЕ
    ============================================================ */
 
-.guest-count:hover {
 
-    background: rgba(170, 140, 85, 0.92);
+.gold-button:hover {
+    background: linear-gradient(
+            145deg,
+            #fff3dc 0%,
+            #e2cca3 45%,
+            #c2a46d 100%
+    );
+
+    transform: translateY(-2px);
 
     box-shadow:
-            0 10px 30px rgba(80, 55, 25, 0.35),
-            0 0 25px rgba(184, 146, 73, 0.25);
-
-    transform: scale(1.06);
-
-    animation: none;
+            inset 0 2px 4px rgba(255,255,255,0.9),
+            inset 0 -3px 5px rgba(90,65,30,0.2),
+            0 4px 0 #9a7b48,
+            0 9px 18px rgba(70,50,25,0.3),
+            0 15px 30px rgba(70,50,25,0.15);
 }
+
 
 
 /* ============================================================
    НАЖАТИЕ
    ============================================================ */
 
-.guest-count:active {
-    transform: scale(0.96);
+.gold-button:active {
+    transform: translateY(3px);
+
+    box-shadow:
+            inset 0 3px 6px rgba(70,50,25,0.25),
+            0 1px 0 #9a7b48,
+            0 3px 7px rgba(70,50,25,0.25);
+}
+
+/* ============================================================
+   СПИСОК ГОСТЕЙ
+   ============================================================ */
+
+.guest-count {
+    animation: guestPulse 2.8s ease-in-out infinite;
 }
 
 
+/* Пульсация */
+
+@keyframes guestPulse {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+
+/* ============================================================
+   МОБИЛЬНЫЕ
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .gold-button {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+
+    .guest-count span {
+        font-size: 24px;
+    }
+
+}
 /* ============================================================
    СЧЁТЧИК
    ============================================================ */
@@ -497,44 +585,31 @@ h1 span {
    ============================================================ */
 
 #guestModal .modal-content {
-    position: relative;
+    position: absolute;
 
-    width: 90%;
-    max-width: 500px;
+    top: 50%;
+    left: 50%;
 
+    transform: translate(-50%, -50%);
+
+    width: min(90%, 500px);
     max-height: 80vh;
 
     margin: 0;
-    padding: 25px;
+    padding: 25px 25px 30px;
 
     background: #fcf9f5;
 
     border-radius: 25px;
 
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-
-    overflow: hidden;
+    box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.25);
 
     box-sizing: border-box;
 
-    animation: guestModalShow 0.3s ease;
-}
+    overflow: hidden;
 
-
-/* ============================================================
-   АНИМАЦИЯ
-   ============================================================ */
-
-@keyframes guestModalShow {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    animation: modalAppear 0.3s ease;
 }
 
 
@@ -997,27 +1072,7 @@ video:-webkit-full-screen {
    МОБИЛЬНЫЕ
    ============================================================ */
 
-@media (max-width: 700px) {
 
-    .venue-text-animated {
-        width: 95%;
-
-        padding: 5px;
-
-        font-size: 28px;
-        line-height: 1.15;
-
-        left: 50%;
-        top: 50%;
-
-        transform: translate(-50%, -50%);
-    }
-
-    .venue-text-animated .venue-signature {
-        margin-top: 12px;
-    }
-
-}
 
 
 @media (max-width: 430px) {
@@ -1106,70 +1161,6 @@ video:-webkit-full-screen {
 }
 
 
-/* ============================================================
-   КНОПКА ГАЛЕРЕИ
-   ============================================================ */
-
-.gallery-link {
-    display: block;
-
-    width: fit-content;
-
-    margin: 25px auto 10px;
-
-    padding: 13px 30px;
-
-    border-radius: 50px;
-
-    background: rgba(255,255,255,0.55);
-
-    border: 1px solid rgba(215,191,145,0.5);
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-
-    color: #8f7347;
-
-    font-family: 'Montserrat', sans-serif;
-
-    font-size: 20px;
-    font-weight: 700;
-
-    text-decoration: none;
-
-    letter-spacing: 0.5px;
-
-    transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease,
-            background 0.3s ease;
-}
-
-.gallery-link:hover {
-    transform: translateY(-2px);
-
-    background: rgba(255,255,255,0.8);
-
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-}
-
-
-/* ============================================================
-   МОБИЛЬНЫЕ
-   ============================================================ */
-
-@media (max-width: 700px) {
-
-    .photo-swiper {
-        height: 75px;
-    }
-
-    .gallery-link {
-        font-size: 17px;
-        padding: 11px 24px;
-    }
-
-}
-
 @media (max-width: 430px) {
 
     .photo-swiper {
@@ -1182,13 +1173,6 @@ video:-webkit-full-screen {
    ФИНАЛЬНЫЙ РАЗМЕР МАЛЕНЬКОЙ ГАЛЕРЕИ НА ГЛАВНОЙ
    ============================================================ */
 
-@media (max-width: 700px) {
-
-    .photo-swiper {
-        height: 75px !important;
-    }
-
-}
 
 @media (max-width: 430px) {
 
@@ -1345,6 +1329,34 @@ video:-webkit-full-screen {
    АДАПТИВ (медиа-запросы)
    ============================================================ */
 @media (max-width: 700px) {
+
+        .venue-text-animated {
+            width: 95%;
+
+            padding: 5px;
+
+            font-size: 28px;
+            line-height: 1.15;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+        }
+
+        .venue-text-animated .venue-signature {
+            margin-top: 12px;
+        }
+
+
+        .photo-swiper {
+            height: 75px !important;
+        }
+
+    .gallery-link {
+        font-size: 17px;
+        padding: 11px 24px;
+    }
     body { padding: 15px; }
     .wrapper { padding: 35px 22px 40px; border-radius: 30px; }
     .wrapper::before, .wrapper::after { font-size: 20px; }
@@ -1812,33 +1824,6 @@ video:-webkit-full-screen {
 
 /* Само окно */
 
-#guestModal .modal-content {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    width: min(90%, 500px);
-    max-height: 80vh;
-
-    margin: 0;
-    padding: 25px 25px 30px;
-
-    background: #fcf9f5;
-
-    border-radius: 25px;
-
-    box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.25);
-
-    box-sizing: border-box;
-
-    overflow: hidden;
-
-    animation: modalAppear 0.3s ease;
-}
 
 
 /* Появление */
