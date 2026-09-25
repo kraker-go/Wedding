@@ -11,27 +11,90 @@ const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
 
-const weddingDate = new Date("2026-10-10T00:00:00").getTime();
+const weddingDate = new Date("2026-10-10T00:44:00").getTime();
 
 // ============================================================
-// 2. ТАЙМЕР (БЕЗ АНИМАЦИИ)
+// 2. ТАЙМЕР ДО СВАДЬБЫ
 // ============================================================
+
 function updateCountdown() {
+
     const now = Date.now();
     const distance = weddingDate - now;
 
+    const countdownCards =
+        document.getElementById('countdownCards');
+
+    const weddingDayMessage =
+        document.getElementById('weddingDayMessage');
+
+    // ========================================================
+    // СВАДЬБА НАСТУПИЛА
+    // ========================================================
+
     if (distance <= 0) {
-        daysEl.textContent = "0";
-        hoursEl.textContent = "0";
-        minutesEl.textContent = "0";
-        secondsEl.textContent = "0";
+
+        if (countdownCards) {
+            countdownCards.classList.add('finished');
+        }
+
+        if (weddingDayMessage) {
+            weddingDayMessage.classList.add('visible');
+        }
+
+
+        // ====================================================
+        // МОБИЛЬНАЯ ЗАЩИТА
+        // ПК НЕ ТРОГАЕМ
+        // ====================================================
+
+        if (window.innerWidth <= 600) {
+
+            if (countdownCards) {
+                countdownCards.style.display = 'none';
+            }
+
+            if (weddingDayMessage) {
+                weddingDayMessage.style.display = 'flex';
+                weddingDayMessage.style.visibility = 'visible';
+                weddingDayMessage.style.opacity = '1';
+            }
+        }
+
         return;
     }
 
-    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // ========================================================
+    // ТАЙМЕР ЕЩЁ ИДЁТ
+    // ========================================================
+
+    const d =
+        Math.floor(
+            distance /
+            (1000 * 60 * 60 * 24)
+        );
+
+    const h =
+        Math.floor(
+            (distance %
+                (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+    const m =
+        Math.floor(
+            (distance %
+                (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+    const s =
+        Math.floor(
+            (distance %
+                (1000 * 60)) /
+            1000
+        );
 
     daysEl.textContent = d;
     hoursEl.textContent = h;
@@ -39,10 +102,13 @@ function updateCountdown() {
     secondsEl.textContent = s;
 }
 
-// Запускаем сразу и обновляем каждую секунду
-updateCountdown();
-setInterval(updateCountdown, 1000);
+// ============================================================
+// ЗАПУСК
+// ============================================================
 
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
 // ============================================================
 // 3. ЗАГРУЗКА КОЛИЧЕСТВА ГОСТЕЙ
 // ============================================================
@@ -703,7 +769,7 @@ window.addEventListener('click', function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     fetch('/visit').catch(err => {
         console.error('Ошибка регистрации посещения:', err);
     });

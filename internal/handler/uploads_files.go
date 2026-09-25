@@ -21,7 +21,7 @@ func (uh *UserHandler) UploadPhotoHandler(w http.ResponseWriter, r *http.Request
 	}
 	defer file.Close()
 
-	if err := os.MkdirAll("./uploads", 0755); err != nil {
+	if err = os.MkdirAll("./uploads", 0755); err != nil {
 		http.Error(w, "Ошибка создания папки", http.StatusInternalServerError)
 		return
 	}
@@ -41,6 +41,8 @@ func (uh *UserHandler) UploadPhotoHandler(w http.ResponseWriter, r *http.Request
 		http.Error(w, "Ошибка записи фото", http.StatusInternalServerError)
 		return
 	}
+
+	uh.notifier.NotifyMessage("Гость добавил новое фото 📸")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)

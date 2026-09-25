@@ -8,7 +8,7 @@
     <!-- Подключение Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Основные стили -->
-    <link rel="stylesheet" href="style.css?v=8" />
+    <link rel="stylesheet" href="style.css?v=13" />
 </head>
 <body>
 
@@ -36,22 +36,59 @@
 
     <!-- ===== ТАЙМЕР ===== -->
     <section class="timer">
-        <div class="timer-card">
-            <div id="days" class="timer-number"></div>
-            <div class="timer-text">Дней</div>
+
+        <div id="countdownCards" class="countdown-cards">
+
+            <div class="timer-card">
+                <div id="days" class="timer-number"></div>
+                <div class="timer-text">Дней</div>
+            </div>
+
+            <div class="timer-card">
+                <div id="hours" class="timer-number"></div>
+                <div class="timer-text">Часов</div>
+            </div>
+
+            <div class="timer-card">
+                <div id="minutes" class="timer-number"></div>
+                <div class="timer-text">Минут</div>
+            </div>
+
+            <div class="timer-card">
+                <div id="seconds" class="timer-number"></div>
+                <div class="timer-text">Секунд</div>
+            </div>
+
         </div>
-        <div class="timer-card">
-            <div id="hours" class="timer-number"></div>
-            <div class="timer-text">Часов</div>
+
+        <div id="weddingDayMessage" class="wedding-day-message">
+
+            <div class="wedding-wave-text">
+                <span>❤</span>
+                <span>&nbsp;</span>
+                <span>С</span>
+                <span>е</span>
+                <span>г</span>
+                <span>о</span>
+                <span>д</span>
+                <span>н</span>
+                <span>я</span>
+                <span>&nbsp;</span>
+                <span>н</span>
+                <span>а</span>
+                <span>ш</span>
+                <span>&nbsp;</span>
+                <span>д</span>
+                <span>е</span>
+                <span>н</span>
+                <span>ь</span>
+                <span>!</span>
+                <span>&nbsp;</span>
+                <span>❤</span>
+            </div>
+
         </div>
-        <div class="timer-card">
-            <div id="minutes" class="timer-number"></div>
-            <div class="timer-text">Минут</div>
-        </div>
-        <div class="timer-card">
-            <div id="seconds" class="timer-number"></div>
-            <div class="timer-text">Секунд</div>
-        </div>
+
     </section>
 
     <!-- ===== ФОТО ЖЕНИХА И НЕВЕСТЫ ===== -->

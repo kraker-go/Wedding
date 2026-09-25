@@ -20,7 +20,9 @@ func GetCityByIP(ip string) (string, error) {
 	}
 
 	client := http.Client{Timeout: 3 * time.Second}
+
 	url := fmt.Sprintf("http://ip-api.com/json/%s?fields=status,message,city,country,isp,org", ip)
+
 	resp, err := client.Get(url)
 	if err != nil {
 		return "", err

@@ -189,6 +189,54 @@ body {
             0 12px 30px rgba(0,0,0,0.15);
 }
 
+/* ============================================================
+   ФОТО + КНОПКА УДАЛЕНИЯ
+   ============================================================ */
+
+.gallery-photo {
+
+    position: relative;
+}
+
+
+.gallery-photo .delete-photo-btn {
+
+    position: absolute;
+
+    bottom: 10px;
+    right: 10px;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.25);
+
+    transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+}
+
+
+.gallery-photo .delete-photo-btn:hover {
+
+    transform: scale(1.1);
+
+    background: #ffffff;
+}
 
 /* ============================================================
    LIGHTBOX
@@ -205,6 +253,12 @@ body {
 
     display: none;
 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 70px 20px 75px;
+
     background: rgba(20, 16, 12, 0.94);
 
     backdrop-filter: blur(14px);
@@ -213,7 +267,7 @@ body {
 }
 
 .gallery-lightbox.active {
-    display: block;
+    display: flex;
 }
 
 
@@ -224,7 +278,9 @@ body {
 .lightbox-swiper {
 
     width: 100%;
-    height: 100%;
+    height: auto;
+    flex: 1;
+    min-height: 0;
 }
 
 .lightbox-swiper .swiper-wrapper {
@@ -362,4 +418,68 @@ body {
         height: 38px;
     }
 
+    .gallery-lightbox {
+        padding:
+                60px 10px 65px;
+    }
+
+    .lightbox-delete {
+        margin-top: 8px;
+
+        padding: 9px 18px;
+
+        font-size: 13px;
+    }
 }
+
+.lightbox-delete {
+
+    flex-shrink: 0;
+
+    margin: 10px auto 0;
+
+    padding: 10px 22px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    color: #333;
+
+    font-family:
+            'Montserrat',
+            sans-serif;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    z-index: 100003;
+
+    box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            opacity 0.2s ease;
+}
+
+
+.lightbox-delete:hover {
+
+    transform: scale(1.05);
+
+    background: #ffffff;
+}
+
+
+.lightbox-delete:disabled {
+
+    opacity: 0.6;
+
+    cursor: default;
+}
+

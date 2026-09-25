@@ -54,12 +54,8 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 	}
 
 	logg.Info("Starting server on port", zap.String("port", port.Port))
-	srv := &http.Server{
-		Addr:    port.Port,
-		Handler: rout,
-	}
 
-	srv, err = server.ConnectServer(port.Port, rout)
+	srv, err := server.ConnectServer(port.Port, rout)
 	if err != nil {
 		return nil, err
 	}
