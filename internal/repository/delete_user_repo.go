@@ -3,10 +3,12 @@ package repository
 import (
 	"context"
 	"fmt"
+	"log"
 	models "wedding/internal/domain"
 )
 
 func (ur *UserRepository) DeleteUser(ctx context.Context, id int) error {
+	log.Println("Delete User Repository")
 	var user models.Guest
 
 	err := ur.Db.QueryRowContext(ctx, GetUserByID, id).Scan(&user.ID, &user.FirstName, &user.LastName, &user.CreatedAt)
