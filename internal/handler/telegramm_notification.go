@@ -17,7 +17,7 @@ import (
 type Notification struct {
 	Guest    models.Guest
 	NewGuest models.Guest
-	Action   string // "add" или "update"
+	Action   string // "add", "delete", "update"
 }
 
 type Notifier struct {
@@ -44,37 +44,68 @@ func (n *Notifier) callbackHandler(
 
 	data := update.CallbackQuery.Data
 
-	fmt.Println("Callback:", data)
+	log.Printf("🔥 CALLBACK ПОЛУЧЕН: %s", data)
 
-	parts := strings.Split(data, ":")
+	// Сообщаем Telegram, что нажатие кнопки получено.
+	_, err := bot.AnswerCallbackQuery(
+		ctx,
+		&tgbot.AnswerCallbackQueryParams{
+			CallbackQueryID: update.CallbackQuery.ID,
+		},
+	)
+
+	if err != nil {
+		log.Printf("❌ Ошибка AnswerCallbackQuery: %v", err)
+	}
+
+	// Ожидаем формат:
+	// approve_delete:123
+	// reject_delete:123
+	// approve_update:123
+	// reject_update:123
+	parts := strings.SplitN(data, ":", 2)
+
 	if len(parts) != 2 {
-		log.Println("Некорректный callback:", data)
+		log.Printf("❌ Некорректный callback: %s", data)
 		return
 	}
+
+	action := parts[0]
 
 	id, err := strconv.Atoi(parts[1])
 	if err != nil {
-		log.Println("Неверный ID:", err)
+		log.Printf(
+			"❌ Неверный ID гостя: %s: %v",
+			parts[1],
+			err,
+		)
 		return
 	}
 
-	fmt.Println("ID гостя:", id)
+	log.Printf(
+		"🔥 CALLBACK ACTION=%s ID=%d",
+		action,
+		id,
+	)
 
 	if n.handler == nil {
-		log.Println("UserHandler не установлен")
+		log.Println("❌ UserHandler не установлен")
 		return
 	}
 
-	// ==================================================
-	// УДАЛЕНИЕ — ПОДТВЕРЖДЕНО
-	// ==================================================
+	switch action {
 
-	if strings.HasPrefix(data, "approve_delete:") {
+	case "approve_delete":
+
+		log.Printf(
+			"🔥 ПОДТВЕРЖДЕНО УДАЛЕНИЕ ГОСТЯ ID=%d",
+			id,
+		)
 
 		err := n.handler.DeleteUserHandler(ctx, id)
 		if err != nil {
 			log.Printf(
-				"Ошибка удаления гостя %d: %v",
+				"❌ Ошибка удаления гостя %d: %v",
 				id,
 				err,
 			)
@@ -89,32 +120,33 @@ func (n *Notifier) callbackHandler(
 			return
 		}
 
-		fmt.Println("Гость успешно удалён:", id)
+		log.Printf(
+			"✅ Гость успешно удалён: %d",
+			id,
+		)
 
-		return
-	}
+	case "reject_delete":
 
-	// УДАЛЕНИЕ — ОТКЛОНЕНО
-
-	if strings.HasPrefix(data, "reject_delete:") {
-
-		fmt.Println("Удаление отклонено:", id)
+		log.Printf(
+			"❌ Удаление отклонено: %d",
+			id,
+		)
 
 		go n.NotifyMessage(
 			"❌ Удаление пользователя отклонено.",
 		)
 
-		return
-	}
+	case "approve_update":
 
-	// ОБНОВЛЕНИЕ — ПОДТВЕРЖДЕНО
-
-	if strings.HasPrefix(data, "approve_update:") {
+		log.Printf(
+			"🔥 ПОДТВЕРЖДЕНО ОБНОВЛЕНИЕ ГОСТЯ ID=%d",
+			id,
+		)
 
 		err := n.handler.UpdateUserHandler(ctx, id)
 		if err != nil {
 			log.Printf(
-				"Ошибка обновления гостя %d: %v",
+				"❌ Ошибка обновления гостя %d: %v",
 				id,
 				err,
 			)
@@ -129,31 +161,44 @@ func (n *Notifier) callbackHandler(
 			return
 		}
 
-		fmt.Println("Гость успешно обновлён:", id)
+		log.Printf(
+			"✅ Гость успешно обновлён: %d",
+			id,
+		)
 
-		return
-	}
+	case "reject_update":
 
-	// ОБНОВЛЕНИЕ — ОТКЛОНЕНО
-
-	if strings.HasPrefix(data, "reject_update:") {
-
-		fmt.Println("Обновление отклонено:", id)
+		log.Printf(
+			"❌ Обновление отклонено: %d",
+			id,
+		)
 
 		go n.NotifyMessage(
 			"❌ Изменение пользователя отклонено.",
 		)
 
-		return
+	default:
+
+		log.Printf(
+			"❌ НЕИЗВЕСТНЫЙ CALLBACK: %s",
+			data,
+		)
 	}
-
-	// НЕИЗВЕСТНЫЙ CALLBACK
-
-	log.Println("Неизвестный callback:", data)
 }
 
-func Telegramm(botToken, chatID string, handler *UserHandler) *Notifier {
-	bot, err := tgbot.New(botToken)
+func Telegramm(
+	botToken string,
+	chatID string,
+	handler *UserHandler,
+) *Notifier {
+
+	bot, err := tgbot.New(
+		botToken,
+		tgbot.WithAllowedUpdates([]string{
+			"message",
+			"callback_query",
+		}),
+	)
 	if err != nil {
 		log.Fatal("Telegram bot init failed:", err)
 	}
@@ -166,20 +211,21 @@ func Telegramm(botToken, chatID string, handler *UserHandler) *Notifier {
 		handler: handler,
 	}
 
-	// Регистрируем обработчик ПОСЛЕ создания n
+	// Один обработчик для всех callback-кнопок.
+	//
+	// Он будет получать:
+	// approve_delete:123
+	// reject_delete:123
+	// approve_update:123
+	// reject_update:123
 	bot.RegisterHandler(
 		tgbot.HandlerTypeCallbackQueryData,
-		"approve_delete:",
+		"",
 		tgbot.MatchTypePrefix,
 		n.callbackHandler,
 	)
 
-	bot.RegisterHandler(
-		tgbot.HandlerTypeCallbackQueryData,
-		"approve_update:",
-		tgbot.MatchTypePrefix,
-		n.callbackHandler,
-	)
+	log.Println("🤖 Telegram bot запускается")
 
 	go bot.Start(context.Background())
 
@@ -191,10 +237,13 @@ func Telegramm(botToken, chatID string, handler *UserHandler) *Notifier {
 
 func (n *Notifier) worker() {
 	defer n.wg.Done()
+
 	for {
 		select {
+
 		case notif := <-n.ch:
 			n.sendNotification(notif)
+
 		case text := <-n.msgCh:
 			n.sendMessage(text)
 		}
@@ -202,15 +251,30 @@ func (n *Notifier) worker() {
 }
 
 func (n *Notifier) sendMessage(text string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		5*time.Second,
+	)
 	defer cancel()
-	_, err := n.bot.SendMessage(ctx, &tgbot.SendMessageParams{
-		ChatID: n.chatID,
-		Text:   text,
-	})
+
+	_, err := n.bot.SendMessage(
+		ctx,
+		&tgbot.SendMessageParams{
+			ChatID: n.chatID,
+			Text:   text,
+		},
+	)
+
 	if err != nil {
-		log.Printf("Не удалось отправить уведомление: %v", err)
+		log.Printf(
+			"❌ Не удалось отправить уведомление: %v",
+			err,
+		)
+
+		return
 	}
+
+	log.Println("✅ Telegram сообщение отправлено")
 }
 
 func (n *Notifier) sendNotification(notif Notification) {
@@ -219,7 +283,6 @@ func (n *Notifier) sendNotification(notif Notification) {
 		context.Background(),
 		5*time.Second,
 	)
-
 	defer cancel()
 
 	text := formatMessage(
@@ -227,13 +290,13 @@ func (n *Notifier) sendNotification(notif Notification) {
 		notif.NewGuest,
 		notif.Action,
 	)
+
 	var keyboard *tgbotmodels.InlineKeyboardMarkup
 
 	if notif.Action == "delete" || notif.Action == "update" {
 
 		keyboard = &tgbotmodels.InlineKeyboardMarkup{
 			InlineKeyboard: [][]tgbotmodels.InlineKeyboardButton{
-
 				{
 					{
 						Text: "✅ Подтвердить",
@@ -271,49 +334,103 @@ func (n *Notifier) sendNotification(notif Notification) {
 	_, err := n.bot.SendMessage(ctx, params)
 
 	if err != nil {
-		log.Printf("Не удалось отправить уведомление: %v", err)
+		log.Printf(
+			"❌ Не удалось отправить уведомление: %v",
+			err,
+		)
+
+		return
 	}
 
-	if err != nil {
+	log.Printf(
+		"✅ Telegram уведомление отправлено: action=%s guestID=%d",
+		notif.Action,
+		notif.Guest.ID,
+	)
+}
 
-		log.Printf(
-			"Не удалось отправить уведомление: %v",
-			err,
+func formatMessage(
+	g models.Guest,
+	newG models.Guest,
+	action string,
+) string {
+
+	switch action {
+
+	case "add":
+
+		return fmt.Sprintf(
+			"\n🎉 Добавлен новый гость на свадьбу!!! ✅\n\nИмя: %s\nФамилия: %s\n",
+			g.FirstName,
+			g.LastName,
+		)
+
+	case "delete":
+
+		return fmt.Sprintf(
+			"Запрос на удаление гостя! ⚠️\nИмя: %d %s %s",
+			g.ID,
+			g.FirstName,
+			g.LastName,
+		)
+
+	case "update":
+
+		return fmt.Sprintf(
+			"🔄 Запрос на изменение гостя №%d\n👤 Гость: %s %s\n✏️ Редактируем: %s %s",
+			g.ID,
+			g.FirstName,
+			g.LastName,
+			newG.FirstName,
+			newG.LastName,
+		)
+
+	default:
+
+		return fmt.Sprintf(
+			"ℹ️ Гость: %d %s %s",
+			g.ID,
+			g.FirstName,
+			g.LastName,
 		)
 	}
 }
 
-func formatMessage(g models.Guest, newG models.Guest, action string) string {
-	switch action {
-	case "add":
-		return fmt.Sprintf("\n🎉 Добавлен новый гость на свадьбу!!! ✅ \n\nИмя: %s\nФамилия: %s\n", g.FirstName, g.LastName)
-	case "delete":
-		return fmt.Sprintf("Запрос на удаление гостя! ⚠️\nИмя: %d %s %s", g.ID, g.FirstName, g.LastName)
-	case "update":
-		return fmt.Sprintf("🔄 Запрос на изменение гостя №%d\n👤 Гость: %s %s\n✏️ Редактируем: %s  %s", g.ID, g.FirstName, g.LastName, newG.FirstName, newG.LastName)
+func (n *Notifier) Notify(
+	guest models.Guest,
+	newG models.Guest,
+	action string,
+) {
+	select {
+
+	case n.ch <- Notification{
+		Guest:    guest,
+		Action:   action,
+		NewGuest: newG,
+	}:
+
 	default:
-		return fmt.Sprintf("ℹ️ Гость: %d %s %s", g.ID, g.FirstName, g.LastName)
+
+		log.Println(
+			"❌ Канал уведомлений переполнен, сообщение потеряно",
+		)
 	}
 }
 
-func (n *Notifier) Notify(guest models.Guest, newG models.Guest, action string) {
+func (n *Notifier) NotifyMessage(text string) {
 	select {
-	case n.ch <- Notification{Guest: guest,
-		Action:   action,
-		NewGuest: newG}:
+
+	case n.msgCh <- text:
+
 	default:
-		log.Println("Канал уведомлений переполнен, сообщение потеряно")
+
+		log.Println(
+			"❌ Канал уведомлений переполнен, сообщение потеряно",
+		)
 	}
 }
 
 func (n *Notifier) Shutdown() {
 	close(n.ch)
 	n.wg.Wait()
-}
-func (n *Notifier) NotifyMessage(text string) {
-	select {
-	case n.msgCh <- text:
-	default:
-		log.Println("Канал уведомлений переполнен, сообщение потеряно")
-	}
 }
