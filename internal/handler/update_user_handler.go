@@ -10,8 +10,12 @@ func (uh *UserHandler) UpdateUserHandler(ctx context.Context, id int) error {
 		return err
 	}
 
-	if uh.notifier != nil {
-		go uh.notifier.NotifyMessage("✅ Пользователь успешно обновлен! ")
+	if uh.tgNotifier != nil {
+		go uh.tgNotifier.NotifyMessage("✅ Гость успешно обновлен! ")
+	}
+
+	if uh.maxNotifier != nil {
+		go uh.maxNotifier.NotifyMessage("✅ Гость успешно обновлен! ")
 	}
 	return nil
 }

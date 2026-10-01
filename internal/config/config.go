@@ -18,7 +18,7 @@ type Config struct {
 }
 
 func InitConfig() (*Config, error) {
-	_ = godotenv.Load(".env")
+	_ = godotenv.Load(".env_local")
 
 	return &Config{
 		DB_HOST:     os.Getenv("DB_HOST"),
@@ -36,11 +36,25 @@ type Telegramm struct {
 	ChatID string
 }
 
+type Max struct {
+	Bot     string
+	ChatID  string
+	ChatID2 string
+}
+
 func InitTelegramm() (*Telegramm, error) {
-	_ = godotenv.Load(".env")
+	_ = godotenv.Load(".env_local")
 	return &Telegramm{
 		Bot:    os.Getenv("TG_BOT"),
-		ChatID: os.Getenv("CHAT_ID"),
+		ChatID: os.Getenv("CHAT_ID_TG"),
+	}, nil
+}
+
+func InitMax() (*Max, error) {
+	return &Max{
+		Bot:     os.Getenv("MAX_BOT"),
+		ChatID:  os.Getenv("CHAT_ID_MAX"),
+		ChatID2: os.Getenv("CHAT_ID_MILANA"),
 	}, nil
 }
 

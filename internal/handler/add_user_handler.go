@@ -33,9 +33,22 @@ func (uh *UserHandler) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err == nil && uh.notifier != nil {
-		go uh.notifier.Notify(user, models.Guest{}, "add") // ✅ ???
+	if err == nil && uh.tgNotifier != nil {
+		go uh.tgNotifier.Notify(user, models.Guest{}, "add") // ✅
 	}
+
+	if uh.tgNotifier != nil {
+		go uh.tgNotifier.Notify(
+			user,
+			models.Guest{},
+			"add",
+		)
+	}
+
+	if uh.maxNotifier != nil {
+		go uh.maxNotifier.NotifyAdd(user)
+	}
+
 	uh.logg.Info("Гость успешно добавлен !")
 
 	w.Header().Set("Content-Type", "application/json")

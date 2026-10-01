@@ -102,7 +102,7 @@ func (n *Notifier) callbackHandler(
 			id,
 		)
 
-		err := n.handler.DeleteUserHandler(ctx, id)
+		err = n.handler.DeleteUserHandler(ctx, id)
 		if err != nil {
 			log.Printf(
 				"❌ Ошибка удаления гостя %d: %v",

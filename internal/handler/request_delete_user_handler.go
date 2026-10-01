@@ -21,7 +21,7 @@ func (uh *UserHandler) RequestDeleteUserHandler(w http.ResponseWriter, r *http.R
 		http.Error(w, "ID не указан", http.StatusBadRequest)
 		return
 	}
-	
+
 	user, err := uh.hand.GetUser(ctx, id)
 	if err != nil {
 		if errors.Is(err, models.ErrorsNotFound) {
@@ -33,8 +33,12 @@ func (uh *UserHandler) RequestDeleteUserHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	if uh.notifier != nil {
-		go uh.notifier.Notify(*user, models.Guest{}, "delete")
+	if uh.tgNotifier != nil {
+		go uh.tgNotifier.Notify(*user, models.Guest{}, "delete")
+	}
+
+	if uh.maxNotifier != nil {
+		go uh.maxNotifier.NotifyDelete(*user)
 	}
 
 	uh.logg.Info("Запрос на удаление отправлен на подтверждение")

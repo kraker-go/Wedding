@@ -11,7 +11,7 @@ const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
 
-const weddingDate = new Date("2026-10-10T00:44:00").getTime();
+const weddingDate = new Date("2026-10-10T00:11:00").getTime();
 
 // ============================================================
 // 2. ТАЙМЕР ДО СВАДЬБЫ

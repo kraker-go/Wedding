@@ -7,7 +7,18 @@ import (
 
 func (uh *UserHandler) DeleteUserHandler(ctx context.Context, id int) error {
 	uh.logg.Info("DeleteUserHandler выполняем удаление пользователя")
-	err := uh.hand.DeleteUser(ctx, id)
+
+	user, err := uh.hand.GetUser(ctx, id)
+	if err != nil {
+		uh.logg.Error(
+			"не удалось получить пользователя перед удалением",
+			zap.Error(err),
+		)
+
+		return err
+	}
+
+	err = uh.hand.DeleteUser(ctx, id)
 	if err != nil {
 		uh.logg.Error("DeleteUserHandler Handler", zap.Error(err))
 		return err
@@ -15,8 +26,12 @@ func (uh *UserHandler) DeleteUserHandler(ctx context.Context, id int) error {
 
 	uh.logg.Info("DeleteUserHandler пользователь удален")
 
-	if uh.notifier != nil {
-		go uh.notifier.NotifyMessage("✅ Пользователь успешно удалён! ")
+	if uh.tgNotifier != nil {
+		go uh.tgNotifier.NotifyMessage("✅ Пользователь: " + user.FirstName + " " + user.LastName + ": успешно удалён!")
+	}
+
+	if uh.maxNotifier != nil {
+		go uh.maxNotifier.NotifyMessage("✅ Пользователь: " + user.FirstName + " " + user.LastName + " - успешно удалён!")
 	}
 
 	return nil

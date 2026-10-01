@@ -30,6 +30,8 @@ func (uh *UserHandler) DeleteFotoHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	uh.notifier.NotifyMessage("удалена фотография из галереи")
+	uh.tgNotifier.NotifyMessage("❌ удалена фотография из галереи")
+	uh.maxNotifier.NotifyMessage("❌ удалена фотография из галереи")
+
 	w.WriteHeader(http.StatusNoContent)
 }
