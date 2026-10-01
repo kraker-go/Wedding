@@ -43,7 +43,6 @@ func (uh *UserHandler) UploadPhotoHandler(w http.ResponseWriter, r *http.Request
 	}
 
 	uh.tgNotifier.NotifyMessage("✅ Гость добавил новое фото 📸")
-	uh.maxNotifier.NotifyMessage("✅ rГость добавил новое фото 📸")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)

@@ -62,10 +62,6 @@ func (uh *UserHandler) RequestUpdateUserHandler(w http.ResponseWriter, r *http.R
 		go uh.tgNotifier.Notify(*user, requestUser, "update") // ✅ отправляет в уже существующий канал
 	}
 
-	if uh.maxNotifier != nil {
-		go uh.maxNotifier.NotifyUpdate(*user, requestUser)
-	}
-
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err = json.NewEncoder(w).Encode(map[string]interface{}{

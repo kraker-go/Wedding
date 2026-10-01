@@ -37,10 +37,6 @@ func (uh *UserHandler) RequestDeleteUserHandler(w http.ResponseWriter, r *http.R
 		go uh.tgNotifier.Notify(*user, models.Guest{}, "delete")
 	}
 
-	if uh.maxNotifier != nil {
-		go uh.maxNotifier.NotifyDelete(*user)
-	}
-
 	uh.logg.Info("Запрос на удаление отправлен на подтверждение")
 
 	w.Header().Set("Content-Type", "application/json")

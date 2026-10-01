@@ -2,14 +2,12 @@
 package api
 
 import (
-	"context"
 	"fmt"
 	"go.uber.org/zap"
 	"net/http"
 	"wedding/internal/config"
 	"wedding/internal/database"
 	"wedding/internal/handler"
-	"wedding/internal/handler/max_notification"
 	"wedding/internal/repository"
 	"wedding/internal/router"
 	"wedding/internal/server"
@@ -41,18 +39,6 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 		return nil, fmt.Errorf("telegram init: %w", err)
 	}
 
-	mx, err := config.InitMax()
-	if err != nil {
-		return nil, fmt.Errorf("max_notification init: %w", err)
-	}
-
-	logg.Info(
-		"MAX config",
-		zap.String("chatID1", mx.ChatID),
-		zap.String("chatID2", mx.ChatID2),
-		zap.Int("tokenLength", len(mx.Bot)),
-	)
-
 	notif := handler.Telegramm(tg.Bot, tg.ChatID, nil)
 
 	repo := repository.NewRepository(db)
@@ -60,17 +46,6 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 	hand := handler.NewUserHandler(serv, logg, notif)
 
 	notif.SetHandler(hand)
-
-	maxNotif := max_notification.NewNotifier(
-		mx.Bot,
-		mx.ChatID,
-		mx.ChatID2,
-		hand,
-	)
-
-	hand.SetMaxNotifier(maxNotif)
-
-	maxNotif.StartPolling(context.Background())
 
 	rout, err := router.InitRouter(hand)
 	if err != nil {

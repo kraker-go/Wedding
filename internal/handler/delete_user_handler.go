@@ -30,9 +30,5 @@ func (uh *UserHandler) DeleteUserHandler(ctx context.Context, id int) error {
 		go uh.tgNotifier.NotifyMessage("✅ Пользователь: " + user.FirstName + " " + user.LastName + ": успешно удалён!")
 	}
 
-	if uh.maxNotifier != nil {
-		go uh.maxNotifier.NotifyMessage("✅ Пользователь: " + user.FirstName + " " + user.LastName + " - успешно удалён!")
-	}
-
 	return nil
 }

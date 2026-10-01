@@ -27,12 +27,6 @@ func (uh *UserHandler) VisitHandler(
 		if uh.tgNotifier != nil {
 			uh.tgNotifier.NotifyMessage(msg)
 		}
-
-		// MAX
-		if uh.maxNotifier != nil {
-			uh.maxNotifier.NotifyMessage(msg)
-		}
 	}()
-
 	w.WriteHeader(http.StatusOK)
 }

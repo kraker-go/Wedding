@@ -45,10 +45,6 @@ func (uh *UserHandler) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		)
 	}
 
-	if uh.maxNotifier != nil {
-		go uh.maxNotifier.NotifyAdd(user)
-	}
-
 	uh.logg.Info("Гость успешно добавлен !")
 
 	w.Header().Set("Content-Type", "application/json")

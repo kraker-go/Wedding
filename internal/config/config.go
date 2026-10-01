@@ -36,25 +36,11 @@ type Telegramm struct {
 	ChatID string
 }
 
-type Max struct {
-	Bot     string
-	ChatID  string
-	ChatID2 string
-}
-
 func InitTelegramm() (*Telegramm, error) {
 	_ = godotenv.Load(".env")
 	return &Telegramm{
 		Bot:    os.Getenv("TG_BOT"),
 		ChatID: os.Getenv("CHAT_ID_TG"),
-	}, nil
-}
-
-func InitMax() (*Max, error) {
-	return &Max{
-		Bot:     os.Getenv("MAX_BOT"),
-		ChatID:  os.Getenv("CHAT_ID_MAX"),
-		ChatID2: os.Getenv("CHAT_ID_MILANA"),
 	}, nil
 }
 
