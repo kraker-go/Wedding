@@ -46,6 +46,13 @@ func StartServer(logg *zap.Logger) (*http.Server, error) {
 		return nil, fmt.Errorf("max_notification init: %w", err)
 	}
 
+	logg.Info(
+		"MAX config",
+		zap.String("chatID1", mx.ChatID),
+		zap.String("chatID2", mx.ChatID2),
+		zap.Int("tokenLength", len(mx.Bot)),
+	)
+
 	notif := handler.Telegramm(tg.Bot, tg.ChatID, nil)
 
 	repo := repository.NewRepository(db)

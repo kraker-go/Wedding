@@ -3,6 +3,8 @@ package max_notification
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	_ "embed"
 
 	models "wedding/internal/domain"
 )
@@ -50,9 +54,7 @@ func NewNotifier(
 		},
 		handler: handler,
 
-		client: &http.Client{
-			Timeout: 95 * time.Second,
-		},
+		client: createMaxHTTPClient(),
 	}
 }
 
@@ -593,7 +595,7 @@ func (n *Notifier) NotifyUpdate(
 			},
 			{
 				Type: "callback",
-				Text: "❌ Отклонить",
+				Text: "я загрузил наш код на амвера, а там не работают оповещения, что делать Отклонить",
 				Payload: fmt.Sprintf(
 					"reject_update:%d",
 					guest.ID,
@@ -615,4 +617,44 @@ func (n *Notifier) NotifyUpdate(
 		"✅ MAX: запрос на изменение отправлен, guestID=%d",
 		guest.ID,
 	)
+}
+
+//go:embed certs/max.cer
+var maxCert []byte
+
+func createMaxHTTPClient() *http.Client {
+	rootCAs, err := x509.SystemCertPool()
+	if err != nil || rootCAs == nil {
+		rootCAs = x509.NewCertPool()
+	}
+
+	// Если сертификат PEM.
+	if ok := rootCAs.AppendCertsFromPEM(maxCert); ok {
+		log.Println("✅ MAX: сертификат Минцифры добавлен из PEM")
+	} else {
+		// Если сертификат DER (.cer).
+		cert, err := x509.ParseCertificate(maxCert)
+		if err != nil {
+			log.Printf(
+				"❌ MAX: не удалось прочитать сертификат: %v",
+				err,
+			)
+		} else {
+			rootCAs.AddCert(cert)
+
+			log.Println(
+				"✅ MAX: сертификат Минцифры добавлен из DER",
+			)
+		}
+	}
+
+	return &http.Client{
+		Timeout: 95 * time.Second,
+
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				RootCAs: rootCAs,
+			},
+		},
+	}
 }
